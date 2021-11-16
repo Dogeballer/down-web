@@ -1,0 +1,29 @@
+/**
+  这个文件专门存放css覆盖重置样式
+*/
+html {
+}
+
+body {
+  min-width: 1280px;
+  height: 100%;
+}
+
+a, a:active, a:hover, a:focus, a:focus-within {
+  text-decoration: none;
+  outline: 0;
+}
+
+//---- 样式重新覆盖 ------
+
+.bui-common-menu-title-logo {
+  display: none !important;
+}
+
+.bui-common-menu-title-text-name {
+  height: 40px;
+}
+
+.bui-common-menu-title-text {
+  align-items: center;
+}

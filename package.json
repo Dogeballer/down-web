@@ -1,0 +1,52 @@
+{
+  "name": "smp-web",
+  "projectName": "人工智能数据安全检测平台",
+  "version": "1.0.0",
+  "projectVersion": "1.0.0-alpha.1",
+  "scripts": {
+    "dev": "webpack-script start:development",
+    "test": "webpack-script start:test",
+    "build:development": "webpack-script build:development",
+    "build:test": "webpack-script build:test",
+    "build:preproduction": "webpack-script build:preproduction",
+    "build:production": "webpack-script build:production",
+    "build:intranet": "webpack-script build:intranet",
+    "standardfix": "standard --fix",
+    "prepare": "husky install"
+  },
+  "author": "cecdataFE fujian",
+  "license": "ISC",
+  "description": "人工智能数据安全检测平台",
+  "devDependencies": {
+    "@cecdataFE/webpack-script": "*",
+    "@commitlint/cli": "12.1.1",
+    "@commitlint/config-angular": "12.1.1",
+    "husky": "6.0.0",
+    "standard": "16.0.3",
+    "validate-commit-msg": "2.14.0"
+  },
+  "dependencies": {
+    "@cecdataFE/bui": "^2.14.14",
+    "@loadable/component": "^5.10.3",
+    "antd": "^3.26.16",
+    "axios": "0.21.1",
+    "classnames": "^2.2.6",
+    "md5": "^2.2.1",
+    "moment": "*",
+    "prop-types": "15.6.1",
+    "query-string": "6.14.1",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "react-router-cache-route": "1.11.0",
+    "react-router-dom": "5.2.0"
+  },
+  "repository": "",
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
