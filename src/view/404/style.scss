@@ -1,0 +1,29 @@
+.nopage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .nopage-img {
+    width: 190px;
+    height: 230px;
+    display: block;
+    margin: 0 auto;
+    background: url('../../assets/images/404/404.png') center center no-repeat;
+  }
+  .nopage-text {
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+    margin: 24px 0 32px 0;
+  }
+  .nopage-back {
+    text-align: center;
+  }
+  .nopage-back-btn {
+    display: inline-block;
+    margin: 0 16px 0 0;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
