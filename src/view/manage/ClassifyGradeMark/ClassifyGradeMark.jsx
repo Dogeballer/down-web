@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import style from './style.scss'
 import ProTable from '../../../components/ProTable/ProTable'
-import { Button } from 'antd'
+import { Button, Input } from 'antd'
 
 const ClassifyGradeMark = (props) => {
   useEffect(() => {
@@ -30,6 +30,9 @@ const ClassifyGradeMark = (props) => {
     }
   ]
   const querier = {
+    forms: [
+      <Input key='name' name='name' placeholder='名称' />
+    ],
     buttons: [
       <Button key='create' type='primary'>新建分类</Button>,
       <Button key='delete' type='danger'>删除</Button>

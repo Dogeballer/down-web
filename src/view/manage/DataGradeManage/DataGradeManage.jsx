@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import style from './style.scss'
-import { Button } from 'antd'
+import { Button, Input } from 'antd'
 import ProTable from '../../../components/ProTable/ProTable'
 
 const DataGradeManage = (props) => {
@@ -31,6 +31,9 @@ const DataGradeManage = (props) => {
     }
   ]
   const querier = {
+    forms: [
+      <Input key='name' name='name' placeholder='名称' />
+    ],
     buttons: [
       <Button key='create' type='primary'>新建分类</Button>,
       <Button key='delete' type='danger'>删除</Button>
@@ -40,6 +43,7 @@ const DataGradeManage = (props) => {
     <ProTable
       querier={querier}
       columns={columns}
+      fetch={() => {}}
     />
   )
 }
