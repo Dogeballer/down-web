@@ -2,7 +2,7 @@
   "name": "smp-web",
   "projectName": "人工智能数据安全检测平台",
   "version": "1.0.0",
-  "projectVersion": "1.0.0-alpha.1",
+  "productVersion": "1.0.0",
   "scripts": {
     "dev": "webpack-script start:development",
     "test": "webpack-script start:test",
