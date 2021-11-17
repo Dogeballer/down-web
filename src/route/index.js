@@ -10,7 +10,7 @@ import { ReactComponent as ProIcon } from '../assets/images/frame/pro-icon.svg'
 import CacheRoute, { CacheSwitch, dropByCacheKey, clearCache, getCachingKeys, refreshByCacheKey } from 'react-router-cache-route'
 import menuBg from '../assets/images/frame/menu.png'
 import sysImg from '../assets/images/frame/sysImg.svg'
-import Toolbar from '../view/toolbar'
+import Toolbar from '../components/Toolbar'
 
 const aliveControl = {
   dropByCacheKey,
