@@ -43,7 +43,6 @@ const DataGradeManage = (props) => {
     <ProTable
       querier={querier}
       columns={columns}
-      fetch={() => {}}
     />
   )
 }

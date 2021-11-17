@@ -24,12 +24,13 @@ const {
 } = emitter
 const ADMIN_ROLE = 'admin'
 class Router extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       routes: getRoutes()
     }
   }
+
   async componentDidMount () {
     if (!isLogin()) {
       history.push('/login')
@@ -51,7 +52,7 @@ class Router extends Component {
   }
 
   renderRoute = (routes) => {
-    let renderRouters = []
+    const renderRouters = []
     const loopRoutes = (routes) => {
       routes.forEach(route => {
         if (route.routes?.length) loopRoutes(route.routes)
@@ -61,10 +62,10 @@ class Router extends Component {
             exact
             multiple
             when={() => 'cache' in route ? route.cache : true} // 是否要缓存
-            className='ka-wrapper'
+            className={'className' in route.meta ? route.meta.className : 'ka-wrapper'}
             key={route.path}
             path={route.path}
-            cacheKey={({location: {pathname, search}}) => (pathname + search)}
+            cacheKey={({ location: { pathname, search } }) => (pathname + search)}
             render={props => (<route.component {...props} />)}
           />
         )
@@ -93,13 +94,13 @@ class Router extends Component {
             <Redirect to={redirectTo} />
           </Route>
           <Layout
-            proKey={'smp'}
+            proKey='smp'
             showBreadcrumb
             menuBg={menuBg}
             routes={routes}
             defaultRoute={defaultRoute}
             proNameImg={sysImg}
-            proIcon={<ProIcon width={24} height={24} fill={'#FFFFFF'} />}
+            proIcon={<ProIcon width={24} height={24} fill='#FFFFFF' />}
             proName={pkg.projectName}
             version={pkg.version}
             aliveControl={aliveControl}

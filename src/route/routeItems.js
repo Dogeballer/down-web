@@ -14,7 +14,8 @@ export default [
     component: Home,
     meta: {
       name: '首页',
-      icon: 'home'
+      icon: 'home',
+      className: 'home'
     }
   },
   {
