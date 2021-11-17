@@ -1,0 +1,26 @@
+.pro-table {
+  .querier {
+    margin-bottom: 8px;
+    .forms {
+      > * {
+        display: inline-block;
+        width: 180px;
+        margin-right: 16px;
+        margin-bottom: 16px;
+      }
+
+      > .ant-btn {
+        width: auto;
+      }
+    }
+  }
+  table tbody tr td {
+    p {
+      margin: 4px 0;
+      padding: 0;
+    }
+    .ant-divider {
+      margin: 0 1px;
+    }
+  }
+}
