@@ -14,6 +14,22 @@
     "standardfix": "standard --fix",
     "prepare": "husky install"
   },
+  "developers": [
+    {
+      "roles": [
+        "developer"
+      ],
+      "name": "luhaikun",
+      "email": "luhaikun@cecdat.com"
+    },
+    {
+      "roles": [
+        "developer"
+      ],
+      "name": "xuxiangsheng",
+      "email": "xuxiangsheng@cecdat.com"
+    }
+  ],
   "author": "cecdataFE fujian",
   "license": "ISC",
   "description": "人工智能数据安全检测平台",
