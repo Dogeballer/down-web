@@ -6,6 +6,21 @@ export const API_VER = 'v1.0'
 
 export const phoneReg = /1\d{10}$/
 
+export const modalFromLayout = {
+  item: {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 20 }
+  },
+  modal: {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
+  },
+  half: {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 12 }
+  }
+}
+
 export const USER_LIST = [
   { userName: 'cecadmin', userPwd: 'admin123', role: 'admin' },
   { userName: 'cecop', userPwd: 'admin123', role: 'operator' },

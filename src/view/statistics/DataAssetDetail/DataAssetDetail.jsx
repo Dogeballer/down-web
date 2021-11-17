@@ -3,11 +3,13 @@ import React, { useState, useCallback} from 'react'
 import moment from 'moment'
 import classnames from 'classnames'
 import Filter from './component/Filter'
-import { Switch, Popconfirm, Icon } from 'antd'
+import {Switch, Popconfirm, Icon, Button} from 'antd'
 import { useFetch } from '../../../hooks/useFetch'
-import { Table, FixHeaderWrapper, StatusCreator } from '@cecdataFE/bui'
+import { FixHeaderWrapper, StatusCreator } from '@cecdataFE/bui'
+import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import { COMMON_STATUS, DATE_FORMAT, INIT_FILTER } from '../../../constant'
 import style from './style.scss'
+import AddEditModal from "./component/AddEditModal";
 
 const Status = StatusCreator(COMMON_STATUS)
 function DataAssetDetail () {
@@ -100,7 +102,6 @@ function DataAssetDetail () {
       dataIndex: 'status',
       width: 80,
       align: 'center',
-      fixed: 'right',
       shouldCellUpdate: function (record, prevRecord) {
         return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
@@ -213,9 +214,19 @@ function DataAssetDetail () {
     setFilter((prev) => ({ ...prev, ...INIT_FILTER, ...params }));
   }
 
+  const handleOk = (values) => {
+    console.log(values)
+  }
+
   return (
     <div className={style['data-detail-wrapper']}>
-      <Filter onSubmit={handleSearch} />
+      <Filter onSubmit={handleSearch}>
+        <AddEditModal
+          onOk={handleOk}
+        >
+          <Button icon='plus' type='primary'>添加资产</Button>
+        </AddEditModal>
+      </Filter>
       <div
         className={classnames('smp-table-wrapper', style['data-detail-table'])}
       >
