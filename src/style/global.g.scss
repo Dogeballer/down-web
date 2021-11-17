@@ -73,3 +73,42 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+.smp-table-wrapper {
+  position: relative;
+  background: #FFFFFF;
+  .ant-table-pagination.ant-pagination {
+    margin: 12px 0;
+  }
+  .ant-table-footer {
+    position: absolute;
+    left: 0;
+    bottom: -42px;
+    border: none !important;
+    background: none;
+    padding: 0 !important;
+    button {
+      margin-right: 16px;
+    }
+  }
+}
+
+.smp-antd4-filter {
+  min-width: 1024px;
+  > .ant-row.ant-form-item {
+    margin-bottom: 16px;
+    &.right-button {
+      float: right;
+    }
+    .ant-form-item-label {
+      line-height: 32px !important;
+    }
+    .ant-form-item-control {
+      line-height: 32px !important;
+      .ant-select,
+      .ant-cascader-picker {
+        width: 224px;
+      }
+    }
+  }
+}

@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { Router as HashRouter, Route, Redirect } from 'react-router-dom'
-import { history, Layout } from '@cecdataFE/bui'
+import { history, Layout, emitter } from '@cecdataFE/bui'
 import NoMatch from '../view/404'
 import Login from '../view/login'
 import getRoutes from './getRoutes'
 import pkg from '../../package.json'
-import { isLogin } from '../lib/storage'
+import { isLogin, getUserData } from '../lib/storage'
 import { ReactComponent as ProIcon } from '../assets/images/frame/pro-icon.svg'
 import CacheRoute, { CacheSwitch, dropByCacheKey, clearCache, getCachingKeys, refreshByCacheKey } from 'react-router-cache-route'
 import menuBg from '../assets/images/frame/menu.png'
@@ -19,14 +19,35 @@ const aliveControl = {
   getCachingKeys
 }
 
+const {
+  onGetRoute
+} = emitter
+const ADMIN_ROLE = 'admin'
 class Router extends Component {
-  routes = null
   constructor(props) {
     super(props);
-    this.routes = getRoutes()
+    this.state = {
+      routes: getRoutes()
+    }
   }
   async componentDidMount () {
-    if (!isLogin()) history.push('/login')
+    if (!isLogin()) {
+      history.push('/login')
+    } else {
+      this.refreshRoutes()
+    }
+    onGetRoute(() => {
+      this.refreshRoutes()
+    })
+  }
+
+  refreshRoutes = () => {
+    let routes = getRoutes()
+    const userData = getUserData()
+    if (userData?.role !== ADMIN_ROLE) {
+      routes = routes.filter(v => v.path !== '/statistics')
+    }
+    this.setState({ routes })
   }
 
   renderRoute = (routes) => {
@@ -59,7 +80,8 @@ class Router extends Component {
   }
 
   render () {
-    const defaultRoute = this.getInitRoute(this.routes)
+    const { routes } = this.state
+    const defaultRoute = this.getInitRoute(routes)
     const redirectTo = defaultRoute || '/login'
 
     return (
@@ -74,7 +96,7 @@ class Router extends Component {
             proKey={'smp'}
             showBreadcrumb
             menuBg={menuBg}
-            routes={this.routes}
+            routes={routes}
             defaultRoute={defaultRoute}
             proNameImg={sysImg}
             proIcon={<ProIcon width={24} height={24} fill={'#FFFFFF'} />}
@@ -83,7 +105,7 @@ class Router extends Component {
             aliveControl={aliveControl}
             toolbar={<Toolbar />}
           >
-            {this.renderRoute(this.routes)}
+            {this.renderRoute(routes)}
           </Layout>
         </CacheSwitch>
       </HashRouter>
