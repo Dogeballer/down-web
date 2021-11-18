@@ -9,6 +9,12 @@ export default function (props) {
     useEffect(() => {
         api.getRisk().then(res => {
             setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
                 yAxis: {
                     type: 'category',
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']

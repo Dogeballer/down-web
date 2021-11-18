@@ -5,6 +5,8 @@ import DataAssetDetail from '../view/statistics/DataAssetDetail'
 import DataAssetAcct from '../view/statistics/DataAssetAcct'
 import DataGradeManage from '../view/manage/DataGradeManage'
 import ClassifyGradeMark from '../view/manage/ClassifyGradeMark'
+import RiskWarning from "../view/monitor/RiskWarning/RiskWarning";
+import Logs from "../view/monitor/Logs/Logs";
 
 export default [
   {
@@ -13,9 +15,39 @@ export default [
     isChild: true, // 叶子路由
     component: Home,
     meta: {
-      name: '首页',
+      name: '控制台',
       icon: 'home'
     }
+  },
+  {
+    path: '/risk',
+    component: null,
+    meta: {
+      name: '安全监测',
+      icon: 'home'
+    },
+    routes: [
+      {
+        exact: true,
+        path: '/risk/warn',
+        isChild: true,
+        component: RiskWarning,
+        meta: {
+          name: '风险预警',
+          icon: 'home'
+        }
+      },
+      {
+        exact: true,
+        path: '/risk/logs',
+        isChild: true,
+        component: Logs,
+        meta: {
+          name: '所有日志',
+          icon: 'home'
+        }
+      }
+    ]
   },
   {
     path: '/manage',
