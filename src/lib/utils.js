@@ -6,11 +6,11 @@
  */
 export const emptyStr = ''
 
-export const removeEvent = function (el, event, handler){
+export const removeEvent = function (el, event, handler) {
   el.removeEventListener(event, handler)
 }
 
-export const addEvent = function (el, event, handler){
+export const addEvent = function (el, event, handler) {
   removeEvent(el, event, handler)
   el.addEventListener(event, handler)
 }

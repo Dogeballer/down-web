@@ -5,8 +5,8 @@ import DataAssetDetail from '../view/statistics/DataAssetDetail'
 import DataAssetAcct from '../view/statistics/DataAssetAcct'
 import DataGradeManage from '../view/manage/DataGradeManage'
 import ClassifyGradeMark from '../view/manage/ClassifyGradeMark'
-import RiskWarning from "../view/monitor/RiskWarning/RiskWarning";
-import AllLogs from "../view/monitor/AllLogs/AllLogs";
+import RiskWarning from '../view/monitor/RiskWarning/RiskWarning'
+import AllLogs from '../view/monitor/AllLogs/AllLogs'
 
 export default [
   {
