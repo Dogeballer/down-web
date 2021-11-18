@@ -1,6 +1,7 @@
 import React from 'react'
-import * as echarts from 'echarts'
 import debounce from '@cecdataFE/bui/dist/lib/debounce'
+import * as echarts from 'echarts'
+import './theme/shine'
 
 export default class EchartsComp extends React.Component {
   static defaultProps = {

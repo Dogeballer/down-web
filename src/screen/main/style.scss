@@ -1,0 +1,69 @@
+.root {
+  width: 100vw;
+  height: 100vh;
+  background-color: #012D68;
+  display: flex;
+  align-items: center;
+}
+
+.placeHolder {
+  margin: auto;
+}
+
+.content {
+  position: relative;
+  background: url("../asset/bg@X2.jpg") no-repeat center;
+  background-size: cover;
+  transform-origin: 0 0;
+  padding: 70px 30px;
+}
+
+.section {
+  background: rgba(7,63,121,0.80);
+  border: 1px solid #00AAFF;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  color: #48C2FF;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  height: 54px;
+
+  &:after {
+    display: inline-block;
+    content: '';
+    width: 70px;
+    height: 15px;
+    background: url('../asset/装饰.png') no-repeat;
+    background-size: cover;
+    margin-left: 6px;
+  }
+}
+
+.img {
+  width: 68px;
+  height: 68px;
+  margin-right: 16px;
+}
+
+.f1 {
+  font-size: 22px;
+  color: #48C2FF;
+}
+
+.f2 {
+  font-size: 38px;
+  color: #FBB62D;
+  line-height: 1.2;
+}
+
+.map {
+  position: absolute;
+  top: -30px;
+  left: 588px;
+  z-index: -1;
+}

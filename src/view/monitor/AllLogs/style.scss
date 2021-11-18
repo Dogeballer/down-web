@@ -1,3 +1,9 @@
-.root {
+.filters {
+  display: flex;
+  align-items: center;
+  padding-bottom: 12px;
 
+  & > * {
+    margin-right: 16px;
+  }
 }

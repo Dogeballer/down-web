@@ -1,5 +1,5 @@
 import shine from './shine.json'
 
-import echarts from 'echarts'
+import * as echarts from 'echarts'
 
 echarts.registerTheme('shine', shine)

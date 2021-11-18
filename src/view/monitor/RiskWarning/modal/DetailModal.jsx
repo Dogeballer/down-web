@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { Modal, Input } from 'antd'
+import React, {useState} from 'react'
+import {Modal, Input} from 'antd'
 
-const { TextArea } = Input
+const {TextArea} = Input
 
-export default function DetailModal (props) {
+export default function DetailModal(props) {
   const [data, setData] = useState()
   const [visible, setVisible] = useState(props.visible)
 
@@ -22,9 +22,10 @@ export default function DetailModal (props) {
   return (
     <>
       {
-                props.children && React.cloneElement(React.Children.only(props.children), { onClick: openModal })
-            }
+        props.children && React.cloneElement(React.Children.only(props.children), {onClick: openModal})
+      }
       <Modal
+        width={1000}
         title={props.title}
         visible={visible}
         destroyOnClose
@@ -32,7 +33,7 @@ export default function DetailModal (props) {
         onOk={onOk}
         onCancel={onCancel}
       >
-        <TextArea readOnly={props.readOnly} defaultValue={props.value} autoSize={{ minRows: 10, maxRows: 20 }} />
+        <TextArea readOnly={props.readOnly} defaultValue={props.value} autoSize={{minRows: 18, maxRows: 30}}/>
       </Modal>
     </>
   )

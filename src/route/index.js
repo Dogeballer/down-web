@@ -11,6 +11,7 @@ import CacheRoute, { CacheSwitch, dropByCacheKey, clearCache, getCachingKeys, re
 import menuBg from '../assets/images/frame/menu.png'
 import sysImg from '../assets/images/frame/sysImg.svg'
 import Toolbar from '../components/Toolbar'
+import Screen from "../screen"
 
 const aliveControl = {
   dropByCacheKey,
@@ -90,6 +91,7 @@ class Router extends Component {
         <CacheSwitch>
           <Route exact path='/login' component={Login} />
           <Route exact path='/404' component={NoMatch} />
+          <Route exact path='/screen' component={Screen} />
           <Route exact path='/'>
             <Redirect to={redirectTo} />
           </Route>
