@@ -27,7 +27,7 @@ const DictSelect = (props) => {
     >
       {
         options.map(v => (
-          <Option value={v.dictCode} key={v.dictCode}>{v.dictName}</Option>
+          <Option value={v.value} key={v.value}>{v.text}</Option>
         ))
       }
     </Select>

@@ -60,20 +60,20 @@ export const INIT_PAGE = {
 
 export const DICT_SET = {
   DATA_STORAGE_CODE: [
-    { dictCode: 1, dictName: 'HIVE' },
-    { dictCode: 2, dictName: 'KUDU' },
-    { dictCode: 3, dictName: 'HBASE' },
-    { dictCode: 4, dictName: 'ES' }
+    { value: 1, text: 'HIVE' },
+    { value: 2, text: 'KUDU' },
+    { value: 3, text: 'HBASE' },
+    { value: 4, text: 'ES' }
   ],
   DATA_LEVEL: [
-    { dictCode: 1, dictName: '1级 公开数据' },
-    { dictCode: 2, dictName: '2级 受限数据' },
-    { dictCode: 3, dictName: '3级 敏感数据' },
-    { dictCode: 4, dictName: '4级 涉密数据' }
+    { value: 1, text: '1级 公开数据' },
+    { value: 2, text: '2级 受限数据' },
+    { value: 3, text: '3级 敏感数据' },
+    { value: 4, text: '4级 涉密数据' }
   ],
   DATA_ASSET_STATUS: [
-    { dictCode: 1, dictName: '正常' },
-    { dictCode: 0, dictName: '禁用' }
+    { value: 1, text: '正常' },
+    { value: 0, text: '禁用' }
   ]
 }
 
