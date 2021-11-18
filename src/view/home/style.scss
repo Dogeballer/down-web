@@ -1,0 +1,72 @@
+.root {
+
+}
+
+.item {
+  display: flex;
+  height: 120px;
+  flex: 1;
+  margin-right: 16px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  color: rgba(0,0,0,0.65);
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.decorate {
+  width: 72px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+}
+
+.divider {
+  margin: 8px 0;
+}
+
+.f1 {
+  display: block;
+  padding-top: 12px;
+  font-size: 14px;
+  color: rgba(0,0,0,0.65);
+}
+
+.f2 {
+  font-size: 16px;
+  color: #3F5060;
+  min-width: 80px;
+  max-width: 80px;
+  margin-right: 8px;
+}
+
+.f3 {
+  font-size: 20px;
+  color: #313E4B;
+}
+
+.section {
+  background: white;
+  width: calc((100% - 16px) / 2);
+  margin-top: 16px;
+}
+
+.title {
+  height: 52px;
+  font-size: 16px;
+  color: #2B3642;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #DFDFDF;
+  padding-left: 12px;
+}

@@ -50,6 +50,7 @@
     "axios": "0.21.1",
     "captcha-mini": "^1.1.0",
     "classnames": "^2.2.6",
+    "echarts": "^5.2.2",
     "md5": "^2.2.1",
     "moment": "*",
     "prop-types": "15.6.1",
