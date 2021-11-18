@@ -28,11 +28,12 @@ a, a:active, a:hover, a:focus, a:focus-within {
   align-items: center;
 }
 
-.bui-frame-content .page-wrapper {
-  background: white;
-  padding: 16px;
-  height: auto;
-  min-height: 100%;
+.bui-frame-content {
+  .page-wrapper {
+    background: white;
+    padding: 16px;
+    height: 100%;
+  }
 }
 
 .ant-form-item-has-error .ant-input,
