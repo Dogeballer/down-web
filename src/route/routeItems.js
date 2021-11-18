@@ -16,7 +16,7 @@ export default [
     component: Home,
     meta: {
       name: '控制台',
-      icon: 'home'
+      icon: 'console'
     }
   },
   {
@@ -24,7 +24,7 @@ export default [
     component: null,
     meta: {
       name: '安全监测',
-      icon: 'home'
+      icon: 'monitor'
     },
     routes: [
       {
@@ -54,7 +54,7 @@ export default [
     component: null,
     meta: {
       name: '数据资产管理',
-      icon: 'home'
+      icon: 'data'
     },
     routes: [
       {
@@ -84,7 +84,7 @@ export default [
     component: null,
     meta: {
       name: '数据资产统计',
-      icon: 'home'
+      icon: 'statistics'
     },
     routes: [
       {
