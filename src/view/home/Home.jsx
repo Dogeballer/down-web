@@ -15,7 +15,7 @@ import DatabaseBugChart from "./charts/DatabaseBugChart";
 
 export default function (props) {
   return <Fragment>
-    <div className='flex'>
+    <div className='flex' style={{marginBottom: 16}}>
       <section className={style.item}>
         <div className={style.decorate} style={{background: '#3A88F4'}}>
           <Icon0 className={style.icon} />
@@ -101,8 +101,8 @@ export default function (props) {
           </div>
         </div>
       </section>
-
     </div>
+
     <div className='flex-space-between'>
       <div className={style.section}>
         <label className={style.title}>数据风险分布</label>

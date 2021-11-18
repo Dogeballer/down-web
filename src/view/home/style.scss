@@ -1,7 +1,3 @@
-.root {
-
-}
-
 .item {
   display: flex;
   height: 120px;
@@ -58,7 +54,7 @@
 .section {
   background: white;
   width: calc((100% - 16px) / 2);
-  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .title {
