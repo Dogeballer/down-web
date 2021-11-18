@@ -6,7 +6,7 @@ import DataAssetAcct from '../view/statistics/DataAssetAcct'
 import DataGradeManage from '../view/manage/DataGradeManage'
 import ClassifyGradeMark from '../view/manage/ClassifyGradeMark'
 import RiskWarning from "../view/monitor/RiskWarning/RiskWarning";
-import Logs from "../view/monitor/Logs/Logs";
+import AllLogs from "../view/monitor/AllLogs/AllLogs";
 
 export default [
   {
@@ -41,7 +41,7 @@ export default [
         exact: true,
         path: '/risk/logs',
         isChild: true,
-        component: Logs,
+        component: AllLogs,
         meta: {
           name: '所有日志',
           icon: 'home'
