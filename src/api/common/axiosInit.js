@@ -2,6 +2,7 @@ import axios from 'axios'
 import { message } from 'antd'
 import cancelToken from './cancelToken'
 import { history } from '@cecdataFE/bui'
+import { getUserData } from '../../lib/storage'
 import utils from '../../lib/utils'
 
 let cancel // 请求取消
@@ -30,6 +31,9 @@ axios.interceptors.request.use(config => {
   // requestCount++
   // 增加 token 头
   // config.headers.common['token'] = token
+  // 后端未做登录，暂时将用户名加在header里
+  const userData = getUserData()
+  config.headers.common.username = userData.userName
   return config
 }, (err) => {
   // requestCount--

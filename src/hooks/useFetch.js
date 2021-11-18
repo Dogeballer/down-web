@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { INIT_PAGE } from '../constant';
+import { useState, useEffect, useCallback } from 'react'
+import { INIT_PAGE } from '../constant'
 
 export const useFetch = (fetcher, params, options = {}) => {
   const { onSuccess, onError } = options
@@ -7,11 +7,11 @@ export const useFetch = (fetcher, params, options = {}) => {
   const [loading, setLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [pagination, setPagination] = useState({ ...INIT_PAGE })
-  const request = useCallback( async () => {
-    setLoading(true);
+  const request = useCallback(async () => {
+    setLoading(true)
     try {
       // const data = await fetcher(params)
-      const data = []
+      const data = [{ id: 1, dataAssetName: '测试数据' }]
       typeof onSuccess === 'function' && onSuccess(data, params)
       setData(data)
       setPagination({
@@ -23,7 +23,7 @@ export const useFetch = (fetcher, params, options = {}) => {
       setIsError(true)
       typeof onError === 'function' && onError(error, params)
     }
-    setLoading(false);
+    setLoading(false)
   }, [fetcher, ...Object.values(params)])
   useEffect(() => {
     request()

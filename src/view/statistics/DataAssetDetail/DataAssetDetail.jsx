@@ -1,20 +1,20 @@
-import React, { useState, useCallback} from 'react'
+import React, { useState, useCallback } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
 import Filter from './component/Filter'
-import {Switch, Popconfirm, Icon, Button} from 'antd'
+import { Switch, Popconfirm, Divider, Button } from 'antd'
 import { useFetch } from '../../../hooks/useFetch'
-import { FixHeaderWrapper, StatusCreator } from '@cecdataFE/bui'
+import { FixHeaderWrapper, Icon, StatusCreator } from '@cecdataFE/bui'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import { COMMON_STATUS, DATE_FORMAT, INIT_FILTER } from '../../../constant'
+import AddEditModal from './component/AddEditModal'
 import style from './style.scss'
-import AddEditModal from "./component/AddEditModal";
 
 const Status = StatusCreator(COMMON_STATUS)
 function DataAssetDetail () {
   const [filter, setFilter] = useState({ ...INIT_FILTER })
-  const { data, loading, pagination, setData } = useFetch(null, { ...filter });
+  const { data, loading, pagination } = useFetch(null, { ...filter })
 
   const columns = [
     {
@@ -110,7 +110,7 @@ function DataAssetDetail () {
           value={value}
           style={{ cursor: 'pointer', color: '#6b6b6b' }}
           onClick={() => {
-            handleStatusChange(value ? 0 : 1, record)
+            handleStatusChange('status', value ? 0 : 1, record)
           }}
         />
       )
@@ -144,19 +144,23 @@ function DataAssetDetail () {
           checkedChildren='开'
           unCheckedChildren='关'
           onChange={() => {
-            handleShowStatusChange(value ? 0 : 1, record)
+            handleStatusChange('showStatus', value ? 0 : 1, record)
           }}
         />
       )
     },
     {
       title: '操作',
-      dataIndex: 'operate',
+      dataIndex: 'op',
       fixed: 'right',
       width: 100,
       align: 'center',
-      render: (value, record, index) => (
+      render: (value, record) => (
         <div className='flex-center-vh'>
+          <AddEditModal onOk={handleOk} record={record}>
+            <Icon type='icon-bianji' style={{ fontSize: 24 }} />
+          </AddEditModal>
+          <Divider type='vertical' />
           <Popconfirm
             title='确定删除数据资产?'
             onConfirm={() => {
@@ -164,12 +168,7 @@ function DataAssetDetail () {
             }}
             okText='确定'
           >
-            <Icon
-              title='删除'
-              position={index}
-              type='icon-shanchu1'
-              style={{ fontSize: 24 }}
-            />
+            <Icon title='删除' type='icon-shanchu1' style={{ fontSize: 24 }} />
           </Popconfirm>
         </div>
       )
@@ -180,24 +179,11 @@ function DataAssetDetail () {
 
   }
 
-  const handleShowStatusChange = (showStatus, record) => {
-    // updateDataStatus(record.id, { showStatus })
+  const handleStatusChange = (key, status, record) => {
+    // updateDataStatus(record.id, { [key]: status })
     //   .then(() => {
     //   })
   }
-
-  const handleStatusChange = (status, record) => {
-    // updateDataStatus(record.id, { status })
-    //   .then(() => {
-    //   })
-  }
-
-  /**
-   * 表格刷新
-   */
-  const refresh = useCallback(() => {
-    setFilter((prev) => ({ ...prev, ...INIT_FILTER }));
-  }, [])
 
   /**
    * 表格发生变化时触发（分页、排序、过滤条件）
@@ -211,7 +197,7 @@ function DataAssetDetail () {
    * 表格查询
    */
   const handleSearch = (params) => {
-    setFilter((prev) => ({ ...prev, ...INIT_FILTER, ...params }));
+    setFilter((prev) => ({ ...prev, ...INIT_FILTER, ...params }))
   }
 
   const handleOk = (values) => {
@@ -221,9 +207,7 @@ function DataAssetDetail () {
   return (
     <div className={style['data-detail-wrapper']}>
       <Filter onSubmit={handleSearch}>
-        <AddEditModal
-          onOk={handleOk}
-        >
+        <AddEditModal onOk={handleOk}>
           <Button icon='plus' type='primary'>添加资产</Button>
         </AddEditModal>
       </Filter>
@@ -232,16 +216,18 @@ function DataAssetDetail () {
       >
         <FixHeaderWrapper siblingsHeight={0} footerHeight={32}>
           {
-            (scrollY) => <Table
-              bordered
-              rowKey='id'
-              loading={loading}
-              scroll={{x: 1680, y: scrollY}}
-              dataSource={data}
-              pagination={pagination}
-              columns={columns}
-              onChange={handleTableChange}
-            />
+            (scrollY) => (
+              <Table
+                bordered
+                rowKey='id'
+                loading={loading}
+                scroll={{ x: 1680, y: scrollY }}
+                dataSource={data}
+                pagination={pagination}
+                columns={columns}
+                onChange={handleTableChange}
+              />
+            )
           }
         </FixHeaderWrapper>
       </div>

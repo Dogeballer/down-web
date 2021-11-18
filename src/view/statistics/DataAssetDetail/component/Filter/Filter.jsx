@@ -5,7 +5,7 @@ import { Button, Input } from 'antd'
 
 const Filter = (props) => {
   const { onSubmit, children } = props
-  const [ form ] = Form.useForm()
+  const [form] = Form.useForm()
   return (
     <Form
       form={form}

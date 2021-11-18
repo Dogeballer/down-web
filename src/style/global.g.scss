@@ -93,6 +93,15 @@
   }
 }
 
+.smp-antd4-form {
+  .ant-form-item {
+    &:last-child {
+      margin-bottom: 0;
+    }
+    margin-bottom: 16px;
+  }
+}
+
 .smp-antd4-filter {
   min-width: 1024px;
   > .ant-row.ant-form-item {

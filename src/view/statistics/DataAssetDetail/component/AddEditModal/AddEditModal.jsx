@@ -1,34 +1,41 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Form } from 'antd4'
-import { Modal, Input, Button, Select } from 'antd'
-import { isEmpty } from "@cecdataFE/bui/dist/lib/utils";
-import { modalFromLayout } from "../../../../../constant";
+import { Modal, Input, Button } from 'antd'
+import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
+import { DICT_SET, modalFromLayout } from '../../../../../constant'
+import DictSelect from '../../../../../components/DictSelect'
 
-const Option = Select.Option
 const AddEditModal = (props) => {
-  const [ form ] = Form.useForm()
-  const { visible, record, onSuccess } = props
+  const [form] = Form.useForm()
+  const { visible, record, onOk } = props
   const [modalVisible, setModalVisible] = useState(visible)
   useEffect(() => {
-
-  }, [])
-  const handleClick = () => {
+    setFieldsValue()
+  }, [record])
+  const handleVisibleChange = () => {
     setModalVisible(!modalVisible)
+  }
+  const handleCancel = () => {
+    setFieldsValue()
+    handleVisibleChange()
+  }
+  const setFieldsValue = () => {
+    form.setFieldsValue({ ...(record || {}) })
   }
   const handleOk = async () => {
     try {
       const values = await form.validateFields()
-      typeof onSuccess === 'function' && onSuccess(values)
+      typeof onOk === 'function' && onOk(values)
     } catch (error) {
       console.log('form commit failed:', error)
     }
   }
   return (
-    <Fragment>
+    <>
       {
         React.cloneElement(props.children, {
-          onClick: handleClick
+          onClick: handleVisibleChange
         })
       }
       {
@@ -42,13 +49,13 @@ const AddEditModal = (props) => {
               title={`${isEmpty(record) ? '新增' : '编辑'}资产`}
               onCancel={() => setModalVisible(false)}
               footer={(
-                <Fragment>
-                  <Button type='primary' onClick={handleClick}>取消</Button>
+                <>
+                  <Button type='primary' onClick={handleCancel}>取消</Button>
                   <Button type='primary' onClick={handleOk}>确定</Button>
-                </Fragment>
+                </>
               )}
             >
-              <Form form={form} {...modalFromLayout.modal}>
+              <Form className='smp-antd4-form' form={form} {...modalFromLayout.modal}>
                 <Form.Item
                   label='数据资产名称'
                   name='dataAssetName'
@@ -92,15 +99,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请选择资产类型'
                   }]}
                 >
-                  <Select
-                    allowClear
-                    placeholder='请选择资产类型'
-                  >
-                    <Option value={1}>HIVE</Option>
-                    <Option value={2}>KUDU</Option>
-                    <Option value={3}>HBASE</Option>
-                    <Option value={4}>ES</Option>
-                  </Select>
+                  <DictSelect placeholder='请选择资产类型' options={DICT_SET.DATA_STORAGE_CODE} />
                 </Form.Item>
                 <Form.Item
                   label='资产等级'
@@ -109,15 +108,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请选择资产等级'
                   }]}
                 >
-                  <Select
-                    allowClear
-                    placeholder='请选择资产等级'
-                  >
-                    <Option value={1}>1级 公开数据</Option>
-                    <Option value={2}>2级 受限数据</Option>
-                    <Option value={3}>3级 敏感数据</Option>
-                    <Option value={4}>4级 涉密数据</Option>
-                  </Select>
+                  <DictSelect placeholder='请选择资产等级' options={DICT_SET.DATA_LEVEL} />
                 </Form.Item>
                 <Form.Item
                   label='状态'
@@ -126,20 +117,14 @@ const AddEditModal = (props) => {
                     required: true, message: '请选择状态'
                   }]}
                 >
-                  <Select
-                    allowClear
-                    placeholder='请选择状态'
-                  >
-                    <Option value={1}>正常</Option>
-                    <Option value={0}>禁用</Option>
-                  </Select>
+                  <DictSelect placeholder='请选择状态' options={DICT_SET.DATA_ASSET_STATUS} />
                 </Form.Item>
               </Form>
             </Modal>
-          )
+            )
           : null
       }
-    </Fragment>
+    </>
   )
 }
 

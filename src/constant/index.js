@@ -58,6 +58,25 @@ export const INIT_PAGE = {
   showTotal: (total) => `总共 ${thousandComma(total)} 条数据`
 }
 
+export const DICT_SET = {
+  DATA_STORAGE_CODE: [
+    { dictCode: 1, dictName: 'HIVE' },
+    { dictCode: 2, dictName: 'KUDU' },
+    { dictCode: 3, dictName: 'HBASE' },
+    { dictCode: 4, dictName: 'ES' }
+  ],
+  DATA_LEVEL: [
+    { dictCode: 1, dictName: '1级 公开数据' },
+    { dictCode: 2, dictName: '2级 受限数据' },
+    { dictCode: 3, dictName: '3级 敏感数据' },
+    { dictCode: 4, dictName: '4级 涉密数据' }
+  ],
+  DATA_ASSET_STATUS: [
+    { dictCode: 1, dictName: '正常' },
+    { dictCode: 0, dictName: '禁用' }
+  ]
+}
+
 export default {
   phoneReg,
   USER_LIST,
