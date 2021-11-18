@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 
 import { Form } from 'antd4'
 import { Modal, Input, Button } from 'antd'
+import { FetchSelect } from '@cecdataFE/bui'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
-import { DICT_SET, modalFromLayout } from '../../../../../constant'
-import DictSelect from '../../../../../components/DictSelect'
+import { getDataAssetDetailList } from '../../../../../api/dataAssetDetail'
+import { modalFromLayout } from '../../../../../constant'
 
 const AddEditModal = (props) => {
   const [form] = Form.useForm()
@@ -46,7 +47,7 @@ const AddEditModal = (props) => {
               centered
               destroyOnClose
               width={500}
-              title={`${isEmpty(record) ? '添加' : '编辑'}资产`}
+              title={`${isEmpty(record) ? '添加' : '编辑'}账号`}
               onCancel={() => setModalVisible(false)}
               footer={(
                 <>
@@ -56,68 +57,60 @@ const AddEditModal = (props) => {
               )}
             >
               <Form className='smp-antd4-form' form={form} {...modalFromLayout.modal}>
+                <Form.Item name='dataAssetName' noStyle>
+                  <Input style={{ display: 'none' }} />
+                </Form.Item>
+                <Form.Item name='dataStorageName' noStyle>
+                  <Input style={{ display: 'none' }} />
+                </Form.Item>
+                <Form.Item
+                  label='应用资产名称'
+                  name='appAssetIp'
+                  rules={[{
+                    required: true, message: '请输入应用资产名称'
+                  }]}
+                >
+                  <Input placeholder='请输入应用资产名称' />
+                </Form.Item>
                 <Form.Item
                   label='数据资产名称'
-                  name='dataAssetName'
+                  name='dataAssetIp'
                   rules={[{
                     required: true, message: '请输入数据资产名称'
                   }]}
                 >
-                  <Input placeholder='请输入数据资产名称' />
-                </Form.Item>
-                <Form.Item
-                  label='数据资产IP'
-                  name='dataAssetIp'
-                  rules={[{
-                    required: true, message: '请输入数据资产IP'
-                  }]}
-                >
-                  <Input placeholder='请输入数据资产IP' />
-                </Form.Item>
-                <Form.Item
-                  label='目标端口'
-                  name='dataAssetHost'
-                  rules={[{
-                    required: true, message: '请输入目标端口'
-                  }]}
-                >
-                  <Input placeholder='请输入目标端口' />
-                </Form.Item>
-                <Form.Item
-                  label='库实例名'
-                  name='dataServerName'
-                  rules={[{
-                    required: true, message: '请输入库实例名'
-                  }]}
-                >
-                  <Input placeholder='请输入库实例名' />
+                  <FetchSelect
+                    autoFetch
+                    searchable
+                    placeholder='数据资产名称'
+                    fetch={getDataAssetDetailList}
+                    style={{ width: '100%' }}
+                    optionsGet={(response) => (response.data || []).map(
+                      ({ dataAssetIp, dataAssetName, dataStorageName }) => {
+                        return {
+                          value: dataAssetIp,
+                          title: dataAssetName,
+                          type: dataStorageName
+                        }
+                      })}
+                    onChange={(value, { title, type }) => {
+                      console.log({ title, type })
+                      form.setFieldsValue({
+                        dataAssetIp: value,
+                        dataAssetName: title,
+                        dataStorageName: type
+                      })
+                    }}
+                  />
                 </Form.Item>
                 <Form.Item
                   label='资产类型'
-                  name='dataStorageCode'
+                  name='dataStorageName'
                   rules={[{
                     required: true, message: '请选择资产类型'
                   }]}
                 >
-                  <DictSelect placeholder='请选择资产类型' options={DICT_SET.DATA_STORAGE_CODE} />
-                </Form.Item>
-                <Form.Item
-                  label='资产等级'
-                  name='dataLevel'
-                  rules={[{
-                    required: true, message: '请选择资产等级'
-                  }]}
-                >
-                  <DictSelect placeholder='请选择资产等级' options={DICT_SET.DATA_LEVEL} />
-                </Form.Item>
-                <Form.Item
-                  label='是否ODS'
-                  name='odsStatus'
-                  rules={[{
-                    required: true, message: '请选择是否ODS'
-                  }]}
-                >
-                  <DictSelect placeholder='请选择资产等级' options={DICT_SET.DATA_ODS_STATUS} />
+                  <Input disabled />
                 </Form.Item>
               </Form>
             </Modal>

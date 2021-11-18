@@ -1,20 +1,28 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useRef, useState, useMemo } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
 import Filter from './component/Filter'
 import { Switch, Popconfirm, Divider, Button } from 'antd'
 import { useFetch } from '../../../hooks/useFetch'
-import { FixHeaderWrapper, Icon, StatusCreator } from '@cecdataFE/bui'
+import {
+  addDataAssetDetail,
+  deleteDataAssetDetail,
+  getDataAssetDetailPage,
+  updateDataAssetDetail,
+  updateDetailShowStatus
+} from '../../../api/dataAssetDetail'
+import { FixHeaderWrapper, Icon, thousandComma } from '@cecdataFE/bui'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
-import { COMMON_STATUS, DATE_FORMAT, INIT_FILTER } from '../../../constant'
+import { DATE_FORMAT, INIT_FILTER } from '../../../constant'
+import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import AddEditModal from './component/AddEditModal'
 import style from './style.scss'
 
-const Status = StatusCreator(COMMON_STATUS)
 function DataAssetDetail () {
-  const [filter, setFilter] = useState({ ...INIT_FILTER })
-  const { data, loading, pagination } = useFetch(null, { ...filter })
+  const filter = useRef({ ...INIT_FILTER })
+  const [switchLoading, setSwitchLoading] = useState(false)
+  const { data, loading, pagination, request, setData } = useFetch(getDataAssetDetailPage, { ...filter.current })
 
   const columns = [
     {
@@ -26,9 +34,6 @@ function DataAssetDetail () {
     {
       title: '数据资产名称',
       dataIndex: 'dataAssetName',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.dataAssetName
       })
@@ -37,9 +42,6 @@ function DataAssetDetail () {
       title: '资产IP',
       dataIndex: 'dataAssetIp',
       width: 150,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.dataAssetIp
       })
@@ -49,9 +51,6 @@ function DataAssetDetail () {
       dataIndex: 'dataAssetHost',
       width: 100,
       align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.dataAssetHost
       })
@@ -61,9 +60,6 @@ function DataAssetDetail () {
       dataIndex: 'dataServerName',
       width: 200,
       align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.dataServerName
       })
@@ -71,10 +67,7 @@ function DataAssetDetail () {
     {
       title: '资产类型',
       dataIndex: 'dataStorageName',
-      width: 100,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
+      width: 150,
       onCell: record => ({
         tooltip: () => record.dataStorageName
       })
@@ -83,37 +76,40 @@ function DataAssetDetail () {
       title: '资产等级',
       dataIndex: 'dataLevel',
       align: 'center',
+      width: 150
+    },
+    {
+      title: '是否ODS',
+      dataIndex: 'odsStatus',
+      align: 'center',
       width: 100,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
+      render: (value) => (
+        value !== undefined ? (value === 1 ? '是' : '否') : '--'
+      )
+    },
+    {
+      title: '表数量',
+      dataIndex: 'tableVolume',
+      width: 150,
+      align: 'center',
+      render: (value) => (
+        value !== undefined ? thousandComma(value) : '--'
+      )
+    },
+    {
+      title: '数据量(万)',
+      dataIndex: 'dataVolume',
+      width: 150,
+      align: 'center',
+      render: (value) => (
+        value !== undefined ? thousandComma(value) : '--'
+      )
     },
     {
       title: '来源方式',
       dataIndex: 'sourceMode',
       width: 100,
-      align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      width: 80,
-      align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
-      render: (value, record) => (
-        <Status
-          value={value}
-          style={{ cursor: 'pointer', color: '#6b6b6b' }}
-          onClick={() => {
-            handleStatusChange('status', value ? 0 : 1, record)
-          }}
-        />
-      )
+      align: 'center'
     },
     {
       title: '操作人',
@@ -126,9 +122,6 @@ function DataAssetDetail () {
       dataIndex: 'operationTime',
       align: 'center',
       width: 184,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value) => (
         value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : '--'
       )
@@ -143,8 +136,9 @@ function DataAssetDetail () {
           checked={!!value}
           checkedChildren='开'
           unCheckedChildren='关'
+          loading={switchLoading}
           onChange={() => {
-            handleStatusChange('showStatus', value ? 0 : 1, record)
+            handleStatusChange(value ? 0 : 1, record)
           }}
         />
       )
@@ -175,14 +169,25 @@ function DataAssetDetail () {
     }
   ]
 
-  const handleDelete = (id) => {
+  useMemo(() => {
+    columns.forEach(v => {
+      v.shouldCellUpdate = function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      }
+    })
+  }, [])
 
-  }
+  const refresh = useCallback(() => {
+    filter.current = { ...filter.current, ...INIT_FILTER }
+    request(filter.current)
+  }, [])
 
-  const handleStatusChange = (key, status, record) => {
-    // updateDataStatus(record.id, { [key]: status })
-    //   .then(() => {
-    //   })
+  /**
+   * 表格查询
+   */
+  const handleSearch = (params) => {
+    filter.current = { ...filter.current, ...INIT_FILTER, ...params }
+    request(filter.current)
   }
 
   /**
@@ -190,18 +195,41 @@ function DataAssetDetail () {
    */
   const handleTableChange = useCallback((pagination) => {
     const { current, pageSize } = pagination
-    setFilter((prev) => ({ ...prev, page: current, limit: pageSize }))
+    filter.current = { ...filter.current, page: current, limit: pageSize }
+    request(filter.current)
   }, [])
 
-  /**
-   * 表格查询
-   */
-  const handleSearch = (params) => {
-    setFilter((prev) => ({ ...prev, ...INIT_FILTER, ...params }))
+  const handleStatusChange = (status, record) => {
+    setSwitchLoading(true)
+    updateDetailShowStatus(record.id, status)
+      .then(() => {
+        const newData = [...data]
+        const idx = newData.findIndex(v => v.id === record.id)
+        newData.splice(idx, 1, {
+          ...record,
+          showStatus: status
+        })
+        setSwitchLoading(false)
+        setData(newData)
+      })
   }
 
-  const handleOk = (values) => {
-    console.log(values)
+  const handleDelete = (id) => {
+    deleteDataAssetDetail(id)
+      .then(() => {
+        refresh()
+      })
+  }
+
+  const handleOk = (values, record) => {
+    let request = () => addDataAssetDetail(values)
+    if (!isEmpty(record)) {
+      request = () => updateDataAssetDetail(record.id, values)
+    }
+    request()
+      .then(() => {
+        refresh()
+      })
   }
 
   return (
@@ -221,10 +249,11 @@ function DataAssetDetail () {
                 bordered
                 rowKey='id'
                 loading={loading}
-                scroll={{ x: 1680, y: scrollY }}
+                virtual={false}
+                scroll={{ x: 2100, y: scrollY }}
                 dataSource={data}
-                pagination={pagination}
                 columns={columns}
+                pagination={pagination}
                 onChange={handleTableChange}
               />
             )

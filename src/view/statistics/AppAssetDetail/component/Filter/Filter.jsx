@@ -16,7 +16,7 @@ const Filter = (props) => {
       }}
     >
       <Form.Item
-        name='dataAssetName'
+        name='appAssetName'
       >
         <Input
           allowClear
@@ -26,7 +26,7 @@ const Filter = (props) => {
         />
       </Form.Item>
       <Form.Item
-        name='dataAssetIp'
+        name='appAssetIp'
       >
         <Input
           allowClear

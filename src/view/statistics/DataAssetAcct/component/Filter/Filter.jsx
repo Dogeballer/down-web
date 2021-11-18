@@ -16,21 +16,21 @@ const Filter = (props) => {
       }}
     >
       <Form.Item
-        name='dataAssetName'
+        name='userName'
       >
         <Input
           allowClear
-          placeholder='资产名称'
+          placeholder='账号名称'
           style={{ width: 200 }}
           maxLength={20}
         />
       </Form.Item>
       <Form.Item
-        name='dataAssetIp'
+        name='dataAssetName'
       >
         <Input
           allowClear
-          placeholder='资产IP'
+          placeholder='资产名称'
           style={{ width: 200 }}
           maxLength={20}
         />

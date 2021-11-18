@@ -2,7 +2,7 @@ import { thousandComma } from '@cecdataFE/bui'
 
 export const PAGE_SIZE = 20
 
-export const API_VER = 'v1.0'
+export const API_VER = 'v1'
 
 export const phoneReg = /1\d{10}$/
 
@@ -44,15 +44,14 @@ export const COMMON_STATUS = [
 
 export const INIT_FILTER = {
   page: 1,
-  current: 1,
   limit: PAGE_SIZE
 }
 
 export const INIT_PAGE = {
   total: 0,
-  size: 'small',
+  // size: 'small',
   showQuickJumper: true,
-  showSizeChanger: true,
+  // showSizeChanger: true,
   defaultPageSize: PAGE_SIZE,
   pageSizeOptions: ['20', '30', '50', '100'],
   showTotal: (total) => `总共 ${thousandComma(total)} 条数据`
@@ -71,9 +70,9 @@ export const DICT_SET = {
     { value: 3, text: '3级 敏感数据' },
     { value: 4, text: '4级 涉密数据' }
   ],
-  DATA_ASSET_STATUS: [
-    { value: 1, text: '正常' },
-    { value: 0, text: '禁用' }
+  DATA_ODS_STATUS: [
+    { value: 1, text: '是' },
+    { value: 0, text: '否' }
   ]
 }
 
