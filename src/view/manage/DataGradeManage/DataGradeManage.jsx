@@ -3,6 +3,7 @@ import { Button, Divider } from 'antd'
 import ProTable from '../../../components/ProTable/ProTable'
 import FormModal from './componnets/FormModal'
 import DeleteButton from '../../../components/DeleteButton'
+import { FixHeaderWrapper } from '@cecdataFE/bui'
 
 const DataGradeManage = (props) => {
   const [formVisible, setFromVisible] = useState(false)
@@ -68,26 +69,68 @@ const DataGradeManage = (props) => {
   }
 
   return (
-    <>
-      <ProTable
-        ref={tableRef}
-        className='page-wrapper'
-        querier={querier}
-        columns={columns}
-        rowKey='id'
-        dataSource={[{ assetClassName: 'wqe' }]}
-        rowSelection={{
-          selectedRowKeys,
-          onChange: setSelectedRowKeys
-        }}
-      />
+    <div className='page-wrapper'>
+      <FixHeaderWrapper siblingsHeight={96}>
+        {
+          (scrollY) => (
+            <ProTable
+              ref={tableRef}
+              querier={querier}
+              columns={columns}
+              rowKey='id'
+              dataSource={[
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' },
+                { assetClassName: 'wqe' }
+              ]}
+              scroll={{ x: 1200, y: scrollY }}
+              rowSelection={{
+                selectedRowKeys,
+                onChange: setSelectedRowKeys
+              }}
+            />
+          )
+        }
+      </FixHeaderWrapper>
       <FormModal
         visible={formVisible}
         record={currentRecord.current}
         onCancel={() => setFromVisible(false)}
         onOk={() => tableRef.current?.refresh()}
       />
-    </>
+    </div>
   )
 }
 

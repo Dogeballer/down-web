@@ -62,6 +62,7 @@ class Router extends Component {
             exact
             multiple
             when={() => 'cache' in route ? route.cache : true} // 是否要缓存
+            className='ka-wrapper'
             key={route.path}
             path={route.path}
             cacheKey={({ location: { pathname, search } }) => (pathname + search)}
