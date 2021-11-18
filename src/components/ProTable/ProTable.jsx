@@ -4,11 +4,12 @@ import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import { Button } from 'antd'
 import { isMoment } from 'moment'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
+import classnames from 'classnames'
 
 const PAGE_SIZE = 20
 
 function ProTable (props, ref) {
-  const { querier, fetch, ...tableProps } = props
+  const { querier, className, fetch, ...tableProps } = props
   const [tableSource, setTableSource] = useState([])
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState({ total: 0, current: 1 })
@@ -84,7 +85,7 @@ function ProTable (props, ref) {
   }))
 
   return (
-    <div className='pro-table'>
+    <div className={classnames('pro-table', className)}>
       {
         querier
           ? (

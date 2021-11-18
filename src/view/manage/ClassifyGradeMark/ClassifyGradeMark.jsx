@@ -39,12 +39,12 @@ const ClassifyGradeMark = (props) => {
     ]
   }
   return (
-    <div>
-      <ProTable
-        querier={querier}
-        columns={columns}
-      />
-    </div>
+    <ProTable
+      className='page-wrapper'
+      querier={querier}
+      columns={columns}
+      dataSource={[]}
+    />
   )
 }
 

@@ -1,0 +1,6 @@
+.btn-link-danger {
+  color: #ff4d4f;
+  &:hover, &:focus, &:active {
+    color: #ff7875
+  }
+}
