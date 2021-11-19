@@ -49,9 +49,9 @@ export const INIT_FILTER = {
 
 export const INIT_PAGE = {
   total: 0,
-  // size: 'small',
+  size: 'small',
   showQuickJumper: true,
-  // showSizeChanger: true,
+  showSizeChanger: true,
   defaultPageSize: PAGE_SIZE,
   pageSizeOptions: ['20', '30', '50', '100'],
   showTotal: (total) => `总共 ${thousandComma(total)} 条数据`

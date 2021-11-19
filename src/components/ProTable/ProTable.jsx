@@ -5,6 +5,7 @@ import { Button } from 'antd'
 import { isMoment } from 'moment'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import classnames from 'classnames'
+import { INIT_PAGE } from '../../constant'
 
 const PAGE_SIZE = 20
 
@@ -84,6 +85,12 @@ function ProTable (props, ref) {
     }
   }))
 
+  console.log({
+    ...INIT_PAGE,
+    pageSize: PAGE_SIZE,
+    onChange: handlePageChange,
+    ...pagination
+  })
   return (
     <div className={classnames('pro-table', className)}>
       {
@@ -109,13 +116,10 @@ function ProTable (props, ref) {
         dataSource={tableSource}
         loading={loading}
         pagination={{
-          size: 'small',
+          ...INIT_PAGE,
           pageSize: PAGE_SIZE,
-          showTotal: total => `共${total}条`,
           onChange: handlePageChange,
-          ...pagination,
-          showSizeChanger: false
-          // showQuickJumper
+          ...pagination
         }}
         {...tableProps}
       />

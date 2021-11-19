@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import style from './style.scss'
-import ProTable from '../../../components/ProTable/ProTable'
 import { Button, Input } from 'antd'
+import ProTable from '../../../components/ProTable/ProTable'
 
 const ClassifyGradeMark = (props) => {
   useEffect(() => {

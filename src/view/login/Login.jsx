@@ -71,7 +71,6 @@ class Login extends Component {
       <div className={style['login-wrapper']}>
         <div className={style['login-body']}>
           <div className={style['login-logo']}>
-            <img className={style['logo-img']} src={logo} alt='logo' />
             <h1>{packageJson.projectName}</h1>
           </div>
           <Form onSubmit={this.handleSubmit} className={style['login-form']}>
