@@ -75,3 +75,15 @@ a, a:active, a:hover, a:focus, a:focus-within {
     margin-bottom: 16px
   }
 }
+
+.ant-table-wrapper {
+  table tbody tr td {
+    p {
+      margin: 4px 0;
+      padding: 0;
+    }
+    .ant-button + .ant-divider {
+      margin: 0 1px;
+    }
+  }
+}
