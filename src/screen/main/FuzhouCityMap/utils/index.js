@@ -1,15 +1,6 @@
 import * as THREE from 'three'
 
-export const proviceHasData = data => {
-  let {name, ...rest} = data
-  return !Object.keys(rest).every(key => {
-    let value = rest[key]
-    return value === undefined || value === null
-  })
-}
-
 let colorCache = {}
-
 export function changeMaterailFromColor (material, color, setAlpha = true) {
   if (typeof color === 'number') {
     material.color.setHex(color)

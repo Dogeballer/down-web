@@ -10,7 +10,10 @@ export default function (props) {
   useEffect(() => {
     api.getRisk().then(res => {
       setOption({
-        grid: props.grid,
+        grid: {
+          ...props.grid,
+          containLabel: true,
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {

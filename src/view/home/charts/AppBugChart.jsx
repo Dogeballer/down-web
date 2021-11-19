@@ -15,7 +15,8 @@ export default function (props) {
           trigger: 'item'
         },
         legend: {
-          y: 'bottom'
+          y: 'bottom',
+          itemWidth: 14,
         },
         series: [
           {

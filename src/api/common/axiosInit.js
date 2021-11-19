@@ -25,7 +25,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   // requestCount--
   const data = response.data
-  if (data.code !== 0) {
+  if (typeof data.code === 'number' && data.code !== 0) {
     message.error(data.message || '服务端异常')
   }
   return data
