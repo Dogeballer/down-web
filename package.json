@@ -44,7 +44,7 @@
     "validate-commit-msg": "2.14.0"
   },
   "dependencies": {
-    "@cecdataFE/bui": "2.14.16-beta.3",
+    "@cecdataFE/bui": "2.14.16-beta.4",
     "@loadable/component": "^5.10.3",
     "antd": "^3.26.16",
     "axios": "0.21.1",

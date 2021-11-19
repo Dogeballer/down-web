@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import { Input, Modal } from 'antd'
 import Form from 'antd4/lib/form'
 import { NumericalInput } from '@cecdataFE/bui'
-import DictSelect from '../../../../components/DictSelect'
-import { DICT_SET } from '../../../../constant'
+import { dataGradeCreate, dataGradeUpdate } from '../../../../api/dataGradeList'
+import DataClassSelect from '../../../../components/DataClassSelect/DataClassSelect'
+import AssetGradeSelect from '../../../../components/AssetGradeSelect'
 
 const layout = {
   labelCol: { span: 6 },
@@ -22,11 +23,11 @@ function FormModal (props) {
     }
   }, [visible, record])
   const handleFinish = (values) => {
-    // (record ? serviceClassUpdate(record.serviceTypeId, values) : serviceClassCreate(values))
-    //   .then(res => {
-    typeof onOk === 'function' && onOk()
-    typeof onCancel === 'function' && onCancel()
-    // })
+    (record?.assetClassName ? dataGradeUpdate(record.assetClassName, values) : dataGradeCreate(values))
+      .then(res => {
+        typeof onOk === 'function' && onOk()
+        typeof onCancel === 'function' && onCancel()
+      })
   }
   const handleOk = () => {
     form.submit()
@@ -34,7 +35,7 @@ function FormModal (props) {
   // console.log(record)
   return (
     <Modal
-      title={record?.id ? '编辑数据分类' : '添加数据分类'}
+      title={record?.assetClassName ? '编辑数据分类' : '添加数据分类'}
       destroyOnClose
       width={400}
       visible={visible}
@@ -48,7 +49,7 @@ function FormModal (props) {
           label='上级分类'
           rules={[{ required: true, message: '请选择上级分类' }]}
         >
-          <Input maxLength={50} />
+          <DataClassSelect />
         </Form.Item>
         <Form.Item
           name='assetClassName'
@@ -61,7 +62,7 @@ function FormModal (props) {
           <Input maxLength={50} />
         </Form.Item>
         <Form.Item name='dataLevel' label='数据分级'>
-          <DictSelect options={DICT_SET.DATA_LEVEL} />
+          <AssetGradeSelect />
         </Form.Item>
         <Form.Item name='sortNo' label='排序'>
           <NumericalInput maxLength={10} />

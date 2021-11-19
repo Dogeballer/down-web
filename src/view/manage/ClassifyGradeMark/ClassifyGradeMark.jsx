@@ -1,50 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import style from './style.scss'
-import { Button, Input } from 'antd'
-import ProTable from '../../../components/ProTable/ProTable'
+import React, { useReducer } from 'react'
+import { Resizer } from '@cecdataFE/bui'
+import AsideTree from './components/AsideTree'
+import DatabaseContent from './components/DatabaseContent'
+import ClassifyContext from './context'
+
+
+const initState = {
+  selected: null
+}
+const reducer = (state, action) => {
+  const [type, payload] = action
+  switch (type) {
+    case 'setSelected': {
+      const { selected } = payload
+      state.selected = selected
+      return { ...state }
+    }
+  }
+}
 
 const ClassifyGradeMark = (props) => {
-  useEffect(() => {
-
-  }, [])
-  const columns = [
-    {
-      dataIndex: '',
-      title: '分类名称'
-    },
-    {
-      dataIndex: '',
-      title: '分类编码'
-    },
-    {
-      dataIndex: '',
-      title: '缺省分级'
-    },
-    {
-      dataIndex: '',
-      title: '排序'
-    },
-    {
-      dataIndex: '',
-      title: '操作'
-    }
-  ]
-  const querier = {
-    forms: [
-      <Input key='name' name='name' placeholder='名称' />
-    ],
-    buttons: [
-      <Button key='create' type='primary'>新建分类</Button>,
-      <Button key='delete' type='danger'>删除</Button>
-    ]
-  }
+  const [state, dispatch] = useReducer(reducer, { ...initState })
+  const { selected } = state
+  const left = (
+    <AsideTree />
+  )
+  const right = (
+    <DatabaseContent />
+  )
   return (
-    <ProTable
-      className='page-wrapper'
-      querier={querier}
-      columns={columns}
-      dataSource={[]}
-    />
+    <ClassifyContext.Provider value={{ state, dispatch }}>
+      <Resizer left={left} right={right} />
+    </ClassifyContext.Provider>
   )
 }
 
