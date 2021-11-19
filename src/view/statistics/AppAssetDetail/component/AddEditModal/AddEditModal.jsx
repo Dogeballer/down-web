@@ -63,7 +63,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请输入应用资产名称'
                   }]}
                 >
-                  <Input placeholder='请输入应用资产名称' />
+                  <Input maxLength={50} placeholder='请输入应用资产名称' />
                 </Form.Item>
                 <Form.Item
                   label='应用资产IP'
@@ -72,7 +72,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请输入应用资产IP'
                   }]}
                 >
-                  <Input placeholder='请输入应用资产IP' />
+                  <Input maxLength={50} placeholder='请输入应用资产IP' />
                 </Form.Item>
               </Form>
             </Modal>

@@ -16,13 +16,13 @@ const Filter = (props) => {
       }}
     >
       <Form.Item
-        name='userName'
+        name='appAssetUser'
       >
         <Input
           allowClear
           placeholder='账号名称'
           style={{ width: 200 }}
-          maxLength={20}
+          maxLength={50}
         />
       </Form.Item>
       <Form.Item
@@ -32,7 +32,7 @@ const Filter = (props) => {
           allowClear
           placeholder='资产名称'
           style={{ width: 200 }}
-          maxLength={20}
+          maxLength={50}
         />
       </Form.Item>
       <Form.Item>

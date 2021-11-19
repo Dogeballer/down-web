@@ -23,7 +23,7 @@ export const addDataAssetAcct = (data) => {
  * @param {data} 数据资产对象
  */
 export const updateDataAssetAcct = (id, data) => {
-  return axios.put(`${API_VER}/web/dbassetUser/addDataAssetUserInfo/${id}`, data)
+  return axios.put(`${API_VER}/web/dbassetUser/upDataAssetUserInfo/${id}`, data)
 }
 
 /**
@@ -32,7 +32,7 @@ export const updateDataAssetAcct = (id, data) => {
  * @param {number} showStatus 是否展示
  */
 export const updateAcctShowStatus = (id, showStatus) => {
-  return axios.put(`${API_VER}/web/dbassetUser/addDataAssetUserInfo/${id}/${showStatus}`)
+  return axios.put(`${API_VER}/web/dbassetUser/upDataAssetUserInfo/${id}/${showStatus}`)
 }
 
 /**

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
@@ -14,61 +14,71 @@ const FileAssetDetail = () => {
   const filter = useRef({ ...INIT_FILTER })
   const { data, loading, pagination, request } = useFetch(getFileAssetDetailPage, { ...filter.current })
 
-  const columns = useMemo(() => {
-    const columns = [
-      {
-        title: '序号',
-        dataIndex: 'id',
-        fixed: 'left',
-        width: 100,
-        render: (value, record, idx) => idx + 1
+  const columns = [
+    {
+      title: '序号',
+      dataIndex: 'id',
+      fixed: 'left',
+      width: 100,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
-      {
-        title: '文件名称',
-        dataIndex: 'fileName',
-        onCell: record => ({
-          tooltip: () => record.fileName
-        })
+      render: (value, record, idx) => idx + 1
+    },
+    {
+      title: '文件名称',
+      dataIndex: 'fileName',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
-      {
-        title: '资产IP',
-        dataIndex: 'fileServerIp',
-        width: 180,
-        onCell: record => ({
-          tooltip: () => record.fileServerIp
-        })
+      onCell: record => ({
+        tooltip: () => record.fileName
+      })
+    },
+    {
+      title: '资产IP',
+      dataIndex: 'fileServerIp',
+      width: 180,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
-      {
-        title: '文件路径',
-        dataIndex: 'targetFilePath',
-        width: 300,
-        onCell: record => ({
-          tooltip: () => record.targetFilePath
-        })
+      onCell: record => ({
+        tooltip: () => record.fileServerIp
+      })
+    },
+    {
+      title: '文件路径',
+      dataIndex: 'targetFilePath',
+      width: 300,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
-      {
-        title: '文件类型',
-        dataIndex: 'fileType',
-        align: 'center',
-        width: 150
-      },
-      {
-        title: '创建时间',
-        dataIndex: 'createTime',
-        align: 'center',
-        width: 200,
-        render: (value) => (
-          value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
-        )
-      }
-    ]
-    columns.forEach(v => {
-      v.shouldCellUpdate = function (record, prevRecord) {
+      onCell: record => ({
+        tooltip: () => record.targetFilePath
+      })
+    },
+    {
+      title: '文件类型',
+      dataIndex: 'fileType',
+      align: 'center',
+      width: 150,
+      shouldCellUpdate: function (record, prevRecord) {
         return record[this.dataIndex] !== prevRecord[this.dataIndex]
       }
-    })
-    return columns
-  }, [])
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      align: 'center',
+      width: 200,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
+      render: (value) => (
+        value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
+      )
+    }
+  ]
 
   /**
    * 表格查询

@@ -5,7 +5,7 @@ import { API_VER } from '../constant'
  * 查询应用资产账号分页
  */
 export const getAppAssetAcctPage = (params) => {
-  return axios.get(`${API_VER}/web/dbassetUser/getDataAssetUserInfo`, {
+  return axios.get(`${API_VER}/web/appassetUser/getAppAssetUserInfo`, {
     params
   })
 }
@@ -14,7 +14,7 @@ export const getAppAssetAcctPage = (params) => {
  * 新增应用资产账号
  */
 export const addAppAssetAcct = (data) => {
-  return axios.post(`${API_VER}/web/dbassetUser/addDataAssetUserInfo`, data)
+  return axios.post(`${API_VER}/web/appassetUser/addAppAssetUserInfo`, data)
 }
 
 /**
@@ -23,7 +23,7 @@ export const addAppAssetAcct = (data) => {
  * @param {data} 应用资产对象
  */
 export const updateAppAssetAcct = (id, data) => {
-  return axios.put(`${API_VER}/web/dbassetUser/addDataAssetUserInfo/${id}`, data)
+  return axios.put(`${API_VER}/web/appassetUser/upAppAssetUserInfo/${id}`, data)
 }
 
 /**
@@ -32,5 +32,5 @@ export const updateAppAssetAcct = (id, data) => {
  * @param {number} showStatus 是否展示
  */
 export const updateAcctShowStatus = (id, showStatus) => {
-  return axios.put(`${API_VER}/web/dbassetUser/addDataAssetUserInfo/${id}/${showStatus}`)
+  return axios.put(`${API_VER}/web/appassetUser/upAppAssetUserInfo/${id}/${showStatus}`)
 }

@@ -12,7 +12,7 @@ import {
 import Filter from './component/Filter'
 import AddEditModal from './component/AddEditModal'
 import { Button, Divider, Popconfirm } from 'antd'
-import { HeightKeepWrapper, Icon } from '@cecdataFE/bui'
+import { HeightKeepWrapper } from '@cecdataFE/bui'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import { DATE_FORMAT, INIT_FILTER } from '../../../constant'
 import { useFetch } from '../../../hooks/useFetch'
@@ -119,15 +119,15 @@ const DataAssetAcct = () => {
       title: '操作',
       dataIndex: 'op',
       fixed: 'right',
-      width: 100,
+      width: 136,
       align: 'center',
       shouldCellUpdate: function (record, prevRecord) {
         return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
       render: (value, record) => (
-        <div className='flex-center-vh'>
+        <>
           <AddEditModal onOk={handleOk} record={record}>
-            <Icon type='icon-bianji' style={{ fontSize: 24 }} />
+            <Button size='small' type='link'>编辑</Button>
           </AddEditModal>
           <Divider type='vertical' />
           <Popconfirm
@@ -137,9 +137,9 @@ const DataAssetAcct = () => {
             }}
             okText='确定'
           >
-            <Icon title='删除' type='icon-shanchu1' style={{ fontSize: 24 }} />
+            <Button className='btn-link-danger' size='small' type='link'>删除</Button>
           </Popconfirm>
-        </div>
+        </>
       )
     }
   ]

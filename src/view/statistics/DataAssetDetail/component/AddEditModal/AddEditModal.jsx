@@ -65,7 +65,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请输入数据资产名称'
                   }]}
                 >
-                  <Input placeholder='请输入数据资产名称' />
+                  <Input maxLength={50} placeholder='请输入数据资产名称' />
                 </Form.Item>
                 <Form.Item
                   label='数据资产IP'
@@ -74,7 +74,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请输入数据资产IP'
                   }]}
                 >
-                  <Input placeholder='请输入数据资产IP' />
+                  <Input maxLength={50} placeholder='请输入数据资产IP' />
                 </Form.Item>
                 <Form.Item
                   label='目标端口'
@@ -83,7 +83,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请输入目标端口'
                   }]}
                 >
-                  <Input placeholder='请输入目标端口' />
+                  <Input maxLength={10} placeholder='请输入目标端口' />
                 </Form.Item>
                 <Form.Item
                   label='库实例名'
@@ -92,7 +92,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请输入库实例名'
                   }]}
                 >
-                  <Input placeholder='请输入库实例名' />
+                  <Input maxLength={50} placeholder='请输入库实例名' />
                 </Form.Item>
                 <Form.Item
                   label='资产类型'

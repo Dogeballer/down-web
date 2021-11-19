@@ -58,21 +58,21 @@ const AddEditModal = (props) => {
               )}
             >
               <Form className='smp-antd4-form' form={form} {...modalFromLayout.modal}>
-                <Form.Item name='appAssetName' noStyle>
+                <Form.Item name='appAssetIp' noStyle>
                   <Input style={{ display: 'none' }} />
                 </Form.Item>
                 <Form.Item
                   label='账号名称'
-                  name='userName'
+                  name='appAssetUser'
                   rules={[{
                     required: true, message: '请输入账号名称'
                   }]}
                 >
-                  <Input placeholder='请输入账号名称' />
+                  <Input maxLength={50} placeholder='请输入账号名称' />
                 </Form.Item>
                 <Form.Item
                   label='应用资产名称'
-                  name='appAssetIp'
+                  name='appAssetName'
                   rules={[{
                     required: true, message: '请输入应用资产名称'
                   }]}
@@ -86,14 +86,15 @@ const AddEditModal = (props) => {
                     optionsGet={(response) => (response.data || []).map(
                       ({ appAssetIp, appAssetName }) => {
                         return {
-                          value: appAssetIp,
+                          ip: appAssetIp,
+                          value: appAssetName,
                           title: appAssetName
                         }
                       })}
-                    onChange={(value, { title }) => {
+                    onChange={(value, { origin }) => {
                       form.setFieldsValue({
-                        appAssetIp: value,
-                        appAssetName: title
+                        appAssetIp: origin.ip,
+                        appAssetName: value
                       })
                     }}
                   />

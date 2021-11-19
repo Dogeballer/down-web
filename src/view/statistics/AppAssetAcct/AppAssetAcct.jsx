@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
 import Filter from './component/Filter'
 import AddEditModal from './component/AddEditModal'
 import { Button } from 'antd'
-import { HeightKeepWrapper, Icon } from '@cecdataFE/bui'
+import { HeightKeepWrapper } from '@cecdataFE/bui'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import { DATE_FORMAT, INIT_FILTER } from '../../../constant'
 import { useFetch } from '../../../hooks/useFetch'
@@ -23,86 +23,102 @@ const AppAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
   const { data, loading, pagination, request, setData } = useFetch(getAppAssetAcctPage, { ...filter.current })
 
-  const columns = useMemo(() => {
-    const columns = [
-      {
-        title: '序号',
-        dataIndex: 'id',
-        fixed: 'left',
-        width: 100,
-        render: (value, record, idx) => idx + 1
+  const columns = [
+    {
+      title: '序号',
+      dataIndex: 'id',
+      fixed: 'left',
+      width: 100,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
-      {
-        title: '资产账号',
-        dataIndex: 'userName',
-        width: 200,
-        onCell: record => ({
-          tooltip: () => record.userName
-        })
+      render: (value, record, idx) => idx + 1
+    },
+    {
+      title: '资产账号',
+      dataIndex: 'appAssetUser',
+      width: 200,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
-      {
-        title: '应用资产名称',
-        dataIndex: 'appAssetName',
-        onCell: record => ({
-          tooltip: () => record.appAssetName
-        })
+      onCell: record => ({
+        tooltip: () => record.appAssetUser
+      })
+    },
+    {
+      title: '应用资产名称',
+      dataIndex: 'appAssetName',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
       },
-      {
-        title: '来源方式',
-        dataIndex: 'sourceMode',
-        width: 150,
-        align: 'center'
-      },
-      {
-        title: '操作人',
-        dataIndex: 'operationUser',
-        width: 150,
-        align: 'center'
-      },
-      {
-        title: '操作时间',
-        dataIndex: 'operationTime',
-        align: 'center',
-        width: 184,
-        render: (value) => (
-          value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
-        )
-      },
-      {
-        title: '是否展示',
-        dataIndex: 'showStatus',
-        align: 'center',
-        width: 150,
-        render: (value, record) => (
-          <StatusSwitch
-            data={data}
-            value={value}
-            record={record}
-            setData={setData}
-            fetcher={updateAcctShowStatus}
-          />
-        )
-      },
-      {
-        title: '操作',
-        dataIndex: 'op',
-        fixed: 'right',
-        width: 100,
-        align: 'center',
-        render: (value, record) => (
-          <AddEditModal onOk={handleOk} record={record}>
-            <Icon type='icon-bianji' style={{ fontSize: 24 }} />
-          </AddEditModal>
-        )
-      }
-    ]
-    columns.forEach(v => {
-      v.shouldCellUpdate = function (record, prevRecord) {
+      onCell: record => ({
+        tooltip: () => record.appAssetName
+      })
+    },
+    {
+      title: '来源方式',
+      dataIndex: 'sourceMode',
+      width: 150,
+      align: 'center',
+      shouldCellUpdate: function (record, prevRecord) {
         return record[this.dataIndex] !== prevRecord[this.dataIndex]
       }
-    })
-    return columns
-  }, [])
+    },
+    {
+      title: '操作人',
+      dataIndex: 'operationUser',
+      width: 150,
+      align: 'center',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      }
+    },
+    {
+      title: '操作时间',
+      dataIndex: 'operationTime',
+      align: 'center',
+      width: 184,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
+      render: (value) => (
+        value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
+      )
+    },
+    {
+      title: '是否展示',
+      dataIndex: 'showStatus',
+      align: 'center',
+      width: 150,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
+      render: (value, record) => (
+        <StatusSwitch
+          data={data}
+          value={value}
+          record={record}
+          setData={setData}
+          fetcher={updateAcctShowStatus}
+        />
+      )
+    },
+    {
+      title: '操作',
+      dataIndex: 'op',
+      fixed: 'right',
+      width: 100,
+      align: 'center',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
+      render: (value, record) => (
+        <AddEditModal onOk={handleOk} record={record}>
+          <Button size='small' type='link'>编辑</Button>
+        </AddEditModal>
+      )
+    }
+  ]
 
   const refresh = useCallback(() => {
     filter.current = { ...filter.current, ...INIT_FILTER }
