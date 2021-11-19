@@ -1,15 +1,14 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
-import * as api from '../../../api/riskWarning'
+import * as api from '../../../api/logs'
 import DetailModal from './modal/DetailModal'
-import { Pagination } from 'antd'
 import thousandComma from '@cecdataFE/bui/dist/lib/thousandComma'
 
 export default function (props) {
   const [loading, setLoading] = useState(true)
   const [dataSource, setDataSource] = useState()
   const [total, setTotal] = useState(0)
-  const queryRef = useRef({ page: 1, limit: 20, isProvideService: 0 })
+  const queryRef = useRef({ page: 1, size: 20, isProvideService: 0 })
   const q = queryRef.current
 
   useEffect(() => {
@@ -18,7 +17,7 @@ export default function (props) {
 
   const fetchData = () => {
     setLoading(true)
-    api.getRiskWarning(queryRef.current).then(res => {
+    api.getLogs(queryRef.current).then(res => {
       setDataSource(res.data.items)
       setTotal(res.data.total)
     }).finally(() => {
@@ -26,14 +25,12 @@ export default function (props) {
     })
   }
 
-  const handleSizeChange = (page, pageSize) => {
-    queryRef.current.page = 1
-    queryRef.current.limit = pageSize
-    fetchData()
-  }
-
-  const handlePageChange = (page, pageSize) => {
-    queryRef.current.page = page
+  const handleTableChange = ({current, pageSize}) => {
+    queryRef.current.page = current
+    if (queryRef.current.size !== pageSize) {
+      queryRef.current.page = 1
+    }
+    queryRef.current.size = pageSize
     fetchData()
   }
 
@@ -113,20 +110,15 @@ export default function (props) {
         loading={loading}
         columns={columns}
         dataSource={dataSource}
-        pagination={false}
+        pagination={{
+          showSizeChanger: true,
+          total,
+          showTotal: total => `总共 ${thousandComma(total)} 条数据`,
+          pageSizeOptions: ['20', '30', '50', '100'],
+          current: q.page,
+          pageSize: q.size,
+        }}
       />
-      <div style={{ marginTop: 12, textAlign: 'right' }}>
-        <Pagination
-          showSizeChanger
-          total={total}
-          showTotal={total => `总共 ${thousandComma(total)} 条数据`}
-          pageSizeOptions={['20', '30', '50', '100']}
-          current={q.page}
-          pageSize={q.limit}
-          onChange={handlePageChange}
-          onShowSizeChange={handleSizeChange}
-        />
-      </div>
     </>
   )
 }
