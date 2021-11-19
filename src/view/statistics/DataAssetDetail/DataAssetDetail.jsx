@@ -1,9 +1,9 @@
-import React, { useCallback, useRef, useState, useMemo } from 'react'
+import React, { useCallback, useRef, useMemo } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
 import Filter from './component/Filter'
-import { Switch, Popconfirm, Divider, Button } from 'antd'
+import { Popconfirm, Divider, Button } from 'antd'
 import { useFetch } from '../../../hooks/useFetch'
 import {
   addDataAssetDetail,
@@ -12,16 +12,16 @@ import {
   updateDataAssetDetail,
   updateDetailShowStatus
 } from '../../../api/dataAssetDetail'
-import { FixHeaderWrapper, Icon, thousandComma } from '@cecdataFE/bui'
+import { HeightKeepWrapper, Icon, thousandComma } from '@cecdataFE/bui'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import { DATE_FORMAT, INIT_FILTER } from '../../../constant'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import AddEditModal from './component/AddEditModal'
+import StatusSwitch from '../../../components/StatusSwitch'
 import style from './style.scss'
 
 function DataAssetDetail () {
   const filter = useRef({ ...INIT_FILTER })
-  const [switchLoading, setSwitchLoading] = useState(false)
   const { data, loading, pagination, request, setData } = useFetch(getDataAssetDetailPage, { ...filter.current })
 
   const columns = [
@@ -34,6 +34,7 @@ function DataAssetDetail () {
     {
       title: '数据资产名称',
       dataIndex: 'dataAssetName',
+      fixed: 'left',
       onCell: record => ({
         tooltip: () => record.dataAssetName
       })
@@ -48,18 +49,16 @@ function DataAssetDetail () {
     },
     {
       title: '目标端口',
-      dataIndex: 'dataAssetHost',
+      dataIndex: 'dataAssetPort',
       width: 100,
-      align: 'center',
       onCell: record => ({
-        tooltip: () => record.dataAssetHost
+        tooltip: () => record.dataAssetPort
       })
     },
     {
       title: '库实例名',
       dataIndex: 'dataServerName',
       width: 200,
-      align: 'center',
       onCell: record => ({
         tooltip: () => record.dataServerName
       })
@@ -84,7 +83,7 @@ function DataAssetDetail () {
       align: 'center',
       width: 100,
       render: (value) => (
-        value !== undefined ? (value === 1 ? '是' : '否') : '--'
+        value !== undefined ? (value === 1 ? '是' : '否') : ''
       )
     },
     {
@@ -93,7 +92,7 @@ function DataAssetDetail () {
       width: 150,
       align: 'center',
       render: (value) => (
-        value !== undefined ? thousandComma(value) : '--'
+        value !== undefined ? thousandComma(value) : ''
       )
     },
     {
@@ -102,7 +101,7 @@ function DataAssetDetail () {
       width: 150,
       align: 'center',
       render: (value) => (
-        value !== undefined ? thousandComma(value) : '--'
+        value !== undefined ? thousandComma(value) : ''
       )
     },
     {
@@ -123,23 +122,22 @@ function DataAssetDetail () {
       align: 'center',
       width: 184,
       render: (value) => (
-        value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : '--'
+        value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
       )
     },
     {
       title: '是否展示',
       dataIndex: 'showStatus',
       align: 'center',
+      fixed: 'right',
       width: 100,
       render: (value, record) => (
-        <Switch
-          checked={!!value}
-          checkedChildren='开'
-          unCheckedChildren='关'
-          loading={switchLoading}
-          onChange={() => {
-            handleStatusChange(value ? 0 : 1, record)
-          }}
+        <StatusSwitch
+          data={data}
+          value={value}
+          record={record}
+          setData={setData}
+          fetcher={updateDetailShowStatus}
         />
       )
     },
@@ -199,21 +197,6 @@ function DataAssetDetail () {
     request(filter.current)
   }, [])
 
-  const handleStatusChange = (status, record) => {
-    setSwitchLoading(true)
-    updateDetailShowStatus(record.id, status)
-      .then(() => {
-        const newData = [...data]
-        const idx = newData.findIndex(v => v.id === record.id)
-        newData.splice(idx, 1, {
-          ...record,
-          showStatus: status
-        })
-        setSwitchLoading(false)
-        setData(newData)
-      })
-  }
-
   const handleDelete = (id) => {
     deleteDataAssetDetail(id)
       .then(() => {
@@ -242,7 +225,7 @@ function DataAssetDetail () {
       <div
         className={classnames('smp-table-wrapper', style['data-detail-table'])}
       >
-        <FixHeaderWrapper siblingsHeight={0} footerHeight={32}>
+        <HeightKeepWrapper minus={108}>
           {
             (scrollY) => (
               <Table
@@ -258,7 +241,7 @@ function DataAssetDetail () {
               />
             )
           }
-        </FixHeaderWrapper>
+        </HeightKeepWrapper>
       </div>
     </div>
   )

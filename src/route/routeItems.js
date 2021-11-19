@@ -3,6 +3,7 @@ import AppAssetAcct from '../view/statistics/AppAssetAcct'
 import AppAssetDetail from '../view/statistics/AppAssetDetail'
 import DataAssetDetail from '../view/statistics/DataAssetDetail'
 import DataAssetAcct from '../view/statistics/DataAssetAcct'
+import FileAssetDetail from '../view/statistics/FileAssetDetail'
 import DataGradeManage from '../view/manage/DataGradeManage'
 import ClassifyGradeMark from '../view/manage/ClassifyGradeMark'
 import RiskWarning from '../view/monitor/RiskWarning/RiskWarning'
@@ -121,6 +122,15 @@ export default [
         component: AppAssetAcct,
         meta: {
           name: '应用资产账号'
+        }
+      },
+      {
+        exact: true,
+        path: '/statistics/file/detail',
+        isChild: true,
+        component: FileAssetDetail,
+        meta: {
+          name: '文件资产详情'
         }
       }
     ]

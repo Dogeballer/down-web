@@ -1,0 +1,11 @@
+.file-detail-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  padding: 16px 16px 0 16px;
+  .file-detail-table {
+    flex: 1;
+    height: 0;
+  }
+}

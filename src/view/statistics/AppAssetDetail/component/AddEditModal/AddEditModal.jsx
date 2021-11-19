@@ -49,7 +49,7 @@ const AddEditModal = (props) => {
               onCancel={() => setModalVisible(false)}
               footer={(
                 <>
-                  <Button type='primary' onClick={handleCancel}>取消</Button>
+                  <Button onClick={handleCancel}>取消</Button>
                   <Button type='primary' onClick={handleOk}>确定</Button>
                 </>
               )}

@@ -50,7 +50,7 @@ const AddEditModal = (props) => {
               onCancel={() => setModalVisible(false)}
               footer={(
                 <>
-                  <Button type='primary' onClick={handleCancel}>取消</Button>
+                  <Button onClick={handleCancel}>取消</Button>
                   <Button type='primary' onClick={handleOk}>确定</Button>
                 </>
               )}
@@ -76,7 +76,7 @@ const AddEditModal = (props) => {
                 </Form.Item>
                 <Form.Item
                   label='目标端口'
-                  name='dataAssetHost'
+                  name='dataAssetPort'
                   rules={[{
                     required: true, message: '请输入目标端口'
                   }]}
@@ -94,7 +94,7 @@ const AddEditModal = (props) => {
                 </Form.Item>
                 <Form.Item
                   label='资产类型'
-                  name='dataStorageCode'
+                  name='dataStorageName'
                   rules={[{
                     required: true, message: '请选择资产类型'
                   }]}
@@ -117,7 +117,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请选择是否ODS'
                   }]}
                 >
-                  <DictSelect placeholder='请选择资产等级' options={DICT_SET.DATA_ODS_STATUS} />
+                  <DictSelect placeholder='请选择是否ODS' options={DICT_SET.DATA_ODS_STATUS} />
                 </Form.Item>
               </Form>
             </Modal>

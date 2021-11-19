@@ -59,16 +59,18 @@ export const INIT_PAGE = {
 
 export const DICT_SET = {
   DATA_STORAGE_CODE: [
-    { value: 1, text: 'HIVE' },
-    { value: 2, text: 'KUDU' },
-    { value: 3, text: 'HBASE' },
-    { value: 4, text: 'ES' }
+    { value: 'HIVE', text: 'HIVE' },
+    { value: 'KUDU', text: 'KUDU' },
+    { value: 'HBASE', text: 'HBASE' },
+    { value: 'ES', text: 'ES' }
   ],
   DATA_LEVEL: [
-    { value: 1, text: '1级 公开数据' },
-    { value: 2, text: '2级 受限数据' },
-    { value: 3, text: '3级 敏感数据' },
-    { value: 4, text: '4级 涉密数据' }
+    { value: '1级', text: '1级' },
+    { value: '2级', text: '2级' },
+    { value: '3级', text: '3级' },
+    { value: '4级', text: '4级' },
+    { value: '5级', text: '5级' },
+    { value: '6级', text: '6级' }
   ],
   DATA_ODS_STATUS: [
     { value: 1, text: '是' },

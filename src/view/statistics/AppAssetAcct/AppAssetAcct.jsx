@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
 import Filter from './component/Filter'
 import AddEditModal from './component/AddEditModal'
-import { Button, Switch } from 'antd'
-import { FixHeaderWrapper, Icon } from '@cecdataFE/bui'
+import { Button } from 'antd'
+import { HeightKeepWrapper, Icon } from '@cecdataFE/bui'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import { DATE_FORMAT, INIT_FILTER } from '../../../constant'
 import { useFetch } from '../../../hooks/useFetch'
@@ -16,12 +16,12 @@ import {
   updateAcctShowStatus
 } from '../../../api/appAssetAcct'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
+import StatusSwitch from '../../../components/StatusSwitch'
 import style from './style.scss'
 
 const AppAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
-  const [switchLoading, setSwitchLoading] = useState(false)
-  const { data, loading, pagination, request, setData } = useFetch(getAppAssetAcctPage,{ ...filter.current })
+  const { data, loading, pagination, request, setData } = useFetch(getAppAssetAcctPage, { ...filter.current })
 
   const columns = [
     {
@@ -63,7 +63,7 @@ const AppAssetAcct = () => {
       align: 'center',
       width: 184,
       render: (value) => (
-        value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : '--'
+        value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
       )
     },
     {
@@ -72,14 +72,12 @@ const AppAssetAcct = () => {
       align: 'center',
       width: 150,
       render: (value, record) => (
-        <Switch
-          checked={!!value}
-          checkedChildren='开'
-          unCheckedChildren='关'
-          loading={switchLoading}
-          onChange={() => {
-            handleStatusChange(value ? 0 : 1, record)
-          }}
+        <StatusSwitch
+          data={data}
+          value={value}
+          record={record}
+          setData={setData}
+          fetcher={updateAcctShowStatus}
         />
       )
     },
@@ -127,21 +125,6 @@ const AppAssetAcct = () => {
     request(filter.current)
   }, [])
 
-  const handleStatusChange = (status, record) => {
-    setSwitchLoading(true)
-    updateAcctShowStatus(record.id, status)
-      .then(() => {
-        const newData = [...data]
-        const idx = newData.findIndex(v => v.id === record.id)
-        newData.splice(idx, 1, {
-          ...record,
-          showStatus: status
-        })
-        setSwitchLoading(false)
-        setData(newData)
-      })
-  }
-
   const handleOk = (values, record) => {
     let request = () => addAppAssetAcct(values)
     if (!isEmpty(record)) {
@@ -162,13 +145,14 @@ const AppAssetAcct = () => {
       <div
         className={classnames('smp-table-wrapper', style['app-acct-table'])}
       >
-        <FixHeaderWrapper siblingsHeight={0} footerHeight={32}>
+        <HeightKeepWrapper minus={108}>
           {
             (scrollY) => (
               <Table
                 bordered
                 rowKey='id'
                 loading={loading}
+                virtual={false}
                 scroll={{ x: 1300, y: scrollY }}
                 dataSource={data}
                 columns={columns}
@@ -177,7 +161,7 @@ const AppAssetAcct = () => {
               />
             )
           }
-        </FixHeaderWrapper>
+        </HeightKeepWrapper>
       </div>
     </div>
   )
