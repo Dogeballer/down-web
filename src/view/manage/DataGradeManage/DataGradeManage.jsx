@@ -3,7 +3,7 @@ import { Button, Divider } from 'antd'
 import ProTable from '../../../components/ProTable/ProTable'
 import FormModal from './componnets/FormModal'
 import DeleteButton from '../../../components/DeleteButton'
-import { FixHeaderWrapper } from '@cecdataFE/bui'
+import { HeightKeepWrapper } from '@cecdataFE/bui'
 
 const DataGradeManage = (props) => {
   const [formVisible, setFromVisible] = useState(false)
@@ -70,7 +70,7 @@ const DataGradeManage = (props) => {
 
   return (
     <div className='page-wrapper'>
-      <FixHeaderWrapper siblingsHeight={96}>
+      <HeightKeepWrapper minus={148}>
         {
           (scrollY) => (
             <ProTable
@@ -123,7 +123,7 @@ const DataGradeManage = (props) => {
             />
           )
         }
-      </FixHeaderWrapper>
+      </HeightKeepWrapper>
       <FormModal
         visible={formVisible}
         record={currentRecord.current}

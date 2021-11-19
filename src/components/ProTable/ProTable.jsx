@@ -85,12 +85,6 @@ function ProTable (props, ref) {
     }
   }))
 
-  console.log({
-    ...INIT_PAGE,
-    pageSize: PAGE_SIZE,
-    onChange: handlePageChange,
-    ...pagination
-  })
   return (
     <div className={classnames('pro-table', className)}>
       {
