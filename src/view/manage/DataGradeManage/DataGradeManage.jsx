@@ -4,6 +4,7 @@ import ProTable from '../../../components/ProTable/ProTable'
 import FormModal from './componnets/FormModal'
 import DeleteButton from '../../../components/DeleteButton'
 import { HeightKeepWrapper } from '@cecdataFE/bui'
+import { dataGradeDelete, dataGradeTree } from '../../../api/dataGradeList'
 
 const DataGradeManage = (props) => {
   const [formVisible, setFromVisible] = useState(false)
@@ -37,6 +38,7 @@ const DataGradeManage = (props) => {
           <Button
             size='small'
             type='link'
+            onClick={() => handleShowForm(record)}
           >
             编辑
           </Button>
@@ -44,13 +46,14 @@ const DataGradeManage = (props) => {
           <Button
             size='small'
             type='link'
+            onClick={() => handleShowForm({ parentAssetClass: record.assetClassName })}
           >
             添加子分类
           </Button>
           <Divider type='vertical' />
           <DeleteButton
             size='small'
-            handleDelete={() => (record.id)}
+            handleDelete={() => dataGradeDelete(record.assetClassName)}
             onDeleted={() => tableRef.current?.refresh()}
           />
         </>
@@ -64,7 +67,13 @@ const DataGradeManage = (props) => {
   const querier = {
     buttons: [
       <Button key='create' type='primary' onClick={handleShowForm}>新建分类</Button>,
-      <DeleteButton key='delete' type='danger' content='是否确认删除选中的分类？'>删除</DeleteButton>
+      <DeleteButton
+        key='delete'
+        type='danger'
+        content='是否确认删除选中的分类？'
+        handleDelete={() => dataGradeDelete(selectedRowKeys)}
+        onDeleted={() => tableRef.current?.refresh()}
+      />
     ]
   }
 
@@ -75,46 +84,12 @@ const DataGradeManage = (props) => {
           (scrollY) => (
             <ProTable
               ref={tableRef}
+              fetch={dataGradeTree}
+              pagination={false}
+              virtual={false}
               querier={querier}
               columns={columns}
-              rowKey='id'
-              dataSource={[
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' },
-                { assetClassName: 'wqe' }
-              ]}
+              rowKey='assetClassName'
               scroll={{ x: 1200, y: scrollY }}
               rowSelection={{
                 selectedRowKeys,
