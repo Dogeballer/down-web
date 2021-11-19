@@ -25,7 +25,8 @@ export default function (props) {
           }
         },
         legend: {
-          y: 'bottom'
+          y: 'bottom',
+          itemWidth: 14,
         },
         yAxis: {
           type: 'value'

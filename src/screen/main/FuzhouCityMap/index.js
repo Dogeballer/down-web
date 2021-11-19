@@ -3,11 +3,6 @@ import ThreeJsMap from './ThreeJsMap'
 import cx from 'classnames'
 import './index.g.scss'
 
-const defaultOption = {
-  curvature: 1,
-  curvatureDirFactor: 1
-}
-
 export const defaultProps = {
   activeColor: '#69C0FF',
   cityData: [
@@ -41,7 +36,6 @@ export const defaultProps = {
     }
   ],
   interval: 4000,
-  option: {...defaultOption},
   optionMap: {
     color: '#004892',
     borderColor: '#5ca4de',

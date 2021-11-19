@@ -64,3 +64,17 @@ export const getAppAssetsStat = () => {
 export const getAccountStat = () => {
   return axios.get('/assets/getAccountStat')
 }
+
+/**
+ * 账号资产数指标统计
+ */
+export const getFileAssetsStat = () => {
+  return axios.get('/bs/getFileAssetsStat')
+}
+
+/**
+ * 数据资产福州区县分布
+ */
+export const getDataCollectRegionStat = () => {
+  return axios.get('/bs/getDataCollectRegionStat')
+}

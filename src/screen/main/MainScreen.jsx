@@ -9,17 +9,31 @@ import ExceptionChart from "../../view/home/charts/ExceptionChart";
 import AppBugChart from "../../view/home/charts/AppBugChart";
 import DatabaseBugChart from "../../view/home/charts/DatabaseBugChart";
 import ExceptionTrendChart from "../../view/home/charts/ExceptionTrendChart";
+import {useScreenFetch} from "../../view/home/lib/hooks";
+import {thousandComma} from "@cecdataFE/bui"
+import * as api from '../../api/screen'
+import geojson from './FuzhouCityMap/assets/fuzhou.json'
 
 const width = 1920
 const height = 1080
 
 export default function (props) {
-  const [data, setData] = useState()
+  const [mapData, setMapData] = useState()
   const root = useRef()
   const placeholder = useRef()
 
-  useEffect(() => {
+  const data = useScreenFetch()
 
+  useEffect(() => {
+    api.getDataCollectRegionStat().then(res => {
+      setMapData(res.data.map(v => {
+        let found = geojson.features.find(v1 => v1.properties.adcode == v.regioncode)
+        return {
+          name: found?.properties?.name || v.regioncode,
+          '数据资产': thousandComma(v.collectcount)
+        }
+      }))
+    })
   }, [])
 
   useEffect(() => {
@@ -54,28 +68,28 @@ export default function (props) {
                   <img className={style.img} src={require('../asset/数据资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>数据资产</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res2?.total)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%', marginBottom: 32}}>
                   <img className={style.img} src={require('../asset/文件资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>文件资产</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res5?.datafilecount + data.res5?.imgfilecount)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%'}}>
                   <img className={style.img} src={require('../asset/应用资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>应用资产</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res3)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%'}}>
                   <img className={style.img} src={require('../asset/账号资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>账号资产</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res4?.db + data.res4?.app)}</span>
                   </div>
                 </div>
               </div>
@@ -83,11 +97,11 @@ export default function (props) {
 
             <section className={style.section} style={{width: 500, height: 300}}>
               <div className={style.title}>数据风险分布</div>
-              <RiskChart theme='shine' grid={{top: '10%', bottom: '10%'}} style={{height: 240}} />
+              <RiskChart theme='shine' grid={{top: '10%', bottom: '10%', left: '2%'}} style={{height: 240}} />
             </section>
           </div>
 
-          <FuzhouCityMap className={style.map} style={{width: 900, height: 900}} />
+          {mapData && <FuzhouCityMap cityData={mapData} className={style.map} style={{width: 900, height: 900}} />}
 
           <div className='flex-direction-column'>
             <section className={style.section} style={{width: 500, height: 280}}>
@@ -98,28 +112,28 @@ export default function (props) {
                   <img className={style.img} src={require('../asset/分类数.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>分类数</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res1?.classcnt)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%', marginBottom: 32}}>
                   <img className={style.img} src={require('../asset/分级数据.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>分级数</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res1?.gradecnt)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%'}}>
                   <img className={style.img} src={require('../asset/分类标识量.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>分类标识量</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res0?.classtagcnt)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%'}}>
                   <img className={style.img} src={require('../asset/分级标识量.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>分级标识量</span>
-                    <span className={style.f2}>29</span>
+                    <span className={style.f2}>{thousandComma(data.res0?.gradetagcnt)}</span>
                   </div>
                 </div>
               </div>

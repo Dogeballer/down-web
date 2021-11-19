@@ -10,7 +10,7 @@ import {
   findBoundBoxFromGeojson
 } from './lib3d/mercator'
 import geojson from './assets/fuzhou.json'
-import { proviceHasData, changeMaterailFromColor } from './utils'
+import { changeMaterailFromColor } from './utils'
 
 class ThreeJsMap {
   constructor (htmlRoot, width = 800, height = 800, optionConfig) {
@@ -50,7 +50,7 @@ class ThreeJsMap {
     // this.renderer.domElement.addEventListener('mousemove', this.onMouseMove)
     // this.renderer.domElement.addEventListener('click', this.onClick)
 
-    let filterProviceData = cityData.filter(v => proviceHasData(v) && this.curMap.getStandarData()[v.name])
+    let filterProviceData = cityData.filter(v => this.curMap.getStandarData()[v.name])
     if (filterProviceData.length) {
       let widthHalf = width / 2
       let heightHalf = height / 2
@@ -98,59 +98,7 @@ class ThreeJsMap {
 
       this.timerKey = window.requestAnimationFrame(animate)
     }
-
     animate()
-  }
-
-  // onClick = (event) => {
-  //   if (!this.curMap) return
-  //   const { cityData, onChangeActiveData} = this.optionConfig
-  //
-  //   let intersects = this._getIntersects(event)
-  //   if (intersects.length <= 0) {
-  //     onChangeActiveData(null, null)
-  //     return
-  //   }
-  //
-  //   this.lastClick = Date.now()
-  //
-  //   let widthHalf = this.width / 2
-  //   let heightHalf = this.height / 2
-  //
-  //   const name = intersects[0].object.name
-  //   let pos = this.curMap.getStandarData()[name].pos.clone()
-  //   pos.project(this.cameraController.getCamera())
-  //   pos.x = (pos.x * widthHalf) + widthHalf
-  //   pos.y = -(pos.y * heightHalf) + heightHalf
-  //
-  //   let activeData = cityData.find(v => v.name === name)
-  //
-  //   onChangeActiveData(pos, activeData)
-  // }
-
-  _getIntersects = (event) => {
-    let camera = this.cameraController.getCamera()
-
-    let raycaster = new THREE.Raycaster() // create once
-    let mouse = new THREE.Vector2() // create once
-
-    let x = event.clientX
-    let y = event.clientY
-
-    let rect = event.target.getBoundingClientRect()
-    x -= rect.left
-    y -= rect.top
-
-    let clientRect = this.renderer.domElement.getBoundingClientRect()
-
-    // console.log(' ss',this.renderer.domElement.clientWidth, rect.width, event.clientX, clientRect.width )
-
-    mouse.x = (x / clientRect.width) * 2 - 1
-    mouse.y = -(y / clientRect.height) * 2 + 1
-
-    raycaster.setFromCamera(mouse, camera)
-
-    return raycaster.intersectObjects(this.curMap.getMeshGroup().children)
   }
 
   dispose = () => {
