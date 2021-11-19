@@ -5,17 +5,20 @@ import { ReactComponent as Icon1 } from './asset/wenjianzichan.svg'
 import { ReactComponent as Icon2 } from './asset/yingyongzichan.svg'
 import { ReactComponent as Icon3 } from './asset/yingyongzhanghu.svg'
 import { ReactComponent as Icon4 } from './asset/shujufenlei.svg'
-import style from './style.scss'
 import RiskChart from './charts/RiskChart'
 import RiskTrendChart from './charts/RiskTrendChart'
 import ExceptionChart from './charts/ExceptionChart'
 import ExceptionTrendChart from './charts/ExceptionTrendChart'
 import AppBugChart from './charts/AppBugChart'
 import DatabaseBugChart from './charts/DatabaseBugChart'
+import style from './style.scss'
+import {useScreenFetch} from "./lib/hooks";
 
 export default function (props) {
+
+  const data = useScreenFetch()
   return (
-    <>
+    <Fragment>
       <div className='flex' style={{ marginBottom: 16 }}>
         <section className={style.item}>
           <div className={style.decorate} style={{ background: '#3A88F4' }}>
@@ -26,11 +29,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>贴   源</label>
-              <span className={style.f3}>3,000</span>
+              <span className={style.f3}>{data.res2?.odscnt}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>非贴源</label>
-              <span className={style.f3}>12</span>
+              <span className={style.f3}>{data.res2?.othercnt}</span>
             </div>
           </div>
         </section>
@@ -62,7 +65,7 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>业务系统</label>
-              <span className={style.f3}>3,000</span>
+              <span className={style.f3}>{data.res3}</span>
             </div>
           </div>
         </section>
@@ -76,11 +79,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>数据库帐号</label>
-              <span className={style.f3}>3,000</span>
+              <span className={style.f3}>{data.res4?.db}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>应用帐号</label>
-              <span className={style.f3}>3,000</span>
+              <span className={style.f3}>{data.res4?.app}</span>
             </div>
           </div>
         </section>
@@ -94,11 +97,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>元数据分类</label>
-              <span className={style.f3}>3,000</span>
+              <span className={style.f3}>{data.res1?.classcnt}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>元数据分级</label>
-              <span className={style.f3}>3,000</span>
+              <span className={style.f3}>{data.res1?.gradecnt}</span>
             </div>
           </div>
         </section>
@@ -136,7 +139,6 @@ export default function (props) {
           <DatabaseBugChart />
         </div>
       </div>
-
-    </>
+    </Fragment>
   )
 }

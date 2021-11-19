@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react'
 import EchartsComp from '../../../components/EchartsComp'
 import * as api from '../../../api/screen'
 import style from './style.scss'
-import cx from "classnames";
+import cx from 'classnames'
+import moment from "moment"
+import {DICT_SET} from "../../../constant";
 
 export default function (props) {
   const [option, setOption] = useState()
 
   useEffect(() => {
     api.getRiskTrend().then(res => {
+
+      let seriesNames = []
+      if(res.data.length) {
+        seriesNames = Object.keys(res.data[0]).filter(v => v !== 'statdate')
+      }
+
       setOption({
         grid: props.grid,
         tooltip: {
@@ -25,40 +33,18 @@ export default function (props) {
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: res.data.map(v => {
+            return moment(v.statdate).format('MM-DD')
+          })
         },
-        series: [
-          {
-            name: 'Direct',
+        series: seriesNames.map(name => {
+          return {
+            name: DICT_SET.RISK_TYPES.find(v => v.value == name)?.text || name,
             type: 'bar',
             stack: 'total',
-            data: [320, 302, 301, 334, 390, 330, 320]
-          },
-          {
-            name: 'Mail Ad',
-            type: 'bar',
-            stack: 'total',
-            data: [120, 132, 101, 134, 90, 230, 210]
-          },
-          {
-            name: 'Affiliate Ad',
-            type: 'bar',
-            stack: 'total',
-            data: [220, 182, 191, 234, 290, 330, 310]
-          },
-          {
-            name: 'Video Ad',
-            type: 'bar',
-            stack: 'total',
-            data: [150, 212, 201, 154, 190, 330, 410]
-          },
-          {
-            name: 'Search Engine',
-            type: 'bar',
-            stack: 'total',
-            data: [820, 832, 901, 934, 1290, 1330, 1320]
+            data: res.data.map(v => v[name])
           }
-        ]
+        })
       })
     })
   }, [])

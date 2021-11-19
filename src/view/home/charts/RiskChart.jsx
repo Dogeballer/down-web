@@ -19,14 +19,14 @@ export default function (props) {
         },
         yAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: res.data.map(v => v.riskname)
         },
         xAxis: {
           type: 'value'
         },
         series: [
           {
-            data: [120, 200, 150, 80, 70, 110, 130],
+            data: res.data.map(v => v.riskcount),
             type: 'bar'
           }
         ]
