@@ -23,84 +23,85 @@ const AppAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
   const { data, loading, pagination, request, setData } = useFetch(getAppAssetAcctPage, { ...filter.current })
 
-  const columns = [
-    {
-      title: '序号',
-      dataIndex: 'id',
-      fixed: 'left',
-      width: 100
-    },
-    {
-      title: '资产账号',
-      dataIndex: 'userName',
-      width: 200,
-      onCell: record => ({
-        tooltip: () => record.userName
-      })
-    },
-    {
-      title: '应用资产名称',
-      dataIndex: 'appAssetName',
-      onCell: record => ({
-        tooltip: () => record.appAssetName
-      })
-    },
-    {
-      title: '来源方式',
-      dataIndex: 'sourceMode',
-      width: 150,
-      align: 'center'
-    },
-    {
-      title: '操作人',
-      dataIndex: 'operationUser',
-      width: 150,
-      align: 'center'
-    },
-    {
-      title: '操作时间',
-      dataIndex: 'operationTime',
-      align: 'center',
-      width: 184,
-      render: (value) => (
-        value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
-      )
-    },
-    {
-      title: '是否展示',
-      dataIndex: 'showStatus',
-      align: 'center',
-      width: 150,
-      render: (value, record) => (
-        <StatusSwitch
-          data={data}
-          value={value}
-          record={record}
-          setData={setData}
-          fetcher={updateAcctShowStatus}
-        />
-      )
-    },
-    {
-      title: '操作',
-      dataIndex: 'op',
-      fixed: 'right',
-      width: 100,
-      align: 'center',
-      render: (value, record) => (
-        <AddEditModal onOk={handleOk} record={record}>
-          <Icon type='icon-bianji' style={{ fontSize: 24 }} />
-        </AddEditModal>
-      )
-    }
-  ]
-
-  useMemo(() => {
+  const columns = useMemo(() => {
+    const columns = [
+      {
+        title: '序号',
+        dataIndex: 'id',
+        fixed: 'left',
+        width: 100,
+        render: (value, record, idx) => idx + 1
+      },
+      {
+        title: '资产账号',
+        dataIndex: 'userName',
+        width: 200,
+        onCell: record => ({
+          tooltip: () => record.userName
+        })
+      },
+      {
+        title: '应用资产名称',
+        dataIndex: 'appAssetName',
+        onCell: record => ({
+          tooltip: () => record.appAssetName
+        })
+      },
+      {
+        title: '来源方式',
+        dataIndex: 'sourceMode',
+        width: 150,
+        align: 'center'
+      },
+      {
+        title: '操作人',
+        dataIndex: 'operationUser',
+        width: 150,
+        align: 'center'
+      },
+      {
+        title: '操作时间',
+        dataIndex: 'operationTime',
+        align: 'center',
+        width: 184,
+        render: (value) => (
+          value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
+        )
+      },
+      {
+        title: '是否展示',
+        dataIndex: 'showStatus',
+        align: 'center',
+        width: 150,
+        render: (value, record) => (
+          <StatusSwitch
+            data={data}
+            value={value}
+            record={record}
+            setData={setData}
+            fetcher={updateAcctShowStatus}
+          />
+        )
+      },
+      {
+        title: '操作',
+        dataIndex: 'op',
+        fixed: 'right',
+        width: 100,
+        align: 'center',
+        render: (value, record) => (
+          <AddEditModal onOk={handleOk} record={record}>
+            <Icon type='icon-bianji' style={{ fontSize: 24 }} />
+          </AddEditModal>
+        )
+      }
+    ]
     columns.forEach(v => {
       v.shouldCellUpdate = function (record, prevRecord) {
         return record[this.dataIndex] !== prevRecord[this.dataIndex]
       }
     })
+    return columns
   }, [])
 
   const refresh = useCallback(() => {

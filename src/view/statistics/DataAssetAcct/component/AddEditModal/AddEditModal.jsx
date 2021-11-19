@@ -28,6 +28,7 @@ const AddEditModal = (props) => {
     try {
       const values = await form.validateFields()
       typeof onOk === 'function' && onOk(values, record)
+      handleVisibleChange()
     } catch (error) {
       console.log('form commit failed:', error)
     }
@@ -74,7 +75,7 @@ const AddEditModal = (props) => {
                 </Form.Item>
                 <Form.Item
                   label='数据资产名称'
-                  name='dataAssetIp'
+                  name='dataAssetName'
                   rules={[{
                     required: true, message: '请输入数据资产名称'
                   }]}
@@ -88,16 +89,17 @@ const AddEditModal = (props) => {
                     optionsGet={(response) => (response.data || []).map(
                       ({ dataAssetIp, dataAssetName, dataStorageName }) => {
                         return {
-                          value: dataAssetIp,
+                          ip: dataAssetIp,
+                          value: dataAssetName,
                           title: dataAssetName,
                           type: dataStorageName
                         }
                       })}
-                    onChange={(value, { title, type }) => {
+                    onChange={(value, { ip, title, type }) => {
                       console.log({ title, type })
                       form.setFieldsValue({
-                        dataAssetIp: value,
-                        dataAssetName: title,
+                        dataAssetIp: ip,
+                        dataAssetName: value,
                         dataStorageName: type
                       })
                     }}

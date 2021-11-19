@@ -5,6 +5,7 @@ import { Modal, Input, Button } from 'antd'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import { DICT_SET, modalFromLayout } from '../../../../../constant'
 import DictSelect from '../../../../../components/DictSelect'
+import AssetGradeSelect from '../../../../../components/AssetGradeSelect'
 
 const AddEditModal = (props) => {
   const [form] = Form.useForm()
@@ -27,6 +28,7 @@ const AddEditModal = (props) => {
     try {
       const values = await form.validateFields()
       typeof onOk === 'function' && onOk(values, record)
+      handleVisibleChange()
     } catch (error) {
       console.log('form commit failed:', error)
     }
@@ -108,7 +110,7 @@ const AddEditModal = (props) => {
                     required: true, message: '请选择资产等级'
                   }]}
                 >
-                  <DictSelect placeholder='请选择资产等级' options={DICT_SET.DATA_LEVEL} />
+                  <AssetGradeSelect placeholder='请选择资产等级' />
                 </Form.Item>
                 <Form.Item
                   label='是否ODS'

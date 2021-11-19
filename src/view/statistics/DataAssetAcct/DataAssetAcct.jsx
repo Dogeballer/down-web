@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
@@ -24,18 +24,24 @@ const DataAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
   const { data, loading, pagination, request, setData } = useFetch(getDataAssetAcctPage, { ...filter.current })
 
-  console.log(data)
   const columns = [
     {
       title: '序号',
       dataIndex: 'id',
       fixed: 'left',
-      width: 100
+      width: 100,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
+      render: (value, record, idx) => idx + 1
     },
     {
       title: '账号名称',
       dataIndex: 'userName',
       width: 200,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
       onCell: record => ({
         tooltip: () => record.userName
       })
@@ -43,6 +49,9 @@ const DataAssetAcct = () => {
     {
       title: '数据资产名称',
       dataIndex: 'dataAssetName',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
       onCell: record => ({
         tooltip: () => record.dataAssetName
       })
@@ -51,6 +60,9 @@ const DataAssetAcct = () => {
       title: '资产类型',
       dataIndex: 'dataStorageName',
       width: 200,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
       onCell: record => ({
         tooltip: () => record.dataStorageName
       })
@@ -59,19 +71,28 @@ const DataAssetAcct = () => {
       title: '来源方式',
       dataIndex: 'sourceMode',
       width: 150,
-      align: 'center'
+      align: 'center',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      }
     },
     {
       title: '操作人',
       dataIndex: 'operationUser',
       width: 150,
-      align: 'center'
+      align: 'center',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      }
     },
     {
       title: '操作时间',
       dataIndex: 'operationTime',
       align: 'center',
       width: 184,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
       render: (value) => (
         value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
       )
@@ -81,6 +102,9 @@ const DataAssetAcct = () => {
       dataIndex: 'showStatus',
       align: 'center',
       width: 100,
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
       render: (value, record) => (
         <StatusSwitch
           data={data}
@@ -97,6 +121,9 @@ const DataAssetAcct = () => {
       fixed: 'right',
       width: 100,
       align: 'center',
+      shouldCellUpdate: function (record, prevRecord) {
+        return record[this.dataIndex] !== prevRecord[this.dataIndex]
+      },
       render: (value, record) => (
         <div className='flex-center-vh'>
           <AddEditModal onOk={handleOk} record={record}>
@@ -116,14 +143,6 @@ const DataAssetAcct = () => {
       )
     }
   ]
-
-  useMemo(() => {
-    columns.forEach(v => {
-      v.shouldCellUpdate = function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
-    })
-  }, [])
 
   const refresh = useCallback(() => {
     filter.current = { ...filter.current, ...INIT_FILTER }

@@ -22,14 +22,20 @@ import style from './style.scss'
 
 function DataAssetDetail () {
   const filter = useRef({ ...INIT_FILTER })
-  const { data, loading, pagination, request, setData } = useFetch(getDataAssetDetailPage, { ...filter.current })
-
+  const {
+    data,
+    loading,
+    pagination,
+    request,
+    setData
+  } = useFetch(getDataAssetDetailPage, { ...filter.current })
   const columns = [
     {
       title: '序号',
       dataIndex: 'id',
       fixed: 'left',
-      width: 100
+      width: 100,
+      render: (value, record, idx) => idx + 1
     },
     {
       title: '数据资产名称',
@@ -166,7 +172,6 @@ function DataAssetDetail () {
       )
     }
   ]
-
   useMemo(() => {
     columns.forEach(v => {
       v.shouldCellUpdate = function (record, prevRecord) {

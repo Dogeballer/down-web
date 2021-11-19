@@ -28,6 +28,7 @@ const AddEditModal = (props) => {
     try {
       const values = await form.validateFields()
       typeof onOk === 'function' && onOk(values, record)
+      handleVisibleChange()
     } catch (error) {
       console.log('form commit failed:', error)
     }
