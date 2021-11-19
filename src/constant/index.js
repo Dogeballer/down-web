@@ -73,6 +73,18 @@ export const DICT_SET = {
   DATA_ODS_STATUS: [
     { value: 1, text: '是' },
     { value: 0, text: '否' }
+  ],
+  // 数据风险 类型， 用于控制台
+  RISK_TYPES: [
+    {value: 'ldfx',text: '漏洞风险'},
+    {value: 'wgfx',text: '违规险数'},
+    {value: 'sjxl',text: '数据泄漏'},
+    {value: 'kjcs',text: '跨境传输'},
+    {value: 'gpfw',text: '高频访问'},
+    {value: 'sjgdhq',text: '数据过度获取'},
+    {value: 'sjph',text: '数据破坏'},
+    {value: 'sjwtm',text: '数据未脱敏'},
+    {value: 'sjdl',text: '数据抵赖'},
   ]
 }
 

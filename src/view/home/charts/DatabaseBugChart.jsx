@@ -3,12 +3,14 @@ import EchartsComp from '../../../components/EchartsComp'
 import * as api from '../../../api/screen'
 import style from './style.scss'
 import cx from "classnames";
+import {sumNum} from "../../../lib/utils";
 
 export default function (props) {
   const [option, setOption] = useState()
 
   useEffect(() => {
     api.getDatabaseBug().then(res => {
+
       setOption({
         grid: props.grid,
         tooltip: {
@@ -24,13 +26,12 @@ export default function (props) {
             label: {
               formatter: '{b}：{d}%'
             },
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
-            ]
+            data: res.data.map(v => {
+              return {
+                name: v.dbName,
+                value: v.vbCnt
+              }
+            })
           }
         ]
       })
