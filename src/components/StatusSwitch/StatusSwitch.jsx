@@ -3,20 +3,23 @@ import React, { useState } from 'react'
 import { Switch } from 'antd'
 
 const StatusSwitch = (props) => {
-  const { value, record, data, fetcher, setData } = props
+  const { value, record, data, fetcher, dataKey = 'id', setData } = props
   const [loading, setLoading] = useState(false)
   const handleChange = (status, record, data) => {
     setLoading(true)
-    fetcher(record.id, status)
+    fetcher(record[dataKey], status)
       .then(() => {
         const newData = [...data]
-        const idx = newData.findIndex(v => v.id === record.id)
+        const idx = newData.findIndex(v => v[dataKey] === record[dataKey])
         newData.splice(idx, 1, {
           ...record,
           showStatus: status
         })
         setLoading(false)
         setData(newData)
+      })
+      .catch(() => {
+        setLoading(false)
       })
   }
   return (
