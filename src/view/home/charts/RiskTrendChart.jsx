@@ -17,7 +17,7 @@ export default function (props) {
         seriesNames = Object.keys(res.data[0]).filter(v => v !== 'statdate')
       }
 
-      setOption({
+      const option = {
         grid: props.grid,
         tooltip: {
           trigger: 'axis',
@@ -46,7 +46,9 @@ export default function (props) {
             data: res.data.map(v => v[name])
           }
         })
-      })
+      }
+
+      setOption(option)
     })
   }, [])
 

@@ -11,10 +11,6 @@ export default function DetailModal(props) {
     setVisible(true)
   }
 
-  const onOk = () => {
-
-  }
-
   const onCancel = () => {
     setVisible(false)
   }
@@ -29,9 +25,8 @@ export default function DetailModal(props) {
         title={props.title}
         visible={visible}
         destroyOnClose
-        maskClosable={false}
-        onOk={onOk}
         onCancel={onCancel}
+        footer={null}
       >
         <TextArea readOnly={props.readOnly} defaultValue={props.value} autoSize={{minRows: 18, maxRows: 30}}/>
       </Modal>
