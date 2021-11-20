@@ -1,14 +1,16 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react'
+import React, {useState, useEffect, Fragment, useRef} from 'react'
 import Table from '@cecdataFE/bui/dist/components/Ant4Table'
 import * as api from '../../../api/logs'
 import DetailModal from './modal/DetailModal'
-import thousandComma from '@cecdataFE/bui/dist/lib/thousandComma'
+import moment from "moment";
+import {INIT_PAGE} from "../../../constant"
 
+const mainKey = 'logId'
 export default function (props) {
   const [loading, setLoading] = useState(true)
   const [dataSource, setDataSource] = useState()
   const [total, setTotal] = useState(0)
-  const queryRef = useRef({ page: 1, size: 20, isProvideService: 0 })
+  const queryRef = useRef({page: 1, size: 20, ...props.query})
   const q = queryRef.current
 
   useEffect(() => {
@@ -18,7 +20,7 @@ export default function (props) {
   const fetchData = () => {
     setLoading(true)
     api.getLogs(queryRef.current).then(res => {
-      setDataSource(res.data.items)
+      setDataSource(res.data.list)
       setTotal(res.data.total)
     }).finally(() => {
       setLoading(false)
@@ -37,88 +39,95 @@ export default function (props) {
   const columns = [
     {
       title: 'ID',
-      dataIndex: '1'
+      dataIndex: mainKey
     },
     {
       title: '用户',
-      dataIndex: '1'
+      dataIndex: 'userName'
     },
     {
       title: '操作类型',
-      dataIndex: '1'
+      dataIndex: 'logType',
+      width: 80,
     },
     {
       title: '事件信息',
-      dataIndex: '1'
+      dataIndex: 'eventInfo',
+      render: v => <div className='flex-center-v'>
+        <span className='text-ellipsis-1 flex1'>{v}</span>
+        <DetailModal value={v}>
+          <a>详情</a>
+        </DetailModal>
+      </div>
     },
     {
       title: '操作IP',
-      dataIndex: '1'
+      dataIndex: 'opIp'
     },
     {
       title: '操作应用',
-      dataIndex: '1'
+      dataIndex: 'opApp'
     },
     {
       title: '应用IP',
-      dataIndex: '1'
+      dataIndex: 'appIp'
     },
     {
       title: '资产ip',
-      dataIndex: '1'
+      dataIndex: 'assetsIp'
     },
     {
       title: '资产名称',
-      dataIndex: '1'
+      dataIndex: 'assetsName'
     },
     {
       title: '资产类型',
-      dataIndex: '1'
+      dataIndex: 'assetsType'
     },
     {
       title: '资产等级',
-      dataIndex: '1'
+      dataIndex: 'assetsLevel'
     },
     {
       title: '控制方式',
-      dataIndex: '1'
+      dataIndex: 'ctlType'
     },
     {
       title: '协议类型',
-      dataIndex: '1'
+      dataIndex: 'protocolType'
     },
     {
       title: '操作时间',
-      dataIndex: '1'
+      dataIndex: 'opTime',
+      render: v => v ? moment(v).format('YYYY-MM-DD HH:mm:ss') : ''
     },
     {
       title: '原始日志',
-      dataIndex: 'op',
+      dataIndex: 'originalLog',
       align: 'center',
+      width: 80,
       fixed: 'right',
-      render: (v, r) => <DetailModal><a>详情</a></DetailModal>
+      render: (v, r) => <DetailModal value={v}><a>详情</a></DetailModal>
     }
   ]
 
   return (
-    <>
-      <Table
-        sticky
-        scroll={{ x: 2046 }}
-        bordered
-        rowKey='id'
-        loading={loading}
-        columns={columns}
-        dataSource={dataSource}
-        pagination={{
-          showSizeChanger: true,
-          total,
-          showTotal: total => `总共 ${thousandComma(total)} 条数据`,
-          pageSizeOptions: ['20', '30', '50', '100'],
-          current: q.page,
-          pageSize: q.size,
-        }}
-      />
-    </>
+    <Table
+      // scroll={{x: 2046, y: window.innerHeight - 720}}
+      scroll={{x: 2046}}
+      bordered
+      rowKey={mainKey}
+      loading={loading}
+      columns={columns}
+      dataSource={dataSource}
+      onChange={handleTableChange}
+      pagination={{
+        ...INIT_PAGE,
+        showQuickJumper: false,
+        total,
+        current: q.page,
+        pageSize: q.size,
+      }}
+    />
   )
 }
