@@ -3,25 +3,25 @@ import EchartsComp from '../../../components/EchartsComp'
 import * as api from '../../../api/screen'
 import style from './style.scss'
 import cx from "classnames";
+import {mergeEchartConfig} from "../util";
 
 export default function (props) {
   const [option, setOption] = useState()
 
   useEffect(() => {
     api.getException().then(res => {
-      setOption({
-        grid: props.grid,
+      const option = {
         tooltip: {
           trigger: 'item'
         },
         legend: {
-          y: 'bottom',
+          bottom: 0,
           itemWidth: 14,
         },
         series: [
           {
             type: 'pie',
-            radius: ['40%', '70%'],
+            radius: ['40%', '62%'],
             avoidLabelOverlap: true,
             label: {
               formatter: '{b}：{d}%'
@@ -34,7 +34,8 @@ export default function (props) {
             })
           }
         ]
-      })
+      }
+      setOption(mergeEchartConfig(option, props.option))
     })
   }, [])
 

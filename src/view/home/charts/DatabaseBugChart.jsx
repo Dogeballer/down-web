@@ -4,6 +4,7 @@ import * as api from '../../../api/screen'
 import style from './style.scss'
 import cx from "classnames";
 import {sumNum} from "../../../lib/utils";
+import {mergeEchartConfig} from "../util";
 
 export default function (props) {
   const [option, setOption] = useState()
@@ -11,18 +12,18 @@ export default function (props) {
   useEffect(() => {
     api.getDatabaseBug().then(res => {
 
-      setOption({
-        grid: props.grid,
+      const option = {
         tooltip: {
           trigger: 'item'
         },
         legend: {
-          y: 'bottom',
+          bottom: 0,
           itemWidth: 14,
         },
         series: [
           {
             type: 'pie',
+            radius: ['40%', '62%'],
             avoidLabelOverlap: true,
             label: {
               formatter: '{b}：{d}%'
@@ -35,7 +36,9 @@ export default function (props) {
             })
           }
         ]
-      })
+      }
+
+      setOption(mergeEchartConfig(option, props.option))
     })
   }, [])
 

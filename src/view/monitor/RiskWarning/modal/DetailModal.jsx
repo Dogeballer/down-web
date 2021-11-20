@@ -21,14 +21,15 @@ export default function DetailModal(props) {
         props.children && React.cloneElement(React.Children.only(props.children), {onClick: openModal})
       }
       <Modal
-        width={1000}
+        width={1100}
+        style={{top: 16}}
         title={props.title}
         visible={visible}
         destroyOnClose
         onCancel={onCancel}
         footer={null}
       >
-        <TextArea readOnly={props.readOnly} defaultValue={props.value} autoSize={{minRows: 18, maxRows: 30}}/>
+        <TextArea readOnly={props.readOnly} defaultValue={props.value} autoSize={{minRows: 22, maxRows: 32}}/>
       </Modal>
     </>
   )
