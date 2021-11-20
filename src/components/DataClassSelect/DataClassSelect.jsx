@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { TreeSelect } from 'antd'
-import { dataGradeTree } from '../../api/dataGradeList'
+import { dataGradeTree } from '../../api/dataGrade'
 import { treeForeach } from '@cecdataFE/bui/dist/lib/tree'
 
 function DataClassSelect (props) {
