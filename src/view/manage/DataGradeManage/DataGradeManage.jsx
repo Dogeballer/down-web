@@ -18,15 +18,18 @@ const DataGradeManage = (props) => {
     },
     {
       dataIndex: 'assetClassCode',
-      title: '分类编码'
+      title: '分类编码',
+      width: 150
     },
     {
       dataIndex: 'dataLevel',
-      title: '缺省分级'
+      title: '缺省分级',
+      width: 150
     },
     {
       dataIndex: 'sortNo',
-      title: '排序'
+      title: '排序',
+      width: 150
     },
     {
       dataIndex: 'op',
@@ -79,7 +82,7 @@ const DataGradeManage = (props) => {
 
   return (
     <div className='page-wrapper'>
-      <HeightKeepWrapper minus={148}>
+      <HeightKeepWrapper minus={108}>
         {
           (scrollY) => (
             <ProTable

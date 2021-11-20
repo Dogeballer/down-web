@@ -49,7 +49,7 @@ function FormModal (props) {
           label='上级分类'
           rules={[{ required: true, message: '请选择上级分类' }]}
         >
-          <DataClassSelect />
+          <DataClassSelect hasRootNode />
         </Form.Item>
         <Form.Item
           name='assetClassName'
