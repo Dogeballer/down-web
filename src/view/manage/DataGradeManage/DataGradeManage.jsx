@@ -4,7 +4,7 @@ import ProTable from '../../../components/ProTable/ProTable'
 import FormModal from './componnets/FormModal'
 import DeleteButton from '../../../components/DeleteButton'
 import { HeightKeepWrapper } from '@cecdataFE/bui'
-import { dataGradeDelete, dataGradeTree } from '../../../api/dataGradeList'
+import { dataGradeDelete, dataGradeTree } from '../../../api/dataGrade'
 
 const DataGradeManage = (props) => {
   const [formVisible, setFromVisible] = useState(false)
