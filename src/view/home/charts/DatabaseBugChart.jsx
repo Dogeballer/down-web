@@ -29,8 +29,8 @@ export default function (props) {
             },
             data: res.data.map(v => {
               return {
-                name: v.dbName,
-                value: v.vbCnt
+                name: v.dbname,
+                value: v.vbcnt
               }
             })
           }

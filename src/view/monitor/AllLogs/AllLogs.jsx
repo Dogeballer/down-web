@@ -45,6 +45,10 @@ export default function (props) {
     fetchData()
   }
 
+  const doExport = () => {
+
+  }
+
   const handleTableChange = ({current, pageSize}) => {
     queryRef.current.page = current
     if (queryRef.current.size !== pageSize) {
@@ -166,7 +170,7 @@ export default function (props) {
           }
         </Select>
         <Button type='primary' onMouseUp={search}>查询</Button>
-        <Button type='primary' onMouseUp={search}>导出</Button>
+        <Button type='primary' onMouseUp={doExport}>导出</Button>
       </div>
       <HeightKeepWrapper minus={152}>
         {

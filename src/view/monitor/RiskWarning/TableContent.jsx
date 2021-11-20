@@ -48,9 +48,7 @@ export default function (props) {
     },
     {
       title: '操作类型',
-      dataIndex: 'logType',
-      width: 80,
-      align: 'center'
+      dataIndex: 'eventType',
     },
     {
       title: '事件信息',
@@ -79,6 +77,12 @@ export default function (props) {
     {
       title: '资产ip',
       dataIndex: 'assetsIp'
+    },
+    {
+      title: '目标端口',
+      dataIndex: 'targetPort',
+      width: 80,
+      align: 'center',
     },
     {
       title: '资产名称',
@@ -118,11 +122,10 @@ export default function (props) {
   ]
 
   return (
-    <div style={{height: 'calc(100vh - 726px)', minHeight: 100}}>
+    <div style={{height: 'calc(100vh - 726px)', minHeight: 246, paddingBottom: 16}}>
       <HeightKeepWrapper>
         {
           scrollY => <Table
-            // scroll={{x: 2046, y: window.innerHeight - 720}}
             scroll={{x: 2046, y: scrollY}}
             bordered
             rowKey={mainKey}

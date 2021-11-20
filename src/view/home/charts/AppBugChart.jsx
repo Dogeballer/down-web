@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import EchartsComp from '../../../components/EchartsComp'
 import * as api from '../../../api/screen'
+import cx from "classnames"
 import style from './style.scss'
-import cx from "classnames";
 
 export default function (props) {
   const [option, setOption] = useState()
@@ -27,8 +27,8 @@ export default function (props) {
             },
             data: res.data.map(v => {
               return {
-                name: v.appName,
-                value: v.vbCnt
+                name: v.appname,
+                value: v.vbcnt
               }
             })
           }
