@@ -120,7 +120,7 @@ export default function (props) {
       align: 'center'
     },
     {
-      title: '控制方式',
+      title: '控制方法',
       dataIndex: 'ctlType'
     },
     {
@@ -147,7 +147,7 @@ export default function (props) {
       <div className={style.filters}>
         <Input onBlur={onChange('user')} placeholder='用户' allowClear style={{ width: 138 }} />
         <Input onBlur={onChange('ip')} placeholder='操作IP' allowClear style={{ width: 138 }} />
-        <Select onChange={onChange('logType')} placeholder='操作类型' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
+        <Select onChange={onChange('et')} placeholder='操作类型' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
           {
             ['查询','添加','更新','删除', '漏洞扫描', '数据防泄露'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
@@ -164,7 +164,7 @@ export default function (props) {
             ].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>
-        <Select onChange={onChange('ip')} placeholder='控制方法' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
+        <Select onChange={onChange('ct')} placeholder='控制方法' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
           {
             ['允许','告警', '阻止'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }

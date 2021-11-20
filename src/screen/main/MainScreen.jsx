@@ -97,7 +97,7 @@ export default function (props) {
 
             <section className={style.section} style={{width: 500, height: 300}}>
               <div className={style.title}>数据风险分布</div>
-              <RiskChart theme='shine' grid={{top: '10%', bottom: '10%', left: '2%'}} style={{height: 240}} />
+              <RiskChart theme='shine' option={{grid: {top: 0, bottom: '10%', left: '2%'}}} style={{height: 240}} />
             </section>
           </div>
 
@@ -141,10 +141,9 @@ export default function (props) {
 
             <section className={style.section} style={{width: 500, height: 300}}>
               <div className={style.title}>数据异常流动分布</div>
-              <ExceptionChart theme='shine' grid={{top: '10%', bottom: '18%'}} style={{height: 240}} />
+              <ExceptionChart theme='shine' style={{height: 240}} />
             </section>
           </div>
-
 
         </div>
 
@@ -152,22 +151,22 @@ export default function (props) {
         <div className='flex-space-between'>
           <section className={style.section} style={{width: 500, height: 360}}>
             <div className={style.title}>数据风险趋势</div>
-            <RiskTrendChart theme='shine' grid={{top: '10%', bottom: '18%', right: '2%'}} style={{height: 290}} />
+            <RiskTrendChart theme='shine' option={{grid: {top: '10%', bottom: '18%', right: '2%'}}} style={{height: 290}} />
           </section>
 
           <section className={style.section} style={{width: 400, height: 360}}>
             <div className={style.title}>应用漏洞风险</div>
-            <AppBugChart theme='shine' grid={{top: '10%', bottom: '18%'}} style={{height: 290}} />
+            <AppBugChart theme='shine' style={{height: 290}} />
           </section>
 
           <section className={style.section} style={{width: 400, height: 360}}>
             <div className={style.title}>数据库漏洞风险</div>
-            <DatabaseBugChart theme='shine' grid={{top: '10%', bottom: '18%'}} style={{height: 290}} />
+            <DatabaseBugChart theme='shine' style={{height: 290}} />
           </section>
 
           <section className={style.section} style={{width: 500, height: 360}}>
             <div className={style.title}>数据异常流动趋势</div>
-            <ExceptionTrendChart theme='shine' grid={{top: '10%', bottom: '18%'}} style={{height: 290}} />
+            <ExceptionTrendChart theme='shine' option={{grid: {top: '10%', bottom: '18%'}}} style={{height: 290}} />
           </section>
         </div>
       </div>

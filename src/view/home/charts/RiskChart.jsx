@@ -3,15 +3,15 @@ import EchartsComp from '../../../components/EchartsComp'
 import * as api from '../../../api/screen'
 import style from './style.scss'
 import cx from 'classnames'
+import {mergeEchartConfig} from "../util";
 
 export default function (props) {
   const [option, setOption] = useState()
 
   useEffect(() => {
     api.getRisk().then(res => {
-      setOption({
+      const option = {
         grid: {
-          ...props.grid,
           containLabel: true,
         },
         tooltip: {
@@ -21,7 +21,7 @@ export default function (props) {
           }
         },
         yAxis: {
-          type: 'category',
+          bottom: 0,
           data: res.data.map(v => v.riskname)
         },
         xAxis: {
@@ -33,7 +33,8 @@ export default function (props) {
             type: 'bar'
           }
         ]
-      })
+      }
+      setOption(mergeEchartConfig(option, props.option))
     })
   }, [])
 
