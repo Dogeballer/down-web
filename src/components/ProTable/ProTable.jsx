@@ -10,7 +10,7 @@ import { INIT_PAGE } from '../../constant'
 const PAGE_SIZE = 20
 
 function ProTable (props, ref) {
-  const { querier, className, fetch, ...tableProps } = props
+  const { querier, className, fetch, autoFetch = true, ...tableProps } = props
   const [tableSource, setTableSource] = useState([])
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState({ total: 0, current: 1 })
@@ -75,7 +75,9 @@ function ProTable (props, ref) {
   }
 
   useEffect(() => {
-    dataFetch()
+    if (autoFetch) {
+      dataFetch()
+    }
   }, [])
 
   useImperativeHandle(ref, () => ({

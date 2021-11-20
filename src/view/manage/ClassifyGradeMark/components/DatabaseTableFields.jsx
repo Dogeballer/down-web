@@ -3,7 +3,7 @@ import { Button, Input } from 'antd'
 import StatusSwitch from '../../../../components/StatusSwitch'
 import DataClassSelect from '../../../../components/DataClassSelect/DataClassSelect'
 import AssetGradeSelect from '../../../../components/AssetGradeSelect'
-import ClassfiySetModal from './ClassfiySetModal'
+import ClassifySetModal from './ClassifySetModal'
 import GradeSetModal from './GradeSetModal'
 import { HeightKeepWrapper } from '@cecdataFE/bui'
 import ProTable from '../../../../components/ProTable/ProTable'
@@ -77,9 +77,9 @@ function DatabaseTableFields (props) {
   const refresh = () => tableRef.current?.refresh()
   const querier = {
     buttons: [
-      <ClassfiySetModal key='class' onOk={refresh}>
+      <ClassifySetModal key='class' onOk={refresh}>
         设置分级
-      </ClassfiySetModal>,
+      </ClassifySetModal>,
       <GradeSetModal key='grade' onOk={refresh}>
         设置分级
       </GradeSetModal>

@@ -11,8 +11,7 @@ const reducer = (state, action) => {
   const [type, payload] = action
   switch (type) {
     case 'setSelected': {
-      const { selected } = payload
-      state.selected = selected
+      state.selected = payload
       return { ...state }
     }
   }
@@ -20,10 +19,10 @@ const reducer = (state, action) => {
 
 const ClassifyGradeMark = (props) => {
   const [state, dispatch] = useReducer(reducer, { ...initState })
-  const { selected } = state
+  const { editable = true } = props
   return (
     <ClassifyContext.Provider value={{ state, dispatch: (type, action) => dispatch([type, action]) }}>
-      <Resizer left={<AsideTree />} right={<DatabaseTable />} />
+      <Resizer left={<AsideTree />} right={<DatabaseTable editable={editable} />} />
     </ClassifyContext.Provider>
   )
 }

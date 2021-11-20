@@ -9,7 +9,7 @@ const layout = {
 }
 
 function ClassifySetModal (props) {
-  const { children, onOk, disabled, ...restProps } = props
+  const { children, onOk, ...restProps } = props
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [visible, setVisible] = useState(false)
