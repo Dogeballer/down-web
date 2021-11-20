@@ -1,15 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react'
 import cx from 'classnames'
-import style from './style.scss'
 import {Button, Input, Select} from 'antd'
-import * as api from "../../../api/logs";
-import DetailModal from "../RiskWarning/modal/DetailModal";
-import Table from "@cecdataFE/bui/dist/components/Ant4Table";
-import thousandComma from "@cecdataFE/bui/dist/lib/thousandComma"
-import HeightKeepWrapper from "@cecdataFE/bui/dist/components/HeightKeepWrapper";
+import * as api from '../../../api/logs'
+import DetailModal from "../RiskWarning/modal/DetailModal"
+import Table from "@cecdataFE/bui/dist/components/Ant4Table"
+import HeightKeepWrapper from "@cecdataFE/bui/dist/components/HeightKeepWrapper"
 import moment from "moment";
 import {DICT_SET, INIT_PAGE} from "../../../constant";
-import AssetGradeSelect from "../../../components/AssetGradeSelect";
+import style from './style.scss'
 
 const { Option } = Select
 const mainKey = 'logId'
@@ -67,16 +65,14 @@ export default function (props) {
     },
     {
       title: '操作类型',
-      dataIndex: 'logType',
-      width: 80,
-      align: 'center'
+      dataIndex: 'eventType',
     },
     {
       title: '事件信息',
       dataIndex: 'eventInfo',
       render: v => <div className='flex-center-v'>
         <span className='text-ellipsis-1 flex1' title={v}>{v}</span>
-        <DetailModal value={v}>
+        <DetailModal title='事件信息' value={v}>
           <a>详情</a>
         </DetailModal>
       </div>
@@ -98,6 +94,12 @@ export default function (props) {
     {
       title: '资产ip',
       dataIndex: 'assetsIp'
+    },
+    {
+      title: '目标端口',
+      dataIndex: 'targetPort',
+      width: 80,
+      align: 'center',
     },
     {
       title: '资产名称',
@@ -141,9 +143,9 @@ export default function (props) {
       <div className={style.filters}>
         <Input onBlur={onChange('user')} placeholder='用户' allowClear style={{ width: 138 }} />
         <Input onBlur={onChange('ip')} placeholder='操作IP' allowClear style={{ width: 138 }} />
-        <Select onChange={onChange('ip')} placeholder='操作类型' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
+        <Select onChange={onChange('logType')} placeholder='操作类型' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
           {
-            [].map((v,i) => <Option key={i} value={v}>{v.label}</Option>)
+            ['查询','添加','更新','删除', '漏洞扫描', '数据防泄露'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>
         <Select onChange={onChange('app')} placeholder='应用' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
@@ -158,15 +160,9 @@ export default function (props) {
             ].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>
-        <Select onChange={onChange('ip')} placeholder='资产类型' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
-          {
-            [].map((v,i) => <Option key={i} value={v}>{v.label}</Option>)
-          }
-        </Select>
-        <AssetGradeSelect onChange={onChange('ag')} placeholder='资产等级' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false} />
         <Select onChange={onChange('ip')} placeholder='控制方法' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
           {
-            [].map((v,i) => <Option key={i} value={v}>{v.label}</Option>)
+            ['允许','告警', '阻止'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>
         <Button type='primary' onMouseUp={search}>查询</Button>

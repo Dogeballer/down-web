@@ -14,6 +14,7 @@ import DatabaseBugChart from './charts/DatabaseBugChart'
 import style from './style.scss'
 import {useScreenFetch} from "./lib/hooks";
 import {thousandComma} from "@cecdataFE/bui";
+import {Link} from "react-router-dom";
 
 export default function (props) {
 
@@ -58,9 +59,9 @@ export default function (props) {
         </section>
 
         <section className={style.item}>
-          <div className={style.decorate} style={{ background: '#3A88F4' }}>
+          <Link to='/screen' target='_blank' className={style.decorate} style={{ background: '#3A88F4' }}>
             <Icon2 className={style.icon} />
-          </div>
+          </Link>
           <div className='flex1'>
             <label className={style.f1}>应用资产</label>
             <Divider className={style.divider} />

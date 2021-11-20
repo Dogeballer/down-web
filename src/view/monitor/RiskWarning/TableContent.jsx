@@ -4,6 +4,7 @@ import * as api from '../../../api/logs'
 import DetailModal from './modal/DetailModal'
 import moment from "moment";
 import {INIT_PAGE} from "../../../constant"
+import {HeightKeepWrapper} from "@cecdataFE/bui";
 
 const mainKey = 'logId'
 export default function (props) {
@@ -49,13 +50,14 @@ export default function (props) {
       title: '操作类型',
       dataIndex: 'logType',
       width: 80,
+      align: 'center'
     },
     {
       title: '事件信息',
       dataIndex: 'eventInfo',
       render: v => <div className='flex-center-v'>
-        <span className='text-ellipsis-1 flex1'>{v}</span>
-        <DetailModal value={v}>
+        <span className='text-ellipsis-1 flex1' title={v}>{v}</span>
+        <DetailModal title='事件信息' value={v}>
           <a>详情</a>
         </DetailModal>
       </div>
@@ -66,7 +68,9 @@ export default function (props) {
     },
     {
       title: '操作应用',
-      dataIndex: 'opApp'
+      dataIndex: 'opApp',
+      width: 80,
+      align: 'center',
     },
     {
       title: '应用IP',
@@ -86,7 +90,9 @@ export default function (props) {
     },
     {
       title: '资产等级',
-      dataIndex: 'assetsLevel'
+      dataIndex: 'assetsLevel',
+      width: 80,
+      align: 'center'
     },
     {
       title: '控制方式',
@@ -112,22 +118,28 @@ export default function (props) {
   ]
 
   return (
-    <Table
-      // scroll={{x: 2046, y: window.innerHeight - 720}}
-      scroll={{x: 2046}}
-      bordered
-      rowKey={mainKey}
-      loading={loading}
-      columns={columns}
-      dataSource={dataSource}
-      onChange={handleTableChange}
-      pagination={{
-        ...INIT_PAGE,
-        showQuickJumper: false,
-        total,
-        current: q.page,
-        pageSize: q.size,
-      }}
-    />
+    <div style={{height: 'calc(100vh - 726px)', minHeight: 100}}>
+      <HeightKeepWrapper>
+        {
+          scrollY => <Table
+            // scroll={{x: 2046, y: window.innerHeight - 720}}
+            scroll={{x: 2046, y: scrollY}}
+            bordered
+            rowKey={mainKey}
+            loading={loading}
+            columns={columns}
+            dataSource={dataSource}
+            onChange={handleTableChange}
+            pagination={{
+              ...INIT_PAGE,
+              showQuickJumper: false,
+              total,
+              current: q.page,
+              pageSize: q.size,
+            }}
+          />
+        }
+      </HeightKeepWrapper>
+    </div>
   )
 }

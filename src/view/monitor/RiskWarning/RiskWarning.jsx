@@ -11,7 +11,6 @@ import {DICT_SET} from "../../../constant";
 const { TabPane } = Tabs
 
 export default function (props) {
-  const [data, setData] = useState()
 
   return (
     <div>
