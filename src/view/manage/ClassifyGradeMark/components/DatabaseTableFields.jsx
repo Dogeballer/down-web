@@ -175,7 +175,15 @@ function DatabaseTableFields (props) {
       </GradeSetModal>
     ]
   }
-
+  const rowSelection = editable
+    ? {
+        selectedRowKeys,
+        onChange: (keys, rows) => {
+          setSelectedRowKeys(keys)
+          selectedRows.current = rows
+        }
+      }
+    : false
   return (
     <HeightKeepWrapper style={{ height: 'calc(100% - 56px)' }} minus={118}>
       {
@@ -184,18 +192,12 @@ function DatabaseTableFields (props) {
             ref={tableRef}
             fetch={dataFetch}
             autoFetch={false}
-            querier={querier}
+            querier={editable ? querier : null}
             columns={columns.filter(c => c)}
             rowKey='id'
             scroll={{ x: 1400, y: scrollY }}
             pagination={false}
-            rowSelection={{
-              selectedRowKeys,
-              onChange: (keys, rows) => {
-                setSelectedRowKeys(keys)
-                selectedRows.current = rows
-              }
-            }}
+            rowSelection={rowSelection}
           />
         )
       }

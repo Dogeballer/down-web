@@ -1,9 +1,10 @@
 import React from 'react'
-import { Button, Modal } from 'antd'
+import { Button, Modal, Popconfirm } from 'antd'
 import './style.g.scss'
 
 function DeleteButton (props) {
   const {
+    pop,
     handleDelete,
     onDeleted,
     type = 'link',
@@ -25,16 +26,37 @@ function DeleteButton (props) {
       }
     })
   }
-  return (
-    <Button
-      className={type === 'link' ? 'btn-link-danger' : null}
-      type={type}
-      onClick={handleClick}
-      {...restProps}
-    >
-      {children || '删除'}
-    </Button>
-  )
+  return pop
+    ? (
+      <Popconfirm
+        title={content}
+        okText='确定'
+        onConfirm={
+        () => handleDelete()
+          .then(() => {
+            typeof onDeleted === 'function' && onDeleted()
+          })
+      }
+      >
+        <Button
+          className={type === 'link' ? 'btn-link-danger' : null}
+          type={type}
+          {...restProps}
+        >
+          {children || '删除'}
+        </Button>
+      </Popconfirm>
+      )
+    : (
+      <Button
+        className={type === 'link' ? 'btn-link-danger' : null}
+        type={type}
+        onClick={handleClick}
+        {...restProps}
+      >
+        {children || '删除'}
+      </Button>
+      )
 }
 
 export default DeleteButton

@@ -5,8 +5,9 @@ import FormModal from './componnets/FormModal'
 import DeleteButton from '../../../components/DeleteButton'
 import { HeightKeepWrapper } from '@cecdataFE/bui'
 import { dataGradeDelete, dataGradeTree } from '../../../api/dataGrade'
+import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 
-const DataGradeManage = (props) => {
+const DataGradeManage = () => {
   const [formVisible, setFromVisible] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const tableRef = useRef()
@@ -56,6 +57,7 @@ const DataGradeManage = (props) => {
           <Divider type='vertical' />
           <DeleteButton
             size='small'
+            pop
             handleDelete={() => dataGradeDelete(record.assetClassName)}
             onDeleted={() => tableRef.current?.refresh()}
           />
@@ -74,6 +76,7 @@ const DataGradeManage = (props) => {
         key='delete'
         type='danger'
         content='是否确认删除选中的分类？'
+        disabled={isEmpty(selectedRowKeys)}
         handleDelete={() => dataGradeDelete(selectedRowKeys)}
         onDeleted={() => tableRef.current?.refresh()}
       />
