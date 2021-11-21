@@ -93,7 +93,6 @@ const FileAssetDetail = () => {
    */
   const handleTableChange = useCallback((pagination) => {
     const { current, pageSize } = pagination
-    console.log(pagination)
     filter.current = { ...filter.current, page: current, limit: pageSize }
     request(filter.current)
   }, [])
