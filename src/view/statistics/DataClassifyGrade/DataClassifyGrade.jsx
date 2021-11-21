@@ -3,7 +3,7 @@ import ClassifyGradeMark from '../../manage/ClassifyGradeMark'
 
 const DataClassifyGrade = (props) => {
   return (
-    <ClassifyGradeMark />
+    <ClassifyGradeMark editable={false} />
   )
 }
 
