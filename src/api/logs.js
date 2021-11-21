@@ -3,7 +3,6 @@
  */
 import axios from 'axios'
 import { API_VER } from '../constant'
-export const getLogs = () => {
-  return Promise.resolve()
-  return axios.get('/logs/getDsdStat')
+export const getLogs = params => {
+  return axios.get('/logs/getLogDetailByPage', {params})
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Input, Modal } from 'antd'
 import Form from 'antd4/lib/form'
 import { NumericalInput } from '@cecdataFE/bui'
-import { dataGradeCreate, dataGradeUpdate } from '../../../../api/dataGradeList'
+import { dataGradeCreate, dataGradeUpdate } from '../../../../api/dataGrade'
 import DataClassSelect from '../../../../components/DataClassSelect/DataClassSelect'
 import AssetGradeSelect from '../../../../components/AssetGradeSelect'
 
@@ -19,10 +19,16 @@ function FormModal (props) {
       return
     }
     if (record) {
+      if (!record?.parentAssetClass) {
+        record.parentAssetClass = '0'
+      }
       form.setFieldsValue(record)
     }
   }, [visible, record])
   const handleFinish = (values) => {
+    if (values.parentAssetClass === '0') {
+      values.parentAssetClass = null
+    }
     (record?.assetClassName ? dataGradeUpdate(record.assetClassName, values) : dataGradeCreate(values))
       .then(res => {
         typeof onOk === 'function' && onOk()
@@ -49,7 +55,7 @@ function FormModal (props) {
           label='上级分类'
           rules={[{ required: true, message: '请选择上级分类' }]}
         >
-          <DataClassSelect />
+          <DataClassSelect hasRootNode />
         </Form.Item>
         <Form.Item
           name='assetClassName'

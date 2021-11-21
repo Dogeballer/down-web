@@ -31,8 +31,21 @@ a, a:active, a:hover, a:focus, a:focus-within {
 .bui-frame-content {
   .page-wrapper {
     background: white;
-    padding: 16px;
+    padding: 10px 16px;
     height: 100%;
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 50px;
+      margin: -10px -16px 16px -16px;
+      padding: 0 16px;
+      font-size: 16px;
+      font-weight: bold;
+      position: relative;
+      z-index: 3;
+      box-shadow: 0 0 7px -1px rgba(0,0,0,0.2);
+    }
   }
 }
 
@@ -82,8 +95,8 @@ a, a:active, a:hover, a:focus, a:focus-within {
       margin: 4px 0;
       padding: 0;
     }
-    .ant-button + .ant-divider {
-      margin: 0 1px;
+    .ant-btn.ant-btn-link {
+      padding: 0 1px;
     }
   }
 }

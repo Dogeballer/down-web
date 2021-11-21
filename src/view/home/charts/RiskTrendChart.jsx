@@ -5,6 +5,7 @@ import style from './style.scss'
 import cx from 'classnames'
 import moment from "moment"
 import {DICT_SET} from "../../../constant";
+import {mergeEchartConfig} from "../util";
 
 export default function (props) {
   const [option, setOption] = useState()
@@ -17,8 +18,7 @@ export default function (props) {
         seriesNames = Object.keys(res.data[0]).filter(v => v !== 'statdate')
       }
 
-      setOption({
-        grid: props.grid,
+      const option = {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -26,7 +26,7 @@ export default function (props) {
           }
         },
         legend: {
-          y: 'bottom',
+          bottom: 0,
           itemWidth: 14,
         },
         yAxis: {
@@ -46,7 +46,9 @@ export default function (props) {
             data: res.data.map(v => v[name])
           }
         })
-      })
+      }
+
+      setOption(mergeEchartConfig(option, props.option))
     })
   }, [])
 

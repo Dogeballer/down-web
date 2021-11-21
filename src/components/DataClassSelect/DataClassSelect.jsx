@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { TreeSelect } from 'antd'
-import { dataGradeTree } from '../../api/dataGradeList'
+import { dataGradeTree } from '../../api/dataGrade'
 import { treeForeach } from '@cecdataFE/bui/dist/lib/tree'
 
 function DataClassSelect (props) {
   const [treeData, setTreeData] = useState([])
+  const { hasRootNode, ...restProps } = props
   useEffect(() => {
     dataGradeTree()
       .then(res => {
@@ -13,6 +14,12 @@ function DataClassSelect (props) {
           node.value = node.assetClassName
           node.title = node.assetClassName
         })
+        if (hasRootNode) {
+          tree.unshift({
+            value: '0',
+            title: '作为一级分类'
+          })
+        }
         setTreeData(tree)
       })
   }, [])
@@ -20,7 +27,7 @@ function DataClassSelect (props) {
     <TreeSelect
       allowClear
       treeData={treeData}
-      {...props}
+      {...restProps}
     />
   )
 }

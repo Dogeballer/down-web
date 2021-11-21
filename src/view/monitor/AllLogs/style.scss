@@ -1,3 +1,10 @@
+.root {
+  height: 100%;
+  overflow: hidden;
+  padding: 16px 16px 0;
+  background: white;
+}
+
 .filters {
   display: flex;
   align-items: center;

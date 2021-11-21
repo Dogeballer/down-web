@@ -7,7 +7,7 @@ export const dataGradeCreate = (data) => {
 
 export const dataGradeDelete = (assetClassNames) => {
   return axios.delete(`${API_VER}/web/asset_class`, {
-    body: Array.isArray(assetClassNames) ? assetClassNames : [assetClassNames]
+    data: Array.isArray(assetClassNames) ? assetClassNames : [assetClassNames]
   })
 }
 

@@ -8,6 +8,7 @@ import DataGradeManage from '../view/manage/DataGradeManage'
 import ClassifyGradeMark from '../view/manage/ClassifyGradeMark'
 import RiskWarning from '../view/monitor/RiskWarning/RiskWarning'
 import AllLogs from '../view/monitor/AllLogs/AllLogs'
+import DataClassifyGrade from '../view/statistics/DataClassifyGrade'
 
 export default [
   {
@@ -60,7 +61,7 @@ export default [
     routes: [
       {
         exact: true,
-        path: '/manage/grade',
+        path: '/manage/manage',
         isChild: true,
         component: DataGradeManage,
         meta: {
@@ -70,7 +71,7 @@ export default [
       },
       {
         exact: true,
-        path: '/manage/classify',
+        path: '/manage/mark',
         isChild: true,
         component: ClassifyGradeMark,
         meta: {
@@ -131,6 +132,15 @@ export default [
         component: FileAssetDetail,
         meta: {
           name: '文件资产详情'
+        }
+      },
+      {
+        exact: true,
+        path: '/statistics/data/classify',
+        isChild: true,
+        component: DataClassifyGrade,
+        meta: {
+          name: '数据分类分级'
         }
       }
     ]

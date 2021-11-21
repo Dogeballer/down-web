@@ -10,19 +10,18 @@ import { INIT_PAGE } from '../../constant'
 const PAGE_SIZE = 20
 
 function ProTable (props, ref) {
-  const { querier, className, fetch, ...tableProps } = props
+  const { querier, className, fetch, autoFetch = true, ...tableProps } = props
   const [tableSource, setTableSource] = useState([])
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState({ total: 0, current: 1 })
   const forms = (querier?.forms || []).map(item => {
     return React.cloneElement(item, {
       ...item.props,
-      key: item.props.name,
       onChange (e) {
         const value = isMoment(e) ? e.valueOf() : (e?.target ? e.target.value : e)
         queryData.current = {
           ...queryData.current,
-          [item.props.name]: value
+          [item.props.key]: value
         }
       }
     })
@@ -76,7 +75,9 @@ function ProTable (props, ref) {
   }
 
   useEffect(() => {
-    dataFetch()
+    if (autoFetch) {
+      dataFetch()
+    }
   }, [])
 
   useImperativeHandle(ref, () => ({

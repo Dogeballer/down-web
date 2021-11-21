@@ -3,16 +3,17 @@ import cx from 'classnames'
 import { Tabs } from 'antd'
 import RiskChart from '../../home/charts/RiskChart'
 import RiskTrendChart from '../../home/charts/RiskTrendChart'
+import TableContent from './TableContent'
 import hstyle from '../../home/style.scss'
 import style from './style.scss'
-import TableContent from './TableContent'
+import {DICT_SET} from "../../../constant";
+
 const { TabPane } = Tabs
 
 export default function (props) {
-  const [data, setData] = useState()
 
   return (
-    <>
+    <div>
       <div className='flex-space-between'>
         <div className={hstyle.section}>
           <label className={hstyle.title}>数据风险分布</label>
@@ -25,17 +26,15 @@ export default function (props) {
       </div>
       <div className={style.section}>
         <Tabs>
-          <TabPane tab='Tab 1' key='1'>
-            <TableContent />
-          </TabPane>
-          <TabPane tab='Tab 2' key='2'>
-            <TableContent />
-          </TabPane>
-          <TabPane tab='Tab 3' key='3'>
-            <TableContent />
-          </TabPane>
+          {
+            DICT_SET.LOG_TYPES.filter(v => v.value != 1).map(v => {
+              return <TabPane tab={v.text} key={v.value}>
+                <TableContent query={{tab: v.value}} />
+              </TabPane>
+            })
+          }
         </Tabs>
       </div>
-    </>
+    </div>
   )
 }
