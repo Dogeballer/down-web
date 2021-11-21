@@ -11,7 +11,7 @@ import CacheRoute, { CacheSwitch, dropByCacheKey, clearCache, getCachingKeys, re
 import menuBg from '../assets/images/frame/menu.png'
 import sysImg from '../assets/images/frame/sysImg.svg'
 import Toolbar from '../components/Toolbar'
-import Screen from "../screen"
+import Screen from '../screen'
 
 const aliveControl = {
   dropByCacheKey,
