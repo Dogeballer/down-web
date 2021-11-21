@@ -64,10 +64,7 @@ const DataAssetAcct = () => {
       width: 200,
       shouldCellUpdate: function (record, prevRecord) {
         return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
-      onCell: record => ({
-        tooltip: () => record.dataStorageName
-      })
+      }
     },
     {
       title: '来源方式',

@@ -57,10 +57,7 @@ function DataAssetDetail () {
     {
       title: '目标端口',
       dataIndex: 'dataAssetPort',
-      width: 100,
-      onCell: record => ({
-        tooltip: () => record.dataAssetPort
-      })
+      width: 100
     },
     {
       title: '库实例名',
@@ -73,10 +70,7 @@ function DataAssetDetail () {
     {
       title: '资产类型',
       dataIndex: 'dataStorageName',
-      width: 150,
-      onCell: record => ({
-        tooltip: () => record.dataStorageName
-      })
+      width: 150
     },
     {
       title: '资产等级',
