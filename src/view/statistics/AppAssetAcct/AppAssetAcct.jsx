@@ -18,6 +18,7 @@ import {
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import StatusSwitch from '../../../components/StatusSwitch'
 import style from './style.scss'
+import tableDataModify from '../../../lib/tableDataModify'
 
 const AppAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
@@ -95,11 +96,11 @@ const AppAssetAcct = () => {
       },
       render: (value, record) => (
         <StatusSwitch
-          data={data}
           value={value}
-          record={record}
-          setData={setData}
-          fetcher={updateAcctShowStatus}
+          fetcher={(value) => updateAcctShowStatus(record.id, value)}
+          onFinish={(value) => {
+            setData(tableDataModify(data, 'id', record, { showStatus: value }))
+          }}
         />
       )
     },

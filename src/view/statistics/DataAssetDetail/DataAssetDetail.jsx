@@ -19,6 +19,7 @@ import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import AddEditModal from './component/AddEditModal'
 import StatusSwitch from '../../../components/StatusSwitch'
 import style from './style.scss'
+import tableDataModify from '../../../lib/tableDataModify'
 
 function DataAssetDetail () {
   const filter = useRef({ ...INIT_FILTER })
@@ -137,11 +138,11 @@ function DataAssetDetail () {
       width: 100,
       render: (value, record) => (
         <StatusSwitch
-          data={data}
           value={value}
-          record={record}
-          setData={setData}
-          fetcher={updateDetailShowStatus}
+          fetcher={(value) => updateDetailShowStatus(record.id, value)}
+          onFinish={(value) => {
+            setData(tableDataModify(data, 'id', record, { showStatus: value }))
+          }}
         />
       )
     },
