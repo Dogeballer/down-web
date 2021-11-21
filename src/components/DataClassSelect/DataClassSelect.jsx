@@ -5,7 +5,7 @@ import { treeForeach } from '@cecdataFE/bui/dist/lib/tree'
 
 function DataClassSelect (props) {
   const [treeData, setTreeData] = useState([])
-  const { hasRootNode, ...restProps } = props
+  const { hasRootNode, disabledValues = [], ...restProps } = props
   useEffect(() => {
     dataGradeTree()
       .then(res => {
@@ -13,6 +13,7 @@ function DataClassSelect (props) {
         treeForeach(tree, node => {
           node.value = node.assetClassName
           node.title = node.assetClassName
+          node.disabled = disabledValues.includes(node.assetClassName)
         })
         if (hasRootNode) {
           tree.unshift({
