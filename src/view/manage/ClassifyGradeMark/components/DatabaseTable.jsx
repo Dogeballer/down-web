@@ -12,6 +12,7 @@ import ClassifyContext from '../context'
 import { dataClassList, dataClassSet } from '../../../../api/dataClassify'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import tableDataModify from '../../../../lib/tableDataModify'
+import moment from 'moment'
 
 function DatabaseTable (props) {
   const { editable } = props
@@ -20,7 +21,6 @@ function DatabaseTable (props) {
   const selectedRows = useRef([])
   const [editableKeys, setEditableKeys] = useState([])
   const tableRef = useRef()
-  const currentRecord = useRef(null)
   const { state, dispatch } = useContext(ClassifyContext)
   const { selected, lastSelected } = state
 
@@ -32,18 +32,19 @@ function DatabaseTable (props) {
   }
 
   const handleEditToggle = (record) => {
-    const index = editableKeys.indexOf(record.tableName)
+    const index = editableKeys.indexOf(record.id)
     if (~index) {
       editableKeys.splice(index, 1)
     } else {
-      editableKeys.push(record.tableName)
+      editableKeys.push(record.id)
     }
     setEditableKeys([...editableKeys])
   }
 
   const dataFetch = (params) => {
     const { dataAssetIp, dbServerName } = selected ?? {}
-    return dataClassList({ ...params, dataAssetIp, dbServerName })
+    debugger
+    return dataClassList({ ...params, dataAssetIp, dbServerName, tableShowStatus: editable ? null : 1 })
   }
 
   const refresh = () => tableRef.current?.refresh()
@@ -60,20 +61,33 @@ function DatabaseTable (props) {
       })
   }
   useEffect(() => {
-    if (!fieldVisible) {
+    const visible = !!selected?.tableName
+    const shouldRefresh = (isEmpty(selected) && isEmpty(lastSelected)) ||
+      selected?.dataAssetIp !== lastSelected?.dataAssetIp ||
+      selected?.dbServerName !== lastSelected?.dbServerName
+    if (!visible && shouldRefresh) {
       refresh()
     }
-  }, [selected?.dataAssetIp, selected?.dbServerName, fieldVisible])
+    setFieldVisible(visible)
+  }, [selected, lastSelected])
 
-  useEffect(() => {
-    setFieldVisible(!!selected?.tableName)
-  }, [selected?.tableName])
+  // useEffect(() => {
+  //   debugger
+  //   if (!fieldVisible) {
+  //     refresh()
+  //   }
+  // }, [selected?.dataAssetIp, selected?.dbServerName, fieldVisible])
+  //
+  // useEffect(() => {
+  //   setFieldVisible(!!selected?.tableName)
+  // }, [selected?.tableName])
 
   const columns = [
     {
       dataIndex: 'tableName',
       title: '表名',
       fixed: 'left',
+      width: 260,
       render: (value, record) => (
         <Button type='link' size='small' onClick={() => handleTableSelect(record)}>{value}</Button>
       )
@@ -85,11 +99,13 @@ function DatabaseTable (props) {
     {
       dataIndex: 'tableClass',
       title: '分类',
+      width: 200,
       render (value, record) {
-        if (editableKeys.includes(record.tableName)) {
+        if (editableKeys.includes(record.id)) {
           return (
             <DataClassSelect
               value={value}
+              style={{ width: '100%' }}
               onChange={tableClass => tableDataUpdate([record], { tableClass })}
             />
           )
@@ -101,11 +117,14 @@ function DatabaseTable (props) {
     {
       dataIndex: 'tableGrade',
       title: '分级',
+      align: 'center',
+      width: 100,
       render (value, record) {
-        if (editableKeys.includes(record.tableName)) {
+        if (editableKeys.includes(record.id)) {
           return (
             <AssetGradeSelect
               value={value}
+              style={{ width: '100%' }}
               onChange={tableGrade => tableDataUpdate([record], { tableGrade })}
             />
           )
@@ -116,7 +135,9 @@ function DatabaseTable (props) {
     },
     {
       dataIndex: 'dataAssetIp',
-      title: '资产ip'
+      title: '资产IP',
+      align: 'center',
+      width: 150
     },
     {
       dataIndex: 'dbServerName',
@@ -124,33 +145,40 @@ function DatabaseTable (props) {
     },
     {
       dataIndex: 'assetType',
-      title: '资产类型'
+      title: '资产类型',
+      width: 100
     },
     {
       dataIndex: 'tableOperationUser',
-      title: '操作人'
+      title: '操作人',
+      width: 120
     },
     {
       dataIndex: 'tableOperationTime',
-      title: '操作时间'
-    },
-    {
-      dataIndex: 'tableShowStatus',
-      title: '是否展示',
+      title: '操作时间',
       align: 'center',
-      fixed: 'right',
-      width: 80,
-      render: (value, record) => (
-        <StatusSwitch
-          value={value}
-          fetcher={tableShowStatus => tableDataUpdate([record], { tableShowStatus })}
-        />
-      )
+      width: 180,
+      render: value => moment(value).format('YYYY-MM-DD HH:mm:ss')
     },
+    editable
+      ? {
+          dataIndex: 'tableShowStatus',
+          title: '是否展示',
+          align: 'center',
+          fixed: 'right',
+          width: 80,
+          render: (value, record) => (
+            <StatusSwitch
+              value={value}
+              fetcher={tableShowStatus => tableDataUpdate([record], { tableShowStatus })}
+            />
+          )
+        }
+      : null,
     {
       dataIndex: 'op',
       title: '操作',
-      width: 150,
+      width: editable ? 150 : 100,
       align: 'center',
       fixed: 'right',
       render: (value, record) => (
@@ -160,7 +188,7 @@ function DatabaseTable (props) {
               ? (
                 <>
                   <Button size='small' type='link' onClick={() => handleEditToggle(record)}>
-                    {editableKeys.includes(record.tableName) ? '取消' : '编辑'}
+                    {editableKeys.includes(record.id) ? '取消' : '编辑'}
                   </Button>
                   <Divider type='vertical' />
                 </>
@@ -226,7 +254,7 @@ function DatabaseTable (props) {
           fieldVisible ? <Button type='primary' onClick={handleBack}>返回上一页</Button> : null
         }
       </div>
-      <HeightKeepWrapper style={{ height: 'calc(100% - 56px)', display: fieldVisible ? 'none' : 'block' }} minus={148}>
+      <HeightKeepWrapper style={{ height: 'calc(100% - 56px)', display: fieldVisible ? 'none' : 'block' }} minus={160}>
         {
           (scrollY) => (
             <ProTable
@@ -234,9 +262,10 @@ function DatabaseTable (props) {
               fetch={dataFetch}
               autoFetch={false}
               querier={querier}
-              columns={columns}
+              columns={columns.filter(c => c)}
               rowKey='id'
-              scroll={{ x: 1600, y: scrollY }}
+              virtual={false}
+              scroll={{ x: 1800, y: scrollY }}
               rowSelection={{
                 selectedRowKeys,
                 onChange: (keys, rows) => {
@@ -249,7 +278,7 @@ function DatabaseTable (props) {
         }
       </HeightKeepWrapper>
       {
-        fieldVisible ? <DatabaseTableFields editable={editable} record={currentRecord.current} /> : null
+        fieldVisible ? <DatabaseTableFields editable={editable} /> : null
       }
     </div>
   )

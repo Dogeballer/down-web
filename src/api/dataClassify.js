@@ -28,8 +28,8 @@ export const tableFieldList = (params) => {
   })
 }
 
-export const tableFieldSet = (params) => {
-  return axios.get(`${API_VER}/web/field_asset_tag/tag`, {
-    params
+export const tableFieldSet = (colNames, data) => {
+  return axios.put(`${API_VER}/web/field_asset_tag/tag`, {
+    colNames, ...data
   })
 }

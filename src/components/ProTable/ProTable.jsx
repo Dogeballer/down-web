@@ -17,11 +17,12 @@ function ProTable (props, ref) {
   const forms = (querier?.forms || []).map(item => {
     return React.cloneElement(item, {
       ...item.props,
+      key: item.props.name,
       onChange (e) {
         const value = isMoment(e) ? e.valueOf() : (e?.target ? e.target.value : e)
         queryData.current = {
           ...queryData.current,
-          [item.props.key]: value
+          [item.props.name]: value
         }
       }
     })
