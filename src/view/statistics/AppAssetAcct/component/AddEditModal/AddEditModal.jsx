@@ -57,7 +57,7 @@ const AddEditModal = (props) => {
                 </>
               )}
             >
-              <Form className='smp-antd4-form' form={form} {...modalFromLayout.modal}>
+              <Form className='smp-antd4-form' preserve={false} form={form} {...modalFromLayout.modal}>
                 <Form.Item name='appAssetIp' noStyle>
                   <Input style={{ display: 'none' }} />
                 </Form.Item>

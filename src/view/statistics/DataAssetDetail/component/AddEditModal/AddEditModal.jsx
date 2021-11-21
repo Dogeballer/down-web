@@ -59,7 +59,7 @@ const AddEditModal = (props) => {
                 </>
               )}
             >
-              <Form className='smp-antd4-form' form={form} {...modalFromLayout.modal}>
+              <Form className='smp-antd4-form' preserve={false} form={form} {...modalFromLayout.modal}>
                 <Form.Item
                   label='数据资产名称'
                   name='dataAssetName'
