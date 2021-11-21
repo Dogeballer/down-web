@@ -16,9 +16,9 @@ export const dataClassSet = (tables, data) => {
   })
 }
 
-export const dataClassTree = (keyword) => {
+export const dataClassTree = (params) => {
   return axios.get(`${API_VER}/web/table_asset_tag/tree`, {
-    params: { keyword }
+    params
   })
 }
 
