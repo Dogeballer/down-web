@@ -43,7 +43,6 @@ function DatabaseTable (props) {
 
   const dataFetch = (params) => {
     const { dataAssetIp, dbServerName } = selected ?? {}
-    debugger
     return dataClassList({ ...params, dataAssetIp, dbServerName, tableShowStatus: editable ? null : 1 })
   }
 

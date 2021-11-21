@@ -24,7 +24,7 @@ const ClassifyGradeMark = (props) => {
   const { editable = true } = props
   return (
     <ClassifyContext.Provider value={{ state, dispatch: (type, action) => dispatch([type, action]) }}>
-      <Resizer left={<AsideTree />} right={<DatabaseTable editable={editable} />} />
+      <Resizer left={<AsideTree editable={editable} />} right={<DatabaseTable editable={editable} />} />
     </ClassifyContext.Provider>
   )
 }

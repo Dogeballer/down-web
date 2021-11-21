@@ -6,8 +6,9 @@ import style from './style.scss'
 import { dataClassTree } from '../../../../api/dataClassify'
 import ClassifyContext from '../context'
 
-function AsideTree () {
+function AsideTree (props) {
   // const
+  const { editable } = props
   const [treeData, setTreeData] = useState([])
   const [expandedKeys, setExpandedKeys] = useState([])
   const { state, dispatch } = useContext(ClassifyContext)
@@ -16,7 +17,7 @@ function AsideTree () {
 
   const fetch = (queryStr) => {
     setLoading(true)
-    dataClassTree(queryStr)
+    dataClassTree({ keyword: queryStr, tableShowStatus: editable ? null : 1 })
       .then(r => {
         const data = r.data ?? []
         const expandedKeys = []
