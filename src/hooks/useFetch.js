@@ -17,7 +17,8 @@ export const useFetch = (fetcher, params, options = {}) => {
       setPagination({
         ...pagination,
         total: data.total,
-        page: params.page
+        page: params.page,
+        current: params.page
       })
     } catch (error) {
       typeof onError === 'function' && onError(error, params)

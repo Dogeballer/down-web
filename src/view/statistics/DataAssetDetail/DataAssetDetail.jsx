@@ -98,7 +98,7 @@ function DataAssetDetail () {
       width: 150,
       align: 'center',
       render: (value) => (
-        value !== undefined ? thousandComma(value) : ''
+        !isNaN(value) ? thousandComma(Number(value)) : ''
       )
     },
     {
@@ -106,9 +106,7 @@ function DataAssetDetail () {
       dataIndex: 'dataVolume',
       width: 150,
       align: 'center',
-      render: (value) => (
-        value !== undefined ? thousandComma(value) : ''
-      )
+      render: (value) => !isNaN(value) ? thousandComma(Number(value.match(/^\d+(?:\.\d{0,2})?/))) : ''
     },
     {
       title: '来源方式',
