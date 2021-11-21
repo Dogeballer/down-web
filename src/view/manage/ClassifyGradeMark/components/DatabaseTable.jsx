@@ -245,6 +245,15 @@ function DatabaseTable (props) {
     }
     return '[所有]数据表'
   }, [selected?.key])
+  const rowSelection = editable
+    ? {
+        selectedRowKeys,
+        onChange: (keys, rows) => {
+          setSelectedRowKeys(keys)
+          selectedRows.current = rows
+        }
+      }
+    : false
   return (
     <div className='page-wrapper'>
       <div className='page-header'>
@@ -265,13 +274,7 @@ function DatabaseTable (props) {
               rowKey='id'
               virtual={false}
               scroll={{ x: 1800, y: scrollY }}
-              rowSelection={{
-                selectedRowKeys,
-                onChange: (keys, rows) => {
-                  setSelectedRowKeys(keys)
-                  selectedRows.current = rows
-                }
-              }}
+              rowSelection={rowSelection}
             />
           )
         }
