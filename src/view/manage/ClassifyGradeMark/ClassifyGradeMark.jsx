@@ -5,12 +5,14 @@ import ClassifyContext from './context'
 import DatabaseTable from './components/DatabaseTable'
 
 const initState = {
-  selected: null
+  selected: null,
+  lastSelected: null
 }
 const reducer = (state, action) => {
   const [type, payload] = action
   switch (type) {
     case 'setSelected': {
+      state.lastSelected = { ...state.selected }
       state.selected = payload
       return { ...state }
     }

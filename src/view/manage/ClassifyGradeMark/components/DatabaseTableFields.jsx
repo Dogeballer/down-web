@@ -7,6 +7,7 @@ import ClassifySetModal from './ClassifySetModal'
 import GradeSetModal from './GradeSetModal'
 import { HeightKeepWrapper } from '@cecdataFE/bui'
 import ProTable from '../../../../components/ProTable/ProTable'
+import { tableFieldList } from '../../../../api/dataClassify'
 
 function DatabaseTableFields (props) {
   const { record } = props
@@ -92,13 +93,10 @@ function DatabaseTableFields (props) {
         (scrollY) => (
           <ProTable
             ref={tableRef}
-            // fetch={dataClassList}
+            fetch={tableFieldList}
             virtual={false}
             querier={querier}
             columns={columns}
-            dataSource={[
-              {tableName: 'dfdsf'}
-            ]}
             rowKey='id'
             scroll={{ x: 1600, y: scrollY }}
             rowSelection={{

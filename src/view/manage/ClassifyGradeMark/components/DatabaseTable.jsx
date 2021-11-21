@@ -9,22 +9,23 @@ import { HeightKeepWrapper } from '@cecdataFE/bui'
 import ProTable from '../../../../components/ProTable/ProTable'
 import DatabaseTableFields from './DatabaseTableFields'
 import ClassifyContext from '../context'
-import { dataClassList } from '../../../../api/dataClassify'
+import { dataClassList, dataClassSet } from '../../../../api/dataClassify'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
+import tableDataModify from '../../../../lib/tableDataModify'
 
 function DatabaseTable (props) {
   const { editable } = props
   const [fieldVisible, setFieldVisible] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const selectedRows = useRef([])
   const [editableKeys, setEditableKeys] = useState([])
   const tableRef = useRef()
   const currentRecord = useRef(null)
   const { state, dispatch } = useContext(ClassifyContext)
-  const { selected } = state
+  const { selected, lastSelected } = state
 
   const handleBack = () => {
-    const { dataAssetIp, dbServerName } = selected ?? {}
-    dispatch('setSelected', { dataAssetIp, dbServerName, key: `${dataAssetIp}_${dbServerName}` })
+    dispatch('setSelected', lastSelected)
   }
   const handleTableSelect = ({ dataAssetIp, dbServerName, tableName }) => {
     dispatch('setSelected', { dataAssetIp, dbServerName, tableName, key: `${dataAssetIp}_${dbServerName}_${tableName}` })
@@ -46,9 +47,23 @@ function DatabaseTable (props) {
   }
 
   const refresh = () => tableRef.current?.refresh()
+
+  const tableDataUpdate = (records, newData) => {
+    const tables = records.map(({ dataAssetIp, dbServerName, tableName }) => (
+      { dataAssetIp, dbServerName, tableName }
+    ))
+    return dataClassSet(tables, newData)
+      .then(() => {
+        tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData)
+        setSelectedRowKeys([])
+        selectedRows.current = []
+      })
+  }
   useEffect(() => {
-    refresh()
-  }, [selected?.dataAssetIp, selected?.dbServerName])
+    if (!fieldVisible) {
+      refresh()
+    }
+  }, [selected?.dataAssetIp, selected?.dbServerName, fieldVisible])
 
   useEffect(() => {
     setFieldVisible(!!selected?.tableName)
@@ -60,7 +75,7 @@ function DatabaseTable (props) {
       title: '表名',
       fixed: 'left',
       render: (value, record) => (
-        <Button type='link' size='small' onClick={handleTableSelect}>{value}</Button>
+        <Button type='link' size='small' onClick={() => handleTableSelect(record)}>{value}</Button>
       )
     },
     {
@@ -72,7 +87,12 @@ function DatabaseTable (props) {
       title: '分类',
       render (value, record) {
         if (editableKeys.includes(record.tableName)) {
-          return <DataClassSelect value={value} />
+          return (
+            <DataClassSelect
+              value={value}
+              onChange={tableClass => tableDataUpdate([record], { tableClass })}
+            />
+          )
         } else {
           return value
         }
@@ -83,7 +103,12 @@ function DatabaseTable (props) {
       title: '分级',
       render (value, record) {
         if (editableKeys.includes(record.tableName)) {
-          return <AssetGradeSelect value={value} />
+          return (
+            <AssetGradeSelect
+              value={value}
+              onChange={tableGrade => tableDataUpdate([record], { tableGrade })}
+            />
+          )
         } else {
           return value
         }
@@ -115,9 +140,12 @@ function DatabaseTable (props) {
       align: 'center',
       fixed: 'right',
       width: 80,
-      render (value) {
-        return <StatusSwitch value={value} />
-      }
+      render: (value, record) => (
+        <StatusSwitch
+          value={value}
+          fetcher={tableShowStatus => tableDataUpdate([record], { tableShowStatus })}
+        />
+      )
     },
     {
       dataIndex: 'op',
@@ -153,17 +181,25 @@ function DatabaseTable (props) {
 
   const querier = {
     forms: [
-      <Input key='name' name='name' placeholder='表名/表中文名' />,
+      <Input key='keyword' name='keyword' placeholder='表名/表中文名' />,
       <DataClassSelect key='tableClass' name='tableClass' placeholder='分类搜索' />,
       <AssetGradeSelect key='tableGrade' name='tableGrade' placeholder='分级搜索' />
     ]
   }
   if (editable) {
     querier.buttons = [
-      <ClassifySetModal key='class' disabled={isEmpty(selected)} onOk={refresh}>
-        设置分级
+      <ClassifySetModal
+        key='class'
+        disabled={isEmpty(selectedRowKeys)}
+        onOk={tableClass => tableDataUpdate(selectedRows.current, { tableClass })}
+      >
+        设置分类
       </ClassifySetModal>,
-      <GradeSetModal key='grade' disabled={isEmpty(selected)} onOk={refresh}>
+      <GradeSetModal
+        key='grade'
+        disabled={isEmpty(selectedRowKeys)}
+        onOk={tableGrade => tableDataUpdate(selectedRows.current, { tableGrade })}
+      >
         设置分级
       </GradeSetModal>
     ]
@@ -203,7 +239,10 @@ function DatabaseTable (props) {
               scroll={{ x: 1600, y: scrollY }}
               rowSelection={{
                 selectedRowKeys,
-                onChange: setSelectedRowKeys
+                onChange: (keys, rows) => {
+                  setSelectedRowKeys(keys)
+                  selectedRows.current = rows
+                }
               }}
             />
           )

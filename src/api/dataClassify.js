@@ -9,9 +9,10 @@ export const dataClassList = (params) => {
 /**
  * 表设置分级分类标注
  */
-export const dataClassSet = (params) => {
-  return axios.get(`${API_VER}/web/table_asset_tag/tag`, {
-    params
+export const dataClassSet = (tables, data) => {
+  return axios.put(`${API_VER}/web/table_asset_tag/tag`, {
+    ...data,
+    tables
   })
 }
 
