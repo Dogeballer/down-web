@@ -92,6 +92,7 @@ function DataAssetDetail () {
       title: '表数量',
       dataIndex: 'tableVolume',
       width: 150,
+      align: 'right',
       render: (value) => (
         !isNaN(value) ? thousandComma(Number(value)) : ''
       )
@@ -99,7 +100,8 @@ function DataAssetDetail () {
     {
       title: '数据量',
       dataIndex: 'dataVolume',
-      width: 150,
+      width: 200,
+      align: 'right',
       render: (value) => formatDataVolume(value)
     },
     {
@@ -230,7 +232,7 @@ function DataAssetDetail () {
                 rowKey='id'
                 loading={loading}
                 virtual={false}
-                scroll={{ x: 2100, y: scrollY }}
+                scroll={{ x: 2150, y: scrollY }}
                 dataSource={data}
                 columns={columns}
                 pagination={pagination}
