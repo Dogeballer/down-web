@@ -50,7 +50,7 @@ export const INIT_FILTER = {
 export const INIT_PAGE = {
   total: 0,
   // size: 'small',
-  showQuickJumper: true,
+  // showQuickJumper: true,
   showSizeChanger: true,
   defaultPageSize: PAGE_SIZE,
   pageSizeOptions: ['20', '50', '100', '200'],

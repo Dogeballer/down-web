@@ -59,14 +59,16 @@ function ProTable (props, ref) {
       })
   }
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page, pageSize) => {
     queryData.current = {
       ...queryData.current,
-      page
+      page,
+      limit: pageSize
     }
     dataFetch()
     setPagination(prev => ({
       ...prev,
+      pageSize,
       current: page
     }))
   }

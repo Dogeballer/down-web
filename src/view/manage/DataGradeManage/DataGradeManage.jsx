@@ -15,7 +15,8 @@ const DataGradeManage = () => {
   const columns = [
     {
       dataIndex: 'assetClassName',
-      title: '分类名称'
+      title: '分类名称',
+      fixed: 'left'
     },
     {
       dataIndex: 'assetClassCode',
@@ -30,13 +31,14 @@ const DataGradeManage = () => {
     {
       dataIndex: 'sortNo',
       title: '排序',
-      width: 150
+      width: 100
     },
     {
       dataIndex: 'op',
       title: '操作',
       width: 220,
       align: 'center',
+      fixed: 'right',
       render: (value, record) => (
         <>
           <Button
