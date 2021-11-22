@@ -91,7 +91,6 @@ function DataAssetDetail () {
       title: '表数量',
       dataIndex: 'tableVolume',
       width: 150,
-      align: 'center',
       render: (value) => (
         !isNaN(value) ? thousandComma(Number(value)) : ''
       )
@@ -100,7 +99,6 @@ function DataAssetDetail () {
       title: '数据量(万)',
       dataIndex: 'dataVolume',
       width: 150,
-      align: 'center',
       render: (value) => !isNaN(value) ? thousandComma(Number(value.match(/^\d+(?:\.\d{0,2})?/))) : ''
     },
     {
