@@ -5,9 +5,9 @@ import { Modal, Input, Button } from 'antd'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import { NumericalInput } from '@cecdataFE/bui'
 import { DICT_SET, modalFromLayout } from '../../../../../constant'
+import { validator } from '../../../../../lib/validator'
 import DictSelect from '../../../../../components/DictSelect'
 import AssetGradeSelect from '../../../../../components/AssetGradeSelect'
-import IPv4Input from '../../../../../components/IPv4Input'
 
 const AddEditModal = (props) => {
   const [form] = Form.useForm()
@@ -35,6 +35,7 @@ const AddEditModal = (props) => {
       console.log('form commit failed:', error)
     }
   }
+
   return (
     <>
       {
@@ -72,11 +73,16 @@ const AddEditModal = (props) => {
                 <Form.Item
                   label='数据资产IP'
                   name='dataAssetIp'
-                  rules={[{
-                    required: true, message: '请输入数据资产IP'
-                  }]}
+                  rules={[
+                    {
+                      required: true, message: '请输入数据资产IP'
+                    },
+                    {
+                      validator: validator
+                    }
+                  ]}
                 >
-                  <IPv4Input maxLength={50} placeholder='请输入数据资产IP' />
+                  <Input maxLength={50} placeholder='请输入数据资产IP' />
                 </Form.Item>
                 <Form.Item
                   label='目标端口'
