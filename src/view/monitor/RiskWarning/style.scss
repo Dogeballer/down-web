@@ -1,0 +1,10 @@
+.section {
+  background: white;
+  padding: 0 16px 0;
+
+  :global {
+    .ant-tabs-bar {
+      margin-bottom: 8px;
+    }
+  }
+}

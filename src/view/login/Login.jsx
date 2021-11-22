@@ -1,25 +1,29 @@
 import React, { Component } from 'react'
-import md5 from 'md5'
 import moment from 'moment'
 import { Form, Icon, Input, Button, Row, Col, message } from 'antd'
-import { history } from '@cecdataFE/bui'
+import Captcha from 'captcha-mini'
+import { history, emitter } from '@cecdataFE/bui'
 import logo from '../../assets/images/frame/cec-data-logo.png'
 import { isLogin, setUserData } from '../../lib/storage'
-import { login, getCaptchaCode } from '../../api/login'
+import { USER_LIST } from '../../constant'
+import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import style from './style.scss'
+import packageJson from '../../../package.json'
 
 const FormItem = Form.Item
+const { emitterGetRoute } = emitter
 class Login extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      captchaImg: '',
-      captchaId: '',
       loading: false
     }
   }
 
+  captchaCanvas = React.createRef()
+
   componentDidMount () {
+    this.resetCaptcha()
     if (isLogin()) {
       return history.push('/')
     }
@@ -27,17 +31,8 @@ class Login extends Component {
   }
 
   resetCaptcha = () => {
-    getCaptchaCode().then(res => {
-      const data = res.data || res
-      const captchaCode = 'data:image/png;base64,' + data.captchaImg
-      const captchaCodeId = data.captchaId
-      this.setState({
-        captchaImg: captchaCode,
-        captchaId: captchaCodeId
-      })
-    }).catch(e => {
-      message.error('获取验证码失败')
-    })
+    const captcha1 = new Captcha({ fontSize: 70, length: 4 })
+    captcha1.draw(this.captchaCanvas.current, r => { this.captcha = r })
   }
 
   handleSubmit = (e) => {
@@ -46,87 +41,77 @@ class Login extends Component {
     form.validateFields((err, values) => {
       if (err) return
       this.setState({ loading: true })
-      const { userPwd, captchaCode, userName, captchaId } = values
-      if (userName === 'root' && userPwd === 'root') {
-          setUserData({userName, password: userPwd})
+      const { userPwd, userName, captcha } = values
+      if (this.captcha.toLowerCase() !== captcha.trim().toLowerCase()) {
+        this.props.form.setFields({
+          captcha: { value: captcha, errors: [new Error('验证码错误')] }
+        })
+        this.resetCaptcha()
+      } else {
+        const userInfo = USER_LIST.find(v => v.userName === userName && v.userPwd === userPwd)
+        if (!isEmpty(userInfo)) {
+          setUserData(userInfo)
           setTimeout(() => {
+            emitterGetRoute()
             history.replace('/')
           }, 100)
+        } else {
+          message.error('用户名与密码不匹配')
+        }
       }
       this.setState({ loading: false })
-      // login({
-      //   userName,
-      //   userPwd: md5(userPwd),
-      //   captchaId,
-      //   captchaCode: captchaCode.toLowerCase()
-      // }).then(userData => {
-      //   setUserData(userData)
-      //   setTimeout(() => {
-      //     history.replace('/')
-      //   }, 40)
-      //   this.setState({ loading: false })
-      // }).catch(err => {
-      //   this.resetCaptcha()
-      //   message.error(err?.data?.message || err?.message || '登录失败')
-      //   this.setState({ loading: false })
-      // })
     })
   }
 
   render () {
+    const { loading } = this.state
     const { getFieldDecorator } = this.props.form
-    const { captchaImg, captchaId, loading  } = this.state
 
     return (
       <div className={style['login-wrapper']}>
         <div className={style['login-body']}>
           <div className={style['login-logo']}>
-            <img className={style['logo-img']} src={logo} alt='logo' />
-            <h1>人工智能数据安全检测平台</h1>
+            <h1>{packageJson.projectName}</h1>
           </div>
           <Form onSubmit={this.handleSubmit} className={style['login-form']}>
-              <FormItem>
-                {getFieldDecorator('userName', {
-                  rules: [{ required: true, message: '账户不可为空' }]
-                })(
-                  <Input size='large' prefix={<Icon type='user' />} placeholder='账户' />
-                )}
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator('userPwd', {
-                  rules: [{ required: true, message: '密码不可为空' }]
-                })(
-                  <Input.Password size='large' prefix={<Icon type='lock' />} placeholder='密码' />
-                )}
-              </FormItem>
-              <FormItem>
-                <Row gutter={8}>
-                  <Col span={16}>
-                    {getFieldDecorator('captchaCode', {
-                        rules: [{ required: true, message: '验证码不可为空' }]
-                    })(
-                      <Input size='large' placeholder='请输入验证码' />
-                    )}
-                  </Col>
-                  <Col span={8} style={{ height: 40 }}>
-                    <img
-                      className='login-captcha'
-                      src={captchaImg}
-                      onClick={this.resetCaptcha}
-                      alt='验证码'
-                    />
-                  </Col>
-                </Row>
-              </FormItem>
-              <FormItem style={{ display: 'none' }}>
-                {getFieldDecorator('captchaId', {
-                    initialValue: captchaId
-                })(
-                  <Input />
-                )}
-              </FormItem>
-              <Button loading={loading} size='large' block type='primary' htmlType='submit'>登录</Button>
-            </Form>
+            <FormItem>
+              {getFieldDecorator('userName', {
+                rules: [{ required: true, message: '账户不可为空' }]
+              })(
+                <Input size='large' prefix={<Icon type='user' />} placeholder='账户' />
+              )}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('userPwd', {
+                rules: [{ required: true, message: '密码不可为空' }]
+              })(
+                <Input.Password size='large' prefix={<Icon type='lock' />} placeholder='密码' />
+              )}
+            </FormItem>
+            <FormItem>
+              <Row gutter={8}>
+                <Col span={16}>
+                  {getFieldDecorator('captcha', {
+                    rules: [{ required: true, message: '验证码不可为空' }]
+                  })(
+                    <Input size='large' placeholder='请输入验证码' />
+                  )}
+                </Col>
+                <Col span={8} style={{ height: 40 }}>
+                  <canvas className={style.captcha} ref={this.captchaCanvas} />
+                </Col>
+              </Row>
+            </FormItem>
+            <Button
+              block
+              size='large'
+              type='primary'
+              htmlType='submit'
+              loading={loading}
+            >
+              登录
+            </Button>
+          </Form>
         </div>
         <div className={style['login-footer']}>
           &copy;2018-{moment(Date.now()).year()} 中电数据.  All Rights Reserved.中电数据
@@ -137,4 +122,3 @@ class Login extends Component {
 }
 
 export default Form.create()(Login)
-

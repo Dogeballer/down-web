@@ -1,35 +1,31 @@
 import axios from 'axios'
 import { message } from 'antd'
-import cancelToken from './cancelToken'
 import { history } from '@cecdataFE/bui'
-import utils from '../../lib/utils'
-
-let cancel // 请求取消
-let cancelTokenInstance // cancelToken 实例
-
-// 路由跳转时取消请求
-utils.addEvent(window, 'hashchange', () => {
-  if (cancel) {
-    cancel('请求取消')
-    cancelTokenInstance = null
-  }
-})
+import { getUserData } from '../../lib/storage'
 
 // 获取环境变量里面的基础 API 路径，设置默认的URL
 axios.defaults.baseURL = window.__smp_config.REACT_ENV_API_URL
 
 // 请求拦截器
 axios.interceptors.request.use(config => {
-  if (!cancelTokenInstance) {
-    cancelTokenInstance = cancelToken((c) => {
-      cancel = c
+  // 清空params里的 '' null undefined
+  if (config.params) {
+    const params = {...config.params}
+    Object.keys(params).map(key => {
+      if (typeof params[key] === 'undefined' || params[key] === '' || params[key] === null) {
+        delete params[key]
+      }
     })
+    config.params = params
   }
-  config.cancelToken = cancelTokenInstance
+
   config.timeout = 30000 // 超时时间30s
   // requestCount++
   // 增加 token 头
   // config.headers.common['token'] = token
+  // 后端未做登录，暂时将用户名加在header里
+  const userData = getUserData()
+  config.headers.common.username = userData.userName
   return config
 }, (err) => {
   // requestCount--
@@ -39,11 +35,11 @@ axios.interceptors.request.use(config => {
 // 响应拦截器
 axios.interceptors.response.use(response => {
   // requestCount--
-  const serverData = response.data
-  if (serverData.code !== 0) {
-    message.error(serverData.message || '服务端异常')
+  const data = response.data
+  if (typeof data.code === 'number' && data.code !== 0) {
+    message.error(data.message || '服务端异常')
   }
-  return response
+  return data
 }, (err) => {
   // requestCount--
   const serverData = (err.response && err.response.data) || {}

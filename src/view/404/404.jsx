@@ -10,12 +10,14 @@ class NotFoundedPage extends Component {
   goBack = () => {
     history.goBack()
   }
+
   goHome = () => {
     history.push('/')
   }
+
   render () {
     return (
-      <div className={style['nopage']}>
+      <div className={style.nopage}>
         <div className={style['nopage-content']}>
           <i className={style['nopage-img']} />
           <p className={style['nopage-text']}>抱歉，你访问的页面没有找到。</p>

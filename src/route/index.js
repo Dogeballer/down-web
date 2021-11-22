@@ -5,12 +5,13 @@ import NoMatch from '../view/404'
 import Login from '../view/login'
 import getRoutes from './getRoutes'
 import pkg from '../../package.json'
-import { isLogin } from '../lib/storage'
+import { isLogin, getUserData } from '../lib/storage'
 import { ReactComponent as ProIcon } from '../assets/images/frame/pro-icon.svg'
 import CacheRoute, { CacheSwitch, dropByCacheKey, clearCache, getCachingKeys, refreshByCacheKey } from 'react-router-cache-route'
 import menuBg from '../assets/images/frame/menu.png'
 import sysImg from '../assets/images/frame/sysImg.svg'
-import Toolbar from '../view/toolbar'
+import Toolbar from '../components/Toolbar'
+import Screen from '../screen'
 
 const aliveControl = {
   dropByCacheKey,
@@ -19,18 +20,43 @@ const aliveControl = {
   getCachingKeys
 }
 
+const ADMIN_ROLE = 'admin'
 class Router extends Component {
-  routes = null
-  constructor(props) {
-    super(props);
-    this.routes = getRoutes()
+  constructor (props) {
+    super(props)
+    this.state = {
+      pathname: '',
+      routes: getRoutes()
+    }
   }
+
   async componentDidMount () {
-    if (!isLogin()) history.push('/login')
+    const hashPath = window.location.hash.slice(1)
+    this.refreshRoutes(hashPath)
+    history.listen(location => {
+      const pathname = location.pathname
+      this.refreshRoutes(pathname)
+    })
+  }
+
+  refreshRoutes = (pathname) => {
+    const paths = ['/screen', '/login']
+    if (!paths.includes(pathname)) {
+      if (!isLogin()) {
+        history.push('/login')
+      } else {
+        let routes = getRoutes()
+        const userData = getUserData()
+        if (userData?.role !== ADMIN_ROLE) {
+          routes = routes.filter(v => v.path !== '/statistics')
+        }
+        this.setState({ routes })
+      }
+    }
   }
 
   renderRoute = (routes) => {
-    let renderRouters = []
+    const renderRouters = []
     const loopRoutes = (routes) => {
       routes.forEach(route => {
         if (route.routes?.length) loopRoutes(route.routes)
@@ -43,7 +69,7 @@ class Router extends Component {
             className='ka-wrapper'
             key={route.path}
             path={route.path}
-            cacheKey={({location: {pathname, search}}) => (pathname + search)}
+            cacheKey={({ location: { pathname, search } }) => (pathname + search)}
             render={props => (<route.component {...props} />)}
           />
         )
@@ -59,7 +85,8 @@ class Router extends Component {
   }
 
   render () {
-    const defaultRoute = this.getInitRoute(this.routes)
+    const { routes } = this.state
+    const defaultRoute = this.getInitRoute(routes)
     const redirectTo = defaultRoute || '/login'
 
     return (
@@ -67,24 +94,29 @@ class Router extends Component {
         <CacheSwitch>
           <Route exact path='/login' component={Login} />
           <Route exact path='/404' component={NoMatch} />
+          <Route exact path='/screen' component={Screen} />
           <Route exact path='/'>
             <Redirect to={redirectTo} />
           </Route>
-          <Layout
-            proKey={'smp'}
-            showBreadcrumb
-            menuBg={menuBg}
-            routes={this.routes}
-            defaultRoute={defaultRoute}
-            proNameImg={sysImg}
-            proIcon={<ProIcon width={24} height={24} fill={'#FFFFFF'} />}
-            proName={pkg.projectName}
-            version={pkg.version}
-            aliveControl={aliveControl}
-            toolbar={<Toolbar />}
-          >
-            {this.renderRoute(this.routes)}
-          </Layout>
+          {
+            isLogin() && (
+              <Layout
+                proKey='smp'
+                showBreadcrumb
+                menuBg={menuBg}
+                routes={routes}
+                defaultRoute={defaultRoute}
+                proNameImg={sysImg}
+                proIcon={<ProIcon width={24} height={24} fill='#FFFFFF' />}
+                proName={pkg.projectName}
+                version={pkg.version}
+                aliveControl={aliveControl}
+                toolbar={<Toolbar />}
+              >
+                {this.renderRoute(routes)}
+              </Layout>
+            )
+          }
         </CacheSwitch>
       </HashRouter>
     )

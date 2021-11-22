@@ -1,0 +1,43 @@
+.dui-fuzhou-map {
+  position: relative;
+
+  &-tip {
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    color: white;
+    width: fit-content;
+    background: rgb(0, 60, 110);
+    padding: 12px;
+    font-size: 22px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+    border:rgb(41, 201, 218) 2px solid;
+    border-radius: 4px;
+    transform: translate(52px, -50%);
+
+    &:after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(-9px, -50%) rotate(45deg);
+      border:rgb(41, 201, 218) 2px solid;
+      background: rgb(0, 60, 110);
+      border-right: none;
+      border-top: none;
+    }
+
+    &-name {
+      white-space: nowrap;
+    }
+
+    &-content {
+      white-space: nowrap;
+    }
+  }
+}

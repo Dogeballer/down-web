@@ -1,8 +1,8 @@
 import React from 'react'
 
-import {Avatar, Dropdown, Menu} from 'antd';
-import avatar from '../../assets/images/frame/avatar.png';
-import {history, Icon} from '@cecdataFE/bui';
+import { Avatar, Dropdown, Menu } from 'antd'
+import avatar from '../../assets/images/frame/avatar.png'
+import { history, Icon } from '@cecdataFE/bui'
 import { logout, getUserData } from '../../lib/storage'
 import style from './style.scss'
 
@@ -36,9 +36,9 @@ const Toolbar = () => {
       placement='bottomRight'
     >
       <div className={style['header-user']}>
-          <span className={style['header-user-name']}>
-            {userData ? userData.userName : 'cecdata'}
-          </span>
+        <span className={style['header-user-name']}>
+          {userData ? userData.userName : 'cecdata'}
+        </span>
         <Avatar size={32} src={avatar} />
         <Icon type='icon-shangsanjiaoxing' className={style['header-user-triangle']} />
       </div>

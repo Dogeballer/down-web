@@ -3,6 +3,12 @@ import AppAssetAcct from '../view/statistics/AppAssetAcct'
 import AppAssetDetail from '../view/statistics/AppAssetDetail'
 import DataAssetDetail from '../view/statistics/DataAssetDetail'
 import DataAssetAcct from '../view/statistics/DataAssetAcct'
+import FileAssetDetail from '../view/statistics/FileAssetDetail'
+import DataGradeManage from '../view/manage/DataGradeManage'
+import ClassifyGradeMark from '../view/manage/ClassifyGradeMark'
+import RiskWarning from '../view/monitor/RiskWarning/RiskWarning'
+import AllLogs from '../view/monitor/AllLogs/AllLogs'
+import DataClassifyGrade from '../view/statistics/DataClassifyGrade'
 
 export default [
   {
@@ -11,16 +17,76 @@ export default [
     isChild: true, // 叶子路由
     component: Home,
     meta: {
-      name: '首页',
-      icon: 'home'
+      name: '控制台',
+      icon: 'console'
     }
+  },
+  {
+    path: '/risk',
+    component: null,
+    meta: {
+      name: '安全监测',
+      icon: 'monitor'
+    },
+    routes: [
+      {
+        exact: true,
+        path: '/risk/warn',
+        isChild: true,
+        component: RiskWarning,
+        meta: {
+          name: '风险预警',
+          icon: 'home'
+        }
+      },
+      {
+        exact: true,
+        path: '/risk/logs',
+        isChild: true,
+        component: AllLogs,
+        meta: {
+          name: '所有日志',
+          icon: 'home'
+        }
+      }
+    ]
+  },
+  {
+    path: '/manage',
+    component: null,
+    meta: {
+      name: '数据资产管理',
+      icon: 'data'
+    },
+    routes: [
+      {
+        exact: true,
+        path: '/manage/manage',
+        isChild: true,
+        component: DataGradeManage,
+        meta: {
+          name: '数据分级管理',
+          icon: 'home'
+        }
+      },
+      {
+        exact: true,
+        path: '/manage/mark',
+        isChild: true,
+        component: ClassifyGradeMark,
+        meta: {
+          name: '分级分类标注',
+          icon: 'home'
+        }
+      }
+    ]
   },
   {
     path: '/statistics',
     component: null,
     meta: {
       name: '数据资产统计',
-      icon: 'home'
+      icon: 'statistics'
     },
     routes: [
       {
@@ -58,8 +124,25 @@ export default [
         meta: {
           name: '应用资产账号'
         }
+      },
+      {
+        exact: true,
+        path: '/statistics/file/detail',
+        isChild: true,
+        component: FileAssetDetail,
+        meta: {
+          name: '文件资产详情'
+        }
+      },
+      {
+        exact: true,
+        path: '/statistics/data/classify',
+        isChild: true,
+        component: DataClassifyGrade,
+        meta: {
+          name: '数据分类分级'
+        }
       }
     ]
   }
 ]
-
