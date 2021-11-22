@@ -235,15 +235,15 @@ function DatabaseTable (props) {
   const title = useMemo(() => {
     const { dataAssetIp, dbServerName, tableName } = selected ?? {}
     if (tableName) {
-      return `[${dataAssetIp}/${dbServerName}]${tableName}`
+      return `[ ${dataAssetIp} / ${dbServerName} ] ${tableName}`
     }
     if (dbServerName) {
-      return `[${dataAssetIp}/${dbServerName}]`
+      return `[ ${dataAssetIp} / ${dbServerName} ]`
     }
     if (dataAssetIp) {
-      return `[${dataAssetIp}]`
+      return `[ ${dataAssetIp} ]`
     }
-    return '[所有]数据表'
+    return '[ 所有 ] 数据表'
   }, [selected?.key])
   const rowSelection = editable
     ? {
@@ -272,7 +272,7 @@ function DatabaseTable (props) {
               querier={querier}
               columns={columns.filter(c => c)}
               rowKey='id'
-              virtual={false}
+              // virtual={false}
               scroll={{ x: 1800, y: scrollY }}
               rowSelection={rowSelection}
             />
