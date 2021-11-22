@@ -18,8 +18,8 @@ import {
 } from '../../../api/appAssetDetail'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import StatusSwitch from '../../../components/StatusSwitch'
-import style from './style.scss'
 import tableDataModify from '../../../lib/tableDataModify'
+import style from './style.scss'
 
 const AppAssetDetail = () => {
   const filter = useRef({ ...INIT_FILTER })
