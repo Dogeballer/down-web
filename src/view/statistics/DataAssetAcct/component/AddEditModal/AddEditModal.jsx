@@ -95,11 +95,12 @@ const AddEditModal = (props) => {
                           storage: dataStorageName
                         }
                       })}
-                    onChange={(value, { origin }) => {
+                    onChange={(value, option) => {
+                      const { origin } = option.props
                       form.setFieldsValue({
-                        dataAssetIp: origin.ip,
+                        dataAssetIp: origin?.ip,
                         dataAssetName: value,
-                        dataStorageName: origin.storage
+                        dataStorageName: origin?.storage
                       })
                     }}
                   />
