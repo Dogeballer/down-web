@@ -142,7 +142,7 @@ export default function (props) {
 
             <section className={style.section} style={{width: 500, height: 300}}>
               <div className={style.title}>数据异常流动分布</div>
-              <ExceptionChart className={style.pie} option={{color: pieColors}} theme='shine' style={{height: 250}} />
+              <ExceptionChart className={style.pie} theme='shine' style={{height: 250}} />
             </section>
           </div>
 
@@ -157,7 +157,7 @@ export default function (props) {
 
           <section className={style.section} style={{width: 400, height: 360}}>
             <div className={style.title}>应用漏洞风险</div>
-            <AppBugChart className={style.pie} option={{color: pieColors}} theme='shine' style={{height: 300}} />
+            <AppBugChart className={style.pie} theme='shine' style={{height: 300}} />
           </section>
 
           <section className={style.section} style={{width: 400, height: 360}}>

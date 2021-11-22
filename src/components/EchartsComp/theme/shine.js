@@ -3,11 +3,10 @@ import shine from './shine.json'
 import * as echarts from 'echarts'
 
 export const pieColors = [
-  '#1479e9',
-  '#11a6ae',
-  '#24a654',
-  '#d5b021',
-  ...shine.color
+  shine.color[2],
+  shine.color[1],
+  shine.color[0],
+  ...shine.color.slice().reverse()
 ]
 
 echarts.registerTheme('shine', shine)
