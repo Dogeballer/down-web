@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Router as HashRouter, Route, Redirect } from 'react-router-dom'
-import { history, Layout, emitter } from '@cecdataFE/bui'
+import { history, Layout } from '@cecdataFE/bui'
 import NoMatch from '../view/404'
 import Login from '../view/login'
 import getRoutes from './getRoutes'
@@ -20,36 +20,37 @@ const aliveControl = {
   getCachingKeys
 }
 
-const {
-  onGetRoute
-} = emitter
 const ADMIN_ROLE = 'admin'
 class Router extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      pathname: '',
       routes: getRoutes()
     }
   }
 
   async componentDidMount () {
-    if (!isLogin()) {
-      history.push('/login')
-    } else {
-      this.refreshRoutes()
-    }
-    onGetRoute(() => {
-      this.refreshRoutes()
+    const hashPath = window.location.hash.slice(1)
+    this.refreshRoutes(hashPath)
+    history.listen(location => {
+      const pathname = location.pathname
+      this.refreshRoutes(pathname)
     })
   }
 
-  refreshRoutes = () => {
-    let routes = getRoutes()
-    const userData = getUserData()
-    if (userData?.role !== ADMIN_ROLE) {
-      routes = routes.filter(v => v.path !== '/statistics')
+  refreshRoutes = (pathname) => {
+    const paths = ['/screen', '/login']
+    if (!isLogin() && !paths.includes(pathname)) {
+      history.push('/login')
+    } else {
+      let routes = getRoutes()
+      const userData = getUserData()
+      if (userData?.role !== ADMIN_ROLE) {
+        routes = routes.filter(v => v.path !== '/statistics')
+      }
+      this.setState({ routes })
     }
-    this.setState({ routes })
   }
 
   renderRoute = (routes) => {
@@ -95,21 +96,25 @@ class Router extends Component {
           <Route exact path='/'>
             <Redirect to={redirectTo} />
           </Route>
-          <Layout
-            proKey='smp'
-            showBreadcrumb
-            menuBg={menuBg}
-            routes={routes}
-            defaultRoute={defaultRoute}
-            proNameImg={sysImg}
-            proIcon={<ProIcon width={24} height={24} fill='#FFFFFF' />}
-            proName={pkg.projectName}
-            version={pkg.version}
-            aliveControl={aliveControl}
-            toolbar={<Toolbar />}
-          >
-            {this.renderRoute(routes)}
-          </Layout>
+          {
+            isLogin() && (
+              <Layout
+                proKey='smp'
+                showBreadcrumb
+                menuBg={menuBg}
+                routes={routes}
+                defaultRoute={defaultRoute}
+                proNameImg={sysImg}
+                proIcon={<ProIcon width={24} height={24} fill='#FFFFFF' />}
+                proName={pkg.projectName}
+                version={pkg.version}
+                aliveControl={aliveControl}
+                toolbar={<Toolbar />}
+              >
+                {this.renderRoute(routes)}
+              </Layout>
+            )
+          }
         </CacheSwitch>
       </HashRouter>
     )
