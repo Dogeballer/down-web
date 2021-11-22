@@ -1,3 +1,5 @@
+import { thousandComma } from '@cecdataFE/bui'
+
 // 数组去重
 export function unique (arr) {
   return Array.from(new Set(arr))
@@ -20,4 +22,17 @@ export const sumNum = (...args) => {
   })
 
   return ret
+}
+
+export const formatDataVolume = (value) => {
+  let v = ''
+  if (!isNaN(value)) {
+    const tmp = Number(value)
+    if (tmp > 10000) {
+      v = thousandComma(Number(`${(tmp / 10000)}`.match(/^\d+(?:\.\d{0,1})?/))) + ' 万条'
+    } else {
+      v = `${tmp} 条`
+    }
+  }
+  return v
 }
