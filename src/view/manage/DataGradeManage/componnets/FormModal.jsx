@@ -39,10 +39,10 @@ function FormModal (props) {
   const handleOk = () => {
     form.submit()
   }
-  const disabledValues = []
-  treeForeach(record, node => {
-    disabledValues.push(node.assetClassName)
-  })
+  // const disabledValues = []
+  // treeForeach(record, node => {
+  //   disabledValues.push(node.assetClassName)
+  // })
   // console.log(record)
   return (
     <Modal
@@ -60,7 +60,8 @@ function FormModal (props) {
           label='上级分类'
           rules={[{ required: true, message: '请选择上级分类' }]}
         >
-          <DataClassSelect hasRootNode disabledValues={disabledValues} />
+          {/* <DataClassSelect hasRootNode disabledValues={disabledValues} /> */}
+          <DataClassSelect hasRootNode disabled={record?.assetClassName} />
         </Form.Item>
         <Form.Item
           name='assetClassName'
