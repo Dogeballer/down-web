@@ -91,9 +91,10 @@ const AddEditModal = (props) => {
                           title: appAssetName
                         }
                       })}
-                    onChange={(value, { origin }) => {
+                    onChange={(value, option) => {
+                      const { origin } = option.props
                       form.setFieldsValue({
-                        appAssetIp: origin.ip,
+                        appAssetIp: origin?.ip,
                         appAssetName: value
                       })
                     }}
