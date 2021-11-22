@@ -7,7 +7,6 @@ const AssetGradeSelect = (props) => {
   return (
     <FetchSelect
       autoFetch
-      searchable
       fetch={getAssetGradeList}
       optionsGet={(response) => (response.data || []).map(
         ({ assetGradeName }) => {
