@@ -85,7 +85,7 @@ function ProTable (props, ref) {
 
   useImperativeHandle(ref, () => ({
     refresh: () => {
-      dataFetch()
+      dataFetch(true)
     },
     get tableSource () { return [...tableSource] },
     set tableSource (data) { setTableSource(data) }

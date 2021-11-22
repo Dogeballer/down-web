@@ -26,12 +26,14 @@ const DataGradeManage = () => {
     {
       dataIndex: 'dataLevel',
       title: '缺省分级',
-      width: 150
+      width: 150,
+      align: 'center'
     },
     {
       dataIndex: 'sortNo',
       title: '排序',
-      width: 100
+      width: 100,
+      align: 'right'
     },
     {
       dataIndex: 'op',
