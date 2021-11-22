@@ -4,7 +4,7 @@ import { Form } from 'antd4'
 import { Modal, Input, Button } from 'antd'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import { modalFromLayout } from '../../../../../constant'
-import IPv4Input from '../../../../../components/IPv4Input'
+import { validator } from '../../../../../lib/validator'
 
 const AddEditModal = (props) => {
   const [form] = Form.useForm()
@@ -69,11 +69,16 @@ const AddEditModal = (props) => {
                 <Form.Item
                   label='应用资产IP'
                   name='appAssetIp'
-                  rules={[{
-                    required: true, message: '请输入应用资产IP'
-                  }]}
+                  rules={[
+                    {
+                      required: true, message: '请输入应用资产IP'
+                    },
+                    {
+                      validator: validator
+                    }
+                  ]}
                 >
-                  <IPv4Input maxLength={50} placeholder='请输入应用资产IP' />
+                  <Input maxLength={50} placeholder='请输入应用资产IP' />
                 </Form.Item>
               </Form>
             </Modal>
