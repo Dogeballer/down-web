@@ -18,8 +18,9 @@ import { DATE_FORMAT, INIT_FILTER } from '../../../constant'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import AddEditModal from './component/AddEditModal'
 import StatusSwitch from '../../../components/StatusSwitch'
-import style from './style.scss'
 import tableDataModify from '../../../lib/tableDataModify'
+import { formatDataVolume } from '../../../lib/utils'
+import style from './style.scss'
 
 function DataAssetDetail () {
   const filter = useRef({ ...INIT_FILTER })
@@ -170,21 +171,6 @@ function DataAssetDetail () {
       }
     })
   }, [])
-
-  const formatDataVolume = (value) => {
-    let v = ''
-    if (!isNaN(value)) {
-      const tmp = Number(value)
-      if (tmp > 10000) {
-        // console.log(Number(`${(tmp / 1000)}`.match(/^\d+(?:\.\d{0,2})?/)))
-        // console.log(thousandComma(Number(`${(tmp / 1000)}`.match(/^\d+(?:\.\d{0,1})?/))))
-        v = thousandComma(Number(`${(tmp / 10000)}`.match(/^\d+(?:\.\d{0,1})?/))) + ' 万条'
-      } else {
-        v = `${tmp} 条`
-      }
-    }
-    return v
-  }
 
   const refresh = useCallback(() => {
     filter.current = { ...filter.current, ...INIT_FILTER }

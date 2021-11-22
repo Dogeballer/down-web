@@ -23,7 +23,7 @@ const Filter = (props) => {
       >
         <Input
           allowClear
-          placeholder='资产名称'
+          placeholder='文件名称'
           style={{ width: 200 }}
           maxLength={50}
         />
