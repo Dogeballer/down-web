@@ -96,7 +96,7 @@ export default function (props) {
       dataIndex: 'appIp'
     },
     {
-      title: '资产ip',
+      title: '资产IP',
       dataIndex: 'assetsIp'
     },
     {
