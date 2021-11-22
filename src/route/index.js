@@ -41,15 +41,17 @@ class Router extends Component {
 
   refreshRoutes = (pathname) => {
     const paths = ['/screen', '/login']
-    if (!isLogin() && !paths.includes(pathname)) {
-      history.push('/login')
-    } else {
-      let routes = getRoutes()
-      const userData = getUserData()
-      if (userData?.role !== ADMIN_ROLE) {
-        routes = routes.filter(v => v.path !== '/statistics')
+    if (!paths.includes(pathname)) {
+      if (!isLogin()) {
+        history.push('/login')
+      } else {
+        let routes = getRoutes()
+        const userData = getUserData()
+        if (userData?.role !== ADMIN_ROLE) {
+          routes = routes.filter(v => v.path !== '/statistics')
+        }
+        this.setState({ routes })
       }
-      this.setState({ routes })
     }
   }
 
