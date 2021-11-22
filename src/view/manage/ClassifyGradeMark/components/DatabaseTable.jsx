@@ -132,6 +132,14 @@ function DatabaseTable (props) {
         }
       }
     },
+    editable
+      ? null
+      : {
+          dataIndex: 'dataVolume',
+          title: '数据量(万)',
+          align: 'right',
+          width: 120
+        },
     {
       dataIndex: 'dataAssetIp',
       title: '资产IP',
