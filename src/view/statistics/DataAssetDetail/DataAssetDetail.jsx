@@ -96,10 +96,10 @@ function DataAssetDetail () {
       )
     },
     {
-      title: '数据量(万)',
+      title: '数据量',
       dataIndex: 'dataVolume',
       width: 150,
-      render: (value) => !isNaN(value) ? thousandComma(Number(value.match(/^\d+(?:\.\d{0,2})?/))) : ''
+      render: (value) => formatDataVolume(value)
     },
     {
       title: '来源方式',
@@ -170,6 +170,21 @@ function DataAssetDetail () {
       }
     })
   }, [])
+
+  const formatDataVolume = (value) => {
+    let v = ''
+    if (!isNaN(value)) {
+      const tmp = Number(value)
+      if (tmp > 10000) {
+        // console.log(Number(`${(tmp / 1000)}`.match(/^\d+(?:\.\d{0,2})?/)))
+        // console.log(thousandComma(Number(`${(tmp / 1000)}`.match(/^\d+(?:\.\d{0,1})?/))))
+        v = thousandComma(Number(`${(tmp / 10000)}`.match(/^\d+(?:\.\d{0,1})?/))) + ' 万条'
+      } else {
+        v = `${tmp} 条`
+      }
+    }
+    return v
+  }
 
   const refresh = useCallback(() => {
     filter.current = { ...filter.current, ...INIT_FILTER }
