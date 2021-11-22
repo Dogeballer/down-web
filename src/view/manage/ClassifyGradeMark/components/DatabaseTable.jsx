@@ -13,6 +13,7 @@ import { dataClassList, dataClassSet } from '../../../../api/dataClassify'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import tableDataModify from '../../../../lib/tableDataModify'
 import moment from 'moment'
+import { formatDataVolume } from '../../../../lib/utils'
 
 function DatabaseTable (props) {
   const { editable } = props
@@ -136,9 +137,10 @@ function DatabaseTable (props) {
       ? null
       : {
           dataIndex: 'dataVolume',
-          title: '数据量(万)',
+          title: '数据量',
           align: 'right',
-          width: 120
+          width: 120,
+          render: (value) => formatDataVolume(value)
         },
     {
       dataIndex: 'dataAssetIp',
