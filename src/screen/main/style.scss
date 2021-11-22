@@ -47,7 +47,7 @@
 .img {
   width: 68px;
   height: 68px;
-  margin-right: 16px;
+  margin-right: 12px;
 }
 
 .f1 {
@@ -66,4 +66,8 @@
   top: -30px;
   left: 588px;
   z-index: -1;
+}
+
+.pie {
+  transform: translateY(-5%);
 }

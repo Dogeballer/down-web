@@ -40,7 +40,11 @@ export default function (props) {
   const columns = [
     {
       title: 'ID',
-      dataIndex: mainKey
+      dataIndex: mainKey,
+      width: 60,
+      onCell: record => ({
+        tooltip: () => record[mainKey]
+      })
     },
     {
       title: '用户',
@@ -49,6 +53,8 @@ export default function (props) {
     {
       title: '操作类型',
       dataIndex: 'eventType',
+      width: 80,
+      align: 'center',
     },
     {
       title: '事件信息',
@@ -62,21 +68,22 @@ export default function (props) {
     },
     {
       title: '操作IP',
-      dataIndex: 'opIp'
+      dataIndex: 'opIp',
+      width: 128,
     },
     {
       title: '操作应用',
       dataIndex: 'opApp',
-      width: 80,
-      align: 'center',
     },
     {
       title: '应用IP',
-      dataIndex: 'appIp'
+      dataIndex: 'appIp',
+      width: 128,
     },
     {
       title: '资产IP',
-      dataIndex: 'assetsIp'
+      dataIndex: 'assetsIp',
+      width: 128,
     },
     {
       title: '目标端口',
@@ -90,7 +97,12 @@ export default function (props) {
     },
     {
       title: '资产类型',
-      dataIndex: 'assetsType'
+      dataIndex: 'assetsType',
+      width: 80,
+      align: 'center',
+      onCell: record => ({
+        tooltip: () => record.assetsType
+      })
     },
     {
       title: '资产等级',
@@ -99,17 +111,23 @@ export default function (props) {
       align: 'center'
     },
     {
-      title: '控制方式',
-      dataIndex: 'ctlType'
+      title: '控制方法',
+      dataIndex: 'ctlType',
+      width: 80,
+      align: 'center',
     },
     {
       title: '协议类型',
-      dataIndex: 'protocolType'
+      dataIndex: 'protocolType',
+      width: 80,
+      align: 'center',
     },
     {
       title: '操作时间',
       dataIndex: 'opTime',
-      render: v => v ? moment(v).format('YYYY-MM-DD HH:mm:ss') : ''
+      render: v => v ? moment(v).format('YYYY-MM-DD HH:mm:ss') : '',
+      width: 180,
+      align: 'center',
     },
     {
       title: '原始日志',
@@ -126,7 +144,7 @@ export default function (props) {
       <HeightKeepWrapper>
         {
           scrollY => <Table
-            scroll={{x: 2046, y: scrollY}}
+            scroll={{x: 2048, y: scrollY}}
             bordered
             rowKey={mainKey}
             loading={loading}
