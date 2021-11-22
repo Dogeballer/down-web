@@ -23,7 +23,7 @@ export default function (props) {
         series: [
           {
             type: 'pie',
-            radius: ['40%', '62%'],
+            radius: ['0%', '62%'],
             avoidLabelOverlap: true,
             label: {
               formatter: '{b}：{d}%'

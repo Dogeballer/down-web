@@ -19,7 +19,7 @@ const AddEditModal = (props) => {
   const handleVisibleChange = () => {
     setModalVisible(!modalVisible)
   }
-  const handleCancel = () => {
+  const handleClick = () => {
     setFieldsValue()
     handleVisibleChange()
   }
@@ -39,7 +39,7 @@ const AddEditModal = (props) => {
     <>
       {
         React.cloneElement(props.children, {
-          onClick: handleVisibleChange
+          onClick: handleClick
         })
       }
       {
@@ -54,7 +54,7 @@ const AddEditModal = (props) => {
               onCancel={() => setModalVisible(false)}
               footer={(
                 <>
-                  <Button onClick={handleCancel}>取消</Button>
+                  <Button onClick={handleClick}>取消</Button>
                   <Button type='primary' onClick={handleOk}>确定</Button>
                 </>
               )}
