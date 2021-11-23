@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Input, Spin } from 'antd'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { Button, Input, Spin } from 'antd'
 import Tree from 'antd4/es/tree'
 import 'antd4/es/tree/style/index.css'
 import style from './style.scss'
 import { dataClassTree } from '../../../../api/dataClassify'
 import ClassifyContext from '../context'
+import { treeForeach } from '@cecdataFE/bui/dist/lib/tree'
 
 function AsideTree (props) {
-  // const
   const { editable } = props
   const [treeData, setTreeData] = useState([])
+  const chinese = useRef(true)
   const [expandedKeys, setExpandedKeys] = useState([])
   const { state, dispatch } = useContext(ClassifyContext)
   const { selected } = state
@@ -34,7 +35,7 @@ function AsideTree (props) {
             }
             const tables = base.children ?? []
             for (const table of tables) {
-              table.title = table.tableName
+              table.title = chinese.current ? (table.tableNameNotes || table.tableName) : table.tableName
               table.key = `${ip.dataAssetIp}_${base.dbServerName}_${table.tableName}`
             }
           }
@@ -51,16 +52,26 @@ function AsideTree (props) {
     fetch()
   }, [])
 
-  const handleSelect = (keys, { node: { dataAssetIp, dbServerName, tableName, key } }) => {
-    dispatch('setSelected', { dataAssetIp, dbServerName, tableName, key })
+  const handleSelect = (keys, { node }) => {
+    dispatch('setSelected', node)
   }
   const handleSearch = (value) => {
     fetch(value)
+  }
+  const handleChineseSwitch = () => {
+    chinese.current = !chinese.current
+    treeForeach(treeData, (node, deep) => {
+      if (deep === 3) {
+        node.title = chinese.current ? (node.tableNameNotes || node.tableName) : node.tableName
+      }
+    })
+    setTreeData([...treeData])
   }
   return (
     <div className={style.aside}>
       <div className={style.top}>
         <Input.Search placeholder='搜索IP/库名/表名' onSearch={handleSearch} />
+        <Button type='link' size='large' icon='retweet' onClick={handleChineseSwitch} />
       </div>
       <div className={style.body}>
         <Spin spinning={loading}>
