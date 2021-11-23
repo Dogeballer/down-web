@@ -79,7 +79,7 @@ export const DICT_SET = {
   // 数据风险 类型， 用于控制台
   RISK_TYPES: [
     {value: 'ldfx',text: '漏洞风险'},
-    {value: 'wgfx',text: '违规险数'},
+    {value: 'wgfx',text: '违规风险'},
     {value: 'sjxl',text: '数据泄漏'},
     {value: 'kjcs',text: '跨境传输'},
     {value: 'gpfw',text: '高频访问'},
