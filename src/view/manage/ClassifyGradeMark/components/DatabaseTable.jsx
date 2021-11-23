@@ -76,9 +76,17 @@ function DatabaseTable (props) {
   useEffect(() => {
     const { last, prev } = lastSelected.current
     const visible = !!selected?.tableName
-    const shouldRefresh = (isEmpty(prev) && isEmpty(last)) ||
-      selected?.dataAssetIp !== last?.dataAssetIp ||
-      selected?.dbServerName !== last?.dbServerName
+    let shouldRefresh = isEmpty(prev) && isEmpty(last)
+    if (prev?.tableName && !selected?.tableName) {
+      shouldRefresh = shouldRefresh ||
+        selected?.dataAssetIp !== last?.dataAssetIp ||
+        selected?.dbServerName !== last?.dbServerName
+    } else {
+      shouldRefresh = shouldRefresh || true
+    }
+    // const shouldRefresh = (isEmpty(prev) && isEmpty(last)) ||
+    //   selected?.dataAssetIp !== last?.dataAssetIp ||
+    //   selected?.dbServerName !== last?.dbServerName
     if (!visible && shouldRefresh) {
       refresh()
     }
