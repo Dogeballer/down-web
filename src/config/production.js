@@ -1,6 +1,6 @@
 window.__smp_config = {
   REACT_ENV_API_URL: 'http://smp-server.dev-app.cecdata.com',
-  ICON_URL: '/static-file/cec-icon/index',
+  ICON_URL: 'http://www.cecdata.com/static-file/cec-icon/index',
   UAC_URL: '/static-file/uac-common-js-web/index',
   APP_CODE: 'RB'
 }

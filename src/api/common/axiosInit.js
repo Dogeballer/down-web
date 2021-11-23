@@ -25,7 +25,7 @@ axios.interceptors.request.use(config => {
   // config.headers.common['token'] = token
   // 后端未做登录，暂时将用户名加在header里
   const userData = getUserData()
-  config.headers.common.username = userData.userName
+  config.headers.common.username = userData?.userName
   return config
 }, (err) => {
   // requestCount--
