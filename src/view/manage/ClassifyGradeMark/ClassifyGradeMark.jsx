@@ -1,19 +1,32 @@
-import React, { useReducer } from 'react'
+import React, { useMemo, useReducer } from 'react'
 import { Resizer } from '@cecdataFE/bui'
 import AsideTree from './components/AsideTree'
 import ClassifyContext from './context'
 import DatabaseTable from './components/DatabaseTable'
 
 const initState = {
-  selected: null,
-  lastSelected: null
+  selected: null
 }
 const reducer = (state, action) => {
   const [type, payload] = action
   switch (type) {
     case 'setSelected': {
-      state.lastSelected = { ...state.selected }
-      state.selected = payload
+      const { dataAssetIp, dbServerName, tableName, tableNameNotes } = payload
+      let key = ''
+      if (tableName) {
+        key = `${dataAssetIp}_${dbServerName}_${tableName}`
+      } else if (dbServerName) {
+        key = `${dataAssetIp}_${dbServerName}`
+      } else if (dataAssetIp) {
+        key = dataAssetIp
+      }
+      state.selected = {
+        dataAssetIp,
+        dbServerName,
+        tableName,
+        tableNameNotes,
+        key
+      }
       return { ...state }
     }
   }

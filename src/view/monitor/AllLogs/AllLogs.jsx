@@ -167,7 +167,7 @@ export default function (props) {
         <Input onBlur={onChange('ip')} placeholder='操作IP' allowClear style={{ width: 138 }} />
         <Select onChange={onChange('et')} placeholder='操作类型' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
           {
-            ['查询','添加','更新','删除', '漏洞扫描', '数据防泄露'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
+            ['查询','添加','更新','删除', '漏洞扫描', '数据防泄漏'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>
         <Select onChange={onChange('app')} placeholder='应用' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
@@ -176,9 +176,7 @@ export default function (props) {
               '大数据采集平台',
               'ETL管理平台',
               '大数据检索平台',
-              '权限中心',
-              '大数据管理平台',
-              '数据服务',
+              '大数据服务平台',
             ].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>

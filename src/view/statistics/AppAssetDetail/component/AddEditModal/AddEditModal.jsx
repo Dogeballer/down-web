@@ -69,14 +69,9 @@ const AddEditModal = (props) => {
                 <Form.Item
                   label='应用资产IP'
                   name='appAssetIp'
-                  rules={[
-                    {
-                      required: true, message: '请输入应用资产IP'
-                    },
-                    {
-                      validator: validator
-                    }
-                  ]}
+                  rules={[{
+                    validator: validator
+                  }]}
                 >
                   <Input maxLength={50} placeholder='请输入应用资产IP' />
                 </Form.Item>

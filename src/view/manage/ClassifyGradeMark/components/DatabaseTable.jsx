@@ -22,14 +22,27 @@ function DatabaseTable (props) {
   const selectedRows = useRef([])
   const [editableKeys, setEditableKeys] = useState([])
   const tableRef = useRef()
+  const lastSelected = useRef({})
   const { state, dispatch } = useContext(ClassifyContext)
-  const { selected, lastSelected } = state
+  const { selected } = state
 
   const handleBack = () => {
-    dispatch('setSelected', lastSelected)
+    const { last } = lastSelected.current
+    if (last?.dbServerName) {
+      handleTableSelect({
+        dataAssetIp: selected.dataAssetIp,
+        dbServerName: selected.dbServerName
+      })
+    } else if (last?.dataAssetIp) {
+      handleTableSelect({
+        dataAssetIp: selected.dataAssetIp
+      })
+    } else {
+      dispatch('setSelected', {})
+    }
   }
-  const handleTableSelect = ({ dataAssetIp, dbServerName, tableName }) => {
-    dispatch('setSelected', { dataAssetIp, dbServerName, tableName, key: `${dataAssetIp}_${dbServerName}_${tableName}` })
+  const handleTableSelect = (record) => {
+    dispatch('setSelected', record)
   }
 
   const handleEditToggle = (record) => {
@@ -61,15 +74,20 @@ function DatabaseTable (props) {
       })
   }
   useEffect(() => {
+    const { last, prev } = lastSelected.current
     const visible = !!selected?.tableName
-    const shouldRefresh = (isEmpty(selected) && isEmpty(lastSelected)) ||
-      selected?.dataAssetIp !== lastSelected?.dataAssetIp ||
-      selected?.dbServerName !== lastSelected?.dbServerName
+    const shouldRefresh = (isEmpty(prev) && isEmpty(last)) ||
+      selected?.dataAssetIp !== last?.dataAssetIp ||
+      selected?.dbServerName !== last?.dbServerName
     if (!visible && shouldRefresh) {
       refresh()
     }
+    lastSelected.current = {
+      prev: { ...selected },
+      last: lastSelected.current.prev
+    }
     setFieldVisible(visible)
-  }, [selected, lastSelected])
+  }, [selected?.key])
 
   // useEffect(() => {
   //   debugger
@@ -243,9 +261,9 @@ function DatabaseTable (props) {
   }
 
   const title = useMemo(() => {
-    const { dataAssetIp, dbServerName, tableName } = selected ?? {}
+    const { dataAssetIp, dbServerName, tableName, tableNameNotes } = selected ?? {}
     if (tableName) {
-      return `[ ${dataAssetIp} / ${dbServerName} ] ${tableName}`
+      return `[ ${dataAssetIp} / ${dbServerName} ] ${tableNameNotes || tableName}`
     }
     if (dbServerName) {
       return `[ ${dataAssetIp} / ${dbServerName} ]`

@@ -98,7 +98,7 @@ function DataAssetDetail () {
       )
     },
     {
-      title: '数据量',
+      title: '数据量 (条)',
       dataIndex: 'dataVolume',
       width: 200,
       align: 'right',

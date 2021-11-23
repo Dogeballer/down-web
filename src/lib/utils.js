@@ -29,9 +29,9 @@ export const formatDataVolume = (value) => {
   if (!isNaN(value)) {
     const tmp = Number(value)
     if (tmp > 10000) {
-      v = thousandComma(Number(`${(tmp / 10000)}`.match(/^\d+(?:\.\d{0,1})?/))) + ' 万条'
+      v = thousandComma(Number(`${(tmp / 10000)}`.match(/^\d+(?:\.\d{0,1})?/))) + 'w'
     } else {
-      v = `${tmp} 条`
+      v = `${tmp}`
     }
   }
   return v
