@@ -40,71 +40,65 @@ const AddEditModal = (props) => {
           onClick: handleClick
         })
       }
-      {
-        modalVisible
-          ? (
-            <Modal
-              visible
-              centered
-              destroyOnClose
-              width={500}
-              title={`${isEmpty(record) ? '添加' : '编辑'}账号`}
-              onCancel={() => setModalVisible(false)}
-              footer={(
-                <>
-                  <Button onClick={handleClick}>取消</Button>
-                  <Button type='primary' onClick={handleOk}>确定</Button>
-                </>
-              )}
-            >
-              <Form className='smp-antd4-form' preserve={false} form={form} {...modalFromLayout.modal}>
-                <Form.Item name='appAssetIp' noStyle>
-                  <Input style={{ display: 'none' }} />
-                </Form.Item>
-                <Form.Item
-                  label='账号名称'
-                  name='appAssetUser'
-                  rules={[{
-                    required: true, message: '请输入账号名称'
-                  }]}
-                >
-                  <Input maxLength={50} placeholder='请输入账号名称' />
-                </Form.Item>
-                <Form.Item
-                  label='应用资产名称'
-                  name='appAssetName'
-                  rules={[{
-                    required: true, message: '请输入应用资产名称'
-                  }]}
-                >
-                  <FetchSelect
-                    autoFetch
-                    searchable
-                    placeholder='应用资产名称'
-                    fetch={getAppAssetDetailList}
-                    style={{ width: '100%' }}
-                    optionsGet={(response) => (response.data || []).map(
-                      ({ appAssetIp, appAssetName }) => {
-                        return {
-                          ip: appAssetIp,
-                          value: appAssetName,
-                          title: appAssetName
-                        }
-                      })}
-                    onChange={(value, option) => {
-                      const { origin } = option.props
-                      form.setFieldsValue({
-                        appAssetIp: origin?.ip,
-                        appAssetName: value
-                      })
-                    }}
-                  />
-                </Form.Item>
-              </Form>
-            </Modal>
-            )
-          : null
-      }
+      <Modal
+        visible={modalVisible}
+        centered
+        destroyOnClose
+        width={500}
+        title={`${isEmpty(record) ? '添加' : '编辑'}账号`}
+        onCancel={() => setModalVisible(false)}
+        footer={(
+          <>
+            <Button onClick={handleClick}>取消</Button>
+            <Button type='primary' onClick={handleOk}>确定</Button>
+          </>
+        )}
+      >
+        <Form className='smp-antd4-form' preserve={false} form={form} {...modalFromLayout.modal}>
+          <Form.Item name='appAssetIp' noStyle>
+            <Input style={{ display: 'none' }} />
+          </Form.Item>
+          <Form.Item
+            label='账号名称'
+            name='appAssetUser'
+            rules={[{
+              required: true, message: '请输入账号名称'
+            }]}
+          >
+            <Input maxLength={50} placeholder='请输入账号名称' />
+          </Form.Item>
+          <Form.Item
+            label='应用资产名称'
+            name='appAssetName'
+            rules={[{
+              required: true, message: '请输入应用资产名称'
+            }]}
+          >
+            <FetchSelect
+              autoFetch
+              searchable
+              placeholder='应用资产名称'
+              fetch={getAppAssetDetailList}
+              style={{ width: '100%' }}
+              optionsGet={(response) => (response.data || []).map(
+                ({ appAssetIp, appAssetName }) => {
+                  return {
+                    ip: appAssetIp,
+                    value: appAssetName,
+                    title: appAssetName
+                  }
+                })}
+              onChange={(value, option) => {
+                const { origin } = option.props
+                form.setFieldsValue({
+                  appAssetIp: origin?.ip,
+                  appAssetName: value
+                })
+              }}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   )
 }

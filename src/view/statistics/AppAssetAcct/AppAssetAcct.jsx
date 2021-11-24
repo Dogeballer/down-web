@@ -30,18 +30,12 @@ const AppAssetAcct = () => {
       dataIndex: 'id',
       fixed: 'left',
       width: 100,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value, record, idx) => idx + 1
     },
     {
-      title: '资产账号',
+      title: '账号名称',
       dataIndex: 'appAssetUser',
       width: 200,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.appAssetUser
       })
@@ -49,9 +43,6 @@ const AppAssetAcct = () => {
     {
       title: '应用资产名称',
       dataIndex: 'appAssetName',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.appAssetName
       })
@@ -60,28 +51,19 @@ const AppAssetAcct = () => {
       title: '来源方式',
       dataIndex: 'sourceMode',
       width: 150,
-      align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
+      align: 'center'
     },
     {
       title: '操作人',
       dataIndex: 'operationUser',
       width: 150,
-      align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
+      align: 'center'
     },
     {
       title: '操作时间',
       dataIndex: 'operationTime',
       align: 'center',
       width: 184,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value) => (
         value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
       )
@@ -91,15 +73,12 @@ const AppAssetAcct = () => {
       dataIndex: 'showStatus',
       align: 'center',
       width: 150,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value, record) => (
         <StatusSwitch
           value={value}
-          fetcher={(value) => updateAcctShowStatus(record.id, value)}
-          onFinish={(value) => {
-            setData(tableDataModify(data, 'id', record, { showStatus: value }))
+          fetcher={(v) => updateAcctShowStatus(record.id, v)}
+          onFinish={(v) => {
+            setData(tableDataModify(data, 'id', record, { showStatus: v }))
           }}
         />
       )
@@ -110,9 +89,6 @@ const AppAssetAcct = () => {
       fixed: 'right',
       width: 100,
       align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value, record) => (
         <AddEditModal onOk={handleOk} record={record}>
           <Button size='small' type='link'>编辑</Button>
