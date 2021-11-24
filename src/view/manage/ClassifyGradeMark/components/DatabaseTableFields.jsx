@@ -33,7 +33,7 @@ function DatabaseTableFields (props) {
     return tableFieldSet(colNames, { ...newData, table: { dataAssetIp, dbServerName, tableName } })
       .then(() => {
         tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData,
-          ['colOperationTime', 'colOperationUser'])
+          ['colOperationUser'])
         setSelectedRowKeys([])
         selectedRows.current = []
       })
