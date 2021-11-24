@@ -17,9 +17,9 @@ function DeleteButton (props) {
     Modal.confirm({
       title,
       content,
-      confirmLoading: true,
+      // confirmLoading: true,
       onOk: () => {
-        return handleDelete()
+        handleDelete()
           .then(() => {
             typeof onDeleted === 'function' && onDeleted()
           })
@@ -32,11 +32,11 @@ function DeleteButton (props) {
         title={content}
         okText='确定'
         onConfirm={
-        () => handleDelete()
-          .then(() => {
-            typeof onDeleted === 'function' && onDeleted()
-          })
-      }
+          () => handleDelete()
+            .then(() => {
+              typeof onDeleted === 'function' && onDeleted()
+            })
+        }
       >
         <Button
           className={type === 'link' ? 'btn-link-danger' : null}
