@@ -40,85 +40,79 @@ const AddEditModal = (props) => {
           onClick: handleClick
         })
       }
-      {
-        modalVisible
-          ? (
-            <Modal
-              visible
-              centered
-              destroyOnClose
-              width={500}
-              title={`${isEmpty(record) ? '添加' : '编辑'}账号`}
-              onCancel={() => setModalVisible(false)}
-              footer={(
-                <>
-                  <Button onClick={handleClick}>取消</Button>
-                  <Button type='primary' onClick={handleOk}>确定</Button>
-                </>
-              )}
-            >
-              <Form className='smp-antd4-form' preserve={false} form={form} {...modalFromLayout.modal}>
-                <Form.Item name='dataAssetIp' noStyle>
-                  <Input style={{ display: 'none' }} />
-                </Form.Item>
-                <Form.Item name='dataStorageName' noStyle>
-                  <Input style={{ display: 'none' }} />
-                </Form.Item>
-                <Form.Item
-                  label='账号名称'
-                  name='userName'
-                  rules={[{
-                    required: true, message: '请输入账号名称'
-                  }]}
-                >
-                  <Input maxLength={50} placeholder='请输入账号名称' />
-                </Form.Item>
-                <Form.Item
-                  label='数据资产名称'
-                  name='dataAssetName'
-                  rules={[{
-                    required: true, message: '请输入数据资产名称'
-                  }]}
-                >
-                  <FetchSelect
-                    autoFetch
-                    searchable
-                    placeholder='数据资产名称'
-                    fetch={getDataAssetDetailList}
-                    style={{ width: '100%' }}
-                    optionsGet={(response) => (response.data || []).map(
-                      ({ dataAssetIp, dataAssetName, dataStorageName }) => {
-                        return {
-                          ip: dataAssetIp,
-                          value: dataAssetName,
-                          title: dataAssetName,
-                          storage: dataStorageName
-                        }
-                      })}
-                    onChange={(value, option) => {
-                      const { origin } = option.props
-                      form.setFieldsValue({
-                        dataAssetIp: origin?.ip,
-                        dataAssetName: value,
-                        dataStorageName: origin?.storage
-                      })
-                    }}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label='资产类型'
-                  name='dataStorageName'
-                  rules={[{
-                    required: true, message: '请选择资产类型'
-                  }]}
-                >
-                  <Input disabled />
-                </Form.Item>
-              </Form>
-            </Modal>
-            )
-          : null
-      }
+      <Modal
+        centered
+        destroyOnClose
+        width={500}
+        visible={modalVisible}
+        title={`${isEmpty(record) ? '添加' : '编辑'}账号`}
+        onCancel={() => setModalVisible(false)}
+        footer={(
+          <>
+            <Button onClick={handleClick}>取消</Button>
+            <Button type='primary' onClick={handleOk}>确定</Button>
+          </>
+        )}
+      >
+        <Form className='smp-antd4-form' preserve={false} form={form} {...modalFromLayout.modal}>
+          <Form.Item name='dataAssetIp' noStyle>
+            <Input style={{ display: 'none' }} />
+          </Form.Item>
+          <Form.Item name='dataStorageName' noStyle>
+            <Input style={{ display: 'none' }} />
+          </Form.Item>
+          <Form.Item
+            label='账号名称'
+            name='userName'
+            rules={[{
+              required: true, message: '请输入账号名称'
+            }]}
+          >
+            <Input maxLength={50} placeholder='请输入账号名称' />
+          </Form.Item>
+          <Form.Item
+            label='数据资产名称'
+            name='dataAssetName'
+            rules={[{
+              required: true, message: '请输入数据资产名称'
+            }]}
+          >
+            <FetchSelect
+              autoFetch
+              searchable
+              placeholder='数据资产名称'
+              fetch={getDataAssetDetailList}
+              style={{ width: '100%' }}
+              optionsGet={(response) => (response.data || []).map(
+                ({ dataAssetIp, dataAssetName, dataStorageName }) => {
+                  return {
+                    ip: dataAssetIp,
+                    value: dataAssetName,
+                    title: dataAssetName,
+                    storage: dataStorageName
+                  }
+                })}
+              onChange={(value, option) => {
+                const { origin } = option.props
+                form.setFieldsValue({
+                  dataAssetIp: origin?.ip,
+                  dataAssetName: value,
+                  dataStorageName: origin?.storage
+                })
+              }}
+            />
+          </Form.Item>
+          <Form.Item
+            label='资产类型'
+            name='dataStorageName'
+            rules={[{
+              required: true, message: '请选择资产类型'
+            }]}
+          >
+            <Input disabled />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   )
 }

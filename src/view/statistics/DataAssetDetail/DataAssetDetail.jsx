@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useMemo } from 'react'
+import React, { useCallback, useRef } from 'react'
 
 import moment from 'moment'
 import classnames from 'classnames'
@@ -31,6 +31,7 @@ function DataAssetDetail () {
     request,
     setData
   } = useFetch(getDataAssetDetailPage, { ...filter.current })
+
   const columns = [
     {
       title: '序号',
@@ -134,9 +135,9 @@ function DataAssetDetail () {
       render: (value, record) => (
         <StatusSwitch
           value={value}
-          fetcher={(value) => updateDetailShowStatus(record.id, value)}
-          onFinish={(value) => {
-            setData(tableDataModify(data, 'id', record, { showStatus: value }))
+          fetcher={(v) => updateDetailShowStatus(record.id, v)}
+          onFinish={(v) => {
+            setData(tableDataModify(data, 'id', record, { showStatus: v }))
           }}
         />
       )
@@ -166,13 +167,6 @@ function DataAssetDetail () {
       )
     }
   ]
-  useMemo(() => {
-    columns.forEach(v => {
-      v.shouldCellUpdate = function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
-    })
-  }, [])
 
   const refresh = useCallback(() => {
     filter.current = { ...filter.current, ...INIT_FILTER }
