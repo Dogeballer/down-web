@@ -12,9 +12,9 @@ import ExceptionTrendChart from './charts/ExceptionTrendChart'
 import AppBugChart from './charts/AppBugChart'
 import DatabaseBugChart from './charts/DatabaseBugChart'
 import style from './style.scss'
-import {useScreenFetch} from "./lib/hooks";
-import {thousandComma} from "@cecdataFE/bui";
+import {useScreenFetch} from "./lib/hooks"
 import {Link} from "react-router-dom";
+import {formatDataVolume} from "../../lib/utils";
 
 export default function (props) {
 
@@ -31,11 +31,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>贴   源</label>
-              <span className={style.f3}>{thousandComma(data.res2?.odscnt)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res2?.odscnt)}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>非贴源</label>
-              <span className={style.f3}>{thousandComma(data.res2?.othercnt)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res2?.othercnt)}</span>
             </div>
           </div>
         </section>
@@ -49,11 +49,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>数据文件</label>
-              <span className={style.f3}>{thousandComma(data.res5?.datafilecount)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res5?.datafilecount)}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>影像文件</label>
-              <span className={style.f3}>{thousandComma(data.res5?.imgfilecount)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res5?.imgfilecount)}</span>
             </div>
           </div>
         </section>
@@ -67,7 +67,7 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>业务系统</label>
-              <span className={style.f3}>{thousandComma(data.res3)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res3)}</span>
             </div>
           </div>
         </section>
@@ -81,11 +81,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>数据库帐号</label>
-              <span className={style.f3}>{thousandComma(data.res4?.db)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res4?.db)}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>应用帐号</label>
-              <span className={style.f3}>{thousandComma(data.res4?.app)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res4?.app)}</span>
             </div>
           </div>
         </section>
@@ -99,11 +99,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>元数据分类</label>
-              <span className={style.f3}>{thousandComma(data.res1?.classcnt)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res1?.classcnt)}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>元数据分级</label>
-              <span className={style.f3}>{thousandComma(data.res1?.gradecnt)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res1?.gradecnt)}</span>
             </div>
           </div>
         </section>
