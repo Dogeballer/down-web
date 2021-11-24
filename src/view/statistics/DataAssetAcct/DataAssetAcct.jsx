@@ -25,7 +25,6 @@ const DataAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
   const { data, loading, pagination, request, setData } = useFetch(getDataAssetAcctPage, { ...filter.current })
 
-  console.log(data)
   const columns = [
     {
       title: '序号',

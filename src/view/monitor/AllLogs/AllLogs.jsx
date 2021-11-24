@@ -186,7 +186,7 @@ export default function (props) {
           }
         </Select>
         <Button type='primary' onMouseUp={search}>查询</Button>
-        <Button type='primary' onMouseUp={doExport}>导出</Button>
+        {/*<Button type='primary' onMouseUp={doExport}>导出</Button>*/}
       </div>
       <HeightKeepWrapper minus={152}>
         {
