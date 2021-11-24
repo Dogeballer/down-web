@@ -79,7 +79,7 @@ export const DICT_SET = {
   // 数据风险 类型， 用于控制台
   RISK_TYPES: [
     {value: 'ldfx',text: '漏洞风险'},
-    {value: 'wgfx',text: '违规险数'},
+    {value: 'wgfx',text: '违规风险'},
     {value: 'sjxl',text: '数据泄漏'},
     {value: 'kjcs',text: '跨境传输'},
     {value: 'gpfw',text: '高频访问'},
@@ -88,13 +88,12 @@ export const DICT_SET = {
     {value: 'sjwtm',text: '数据未脱敏'},
     {value: 'sjdl',text: '数据抵赖'},
   ],
-  // 日志类型: 1-正常访问日志，101-越权访问风险日志,102-数据库漏洞风险日志,103-应用漏洞风险日志,104-数据泄露风险日志,105-数据违规风险日志,106-跨境传输风险日志,107-高频
+  // 日志类型: 1-正常访问日志，101-越权访问风险日志,102-数据库漏洞风险日志,103-应用漏洞风险日志,104-数据泄漏风险日志,105-数据违规风险日志,106-跨境传输风险日志,107-高频
   LOG_TYPES: [
-    {value: 1,text: '正常访问日志'},
     {value: 101,text: '越权访问风险'},
     {value: 102,text: '数据库漏洞风险'},
     {value: 103,text: '应用漏洞风险'},
-    {value: 104,text: '数据泄露风险'},
+    {value: 104,text: '数据泄漏风险'},
     {value: 105,text: '数据违规风险'},
     {value: 106,text: '跨境传输风险'},
     {value: 107,text: '高频访问风险'},

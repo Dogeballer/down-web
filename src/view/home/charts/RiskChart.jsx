@@ -10,6 +10,7 @@ export default function (props) {
 
   useEffect(() => {
     api.getRisk().then(res => {
+      const data = res.data.reverse()
       const option = {
         grid: {
           containLabel: true,
@@ -22,14 +23,14 @@ export default function (props) {
         },
         yAxis: {
           bottom: 0,
-          data: res.data.map(v => v.riskname)
+          data: data.map(v => v.riskname)
         },
         xAxis: {
           type: 'value'
         },
         series: [
           {
-            data: res.data.map(v => v.riskcount),
+            data: data.map(v => v.riskcount),
             type: 'bar'
           }
         ]

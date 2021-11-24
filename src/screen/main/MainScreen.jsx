@@ -10,10 +10,11 @@ import AppBugChart from "../../view/home/charts/AppBugChart";
 import DatabaseBugChart from "../../view/home/charts/DatabaseBugChart";
 import ExceptionTrendChart from "../../view/home/charts/ExceptionTrendChart";
 import {useScreenFetch} from "../../view/home/lib/hooks";
-import {thousandComma} from "@cecdataFE/bui"
 import * as api from '../../api/screen'
 import geojson from './FuzhouCityMap/assets/fuzhou.json'
 import {pieColors} from "../../components/EchartsComp/theme/shine";
+import {formatDataVolume} from "../../lib/utils";
+import {Modal} from "antd";
 
 const width = 1920
 const height = 1080
@@ -31,9 +32,12 @@ export default function (props) {
         let found = geojson.features.find(v1 => v1.properties.adcode == v.regioncode)
         return {
           name: found?.properties?.name || v.regioncode,
-          '数据资产': thousandComma(v.collectcount)
+          '数据资产': formatDataVolume(v.collectcount)
         }
       }))
+    }).finally(() => {
+      // 不弹错误
+      Modal.destroyAll()
     })
   }, [])
 
@@ -69,28 +73,28 @@ export default function (props) {
                   <img className={style.img} src={require('../asset/数据资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>数据资产</span>
-                    <span className={style.f2}>{thousandComma(data.res2?.total)}</span>
+                    <span className={style.f2}>{formatDataVolume(data.res2?.total)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%', marginBottom: 32}}>
                   <img className={style.img} src={require('../asset/文件资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>文件资产</span>
-                    <span className={style.f2}>{thousandComma(data.res5?.datafilecount + data.res5?.imgfilecount)}</span>
+                    <span className={style.f2}>{formatDataVolume(data.res5?.datafilecount + data.res5?.imgfilecount)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%'}}>
                   <img className={style.img} src={require('../asset/应用资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>应用资产</span>
-                    <span className={style.f2}>{thousandComma(data.res3)}</span>
+                    <span className={style.f2}>{formatDataVolume(data.res3)}</span>
                   </div>
                 </div>
                 <div className='flex-center-v' style={{width: '50%'}}>
                   <img className={style.img} src={require('../asset/账号资产.png')}/>
                   <div className='flex-direction-column'>
                     <span className={style.f1}>账号资产</span>
-                    <span className={style.f2}>{thousandComma(data.res4?.db + data.res4?.app)}</span>
+                    <span className={style.f2}>{formatDataVolume(data.res4?.db + data.res4?.app)}</span>
                   </div>
                 </div>
               </div>
@@ -109,33 +113,15 @@ export default function (props) {
               <div className={style.title}>分类分级</div>
 
               <div className='flex-center-vh' style={{flexWrap: 'wrap', paddingLeft: 30, paddingTop: 12}}>
-                <div className='flex-center-v' style={{width: '50%', marginBottom: 32}}>
-                  <img className={style.img} src={require('../asset/分类数.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分类数</span>
-                    <span className={style.f2}>{thousandComma(data.res1?.classcnt)}</span>
-                  </div>
+                <div className='flex-direction-column flex-center-v' style={{width: '50%'}}>
+                  <img className={style.img} style={{marginRight: 0, marginBottom: 16, marginTop: 6}} src={require('../asset/分类数.png')}/>
+                  <span className={style.f1} style={{marginBottom: 12}}>分类分级数</span>
+                  <span className={style.f2}>{formatDataVolume(data.res1?.classcnt)}</span>
                 </div>
-                <div className='flex-center-v' style={{width: '50%', marginBottom: 32}}>
-                  <img className={style.img} src={require('../asset/分级数据.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分级数</span>
-                    <span className={style.f2}>{thousandComma(data.res1?.gradecnt)}</span>
-                  </div>
-                </div>
-                <div className='flex-center-v' style={{width: '50%'}}>
-                  <img className={style.img} src={require('../asset/分类标识量.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分类标识量</span>
-                    <span className={style.f2}>{thousandComma(data.res0?.classtagcnt)}</span>
-                  </div>
-                </div>
-                <div className='flex-center-v' style={{width: '50%'}}>
-                  <img className={style.img} src={require('../asset/分级标识量.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分级标识量</span>
-                    <span className={style.f2}>{thousandComma(data.res0?.gradetagcnt)}</span>
-                  </div>
+                <div className='flex-direction-column flex-center-v' style={{width: '50%'}}>
+                  <img className={style.img} style={{marginRight: 0, marginBottom: 16, marginTop: 6}} src={require('../asset/分类标识量.png')}/>
+                  <span className={style.f1} style={{marginBottom: 12}}>分类分级标识量</span>
+                  <span className={style.f2}>{formatDataVolume(data.res0?.classtagcnt)}</span>
                 </div>
               </div>
             </section>

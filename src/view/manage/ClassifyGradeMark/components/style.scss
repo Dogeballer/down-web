@@ -5,8 +5,10 @@
 
   .top {
     height: 50px;
-    padding: 9px 16px;
+    padding: 9px 10px 9px 16px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
   }
 
   .body {

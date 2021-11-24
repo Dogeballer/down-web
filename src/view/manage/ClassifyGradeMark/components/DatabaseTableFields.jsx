@@ -32,7 +32,8 @@ function DatabaseTableFields (props) {
     const { dataAssetIp, dbServerName, tableName } = selected
     return tableFieldSet(colNames, { ...newData, table: { dataAssetIp, dbServerName, tableName } })
       .then(() => {
-        tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData)
+        tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData,
+          ['colOperationUser'])
         setSelectedRowKeys([])
         selectedRows.current = []
       })

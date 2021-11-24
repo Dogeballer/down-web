@@ -22,14 +22,27 @@ function DatabaseTable (props) {
   const selectedRows = useRef([])
   const [editableKeys, setEditableKeys] = useState([])
   const tableRef = useRef()
+  const lastSelected = useRef({})
   const { state, dispatch } = useContext(ClassifyContext)
-  const { selected, lastSelected } = state
+  const { selected } = state
 
   const handleBack = () => {
-    dispatch('setSelected', lastSelected)
+    const { last } = lastSelected.current
+    if (last?.dbServerName) {
+      handleTableSelect({
+        dataAssetIp: selected.dataAssetIp,
+        dbServerName: selected.dbServerName
+      })
+    } else if (last?.dataAssetIp) {
+      handleTableSelect({
+        dataAssetIp: selected.dataAssetIp
+      })
+    } else {
+      dispatch('setSelected', {})
+    }
   }
-  const handleTableSelect = ({ dataAssetIp, dbServerName, tableName }) => {
-    dispatch('setSelected', { dataAssetIp, dbServerName, tableName, key: `${dataAssetIp}_${dbServerName}_${tableName}` })
+  const handleTableSelect = (record) => {
+    dispatch('setSelected', record)
   }
 
   const handleEditToggle = (record) => {
@@ -55,21 +68,35 @@ function DatabaseTable (props) {
     ))
     return dataClassSet(tables, newData)
       .then(() => {
-        tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData)
+        tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData,
+          ['tableOperationUser'])
         setSelectedRowKeys([])
         selectedRows.current = []
       })
   }
   useEffect(() => {
+    const { last, prev } = lastSelected.current
     const visible = !!selected?.tableName
-    const shouldRefresh = (isEmpty(selected) && isEmpty(lastSelected)) ||
-      selected?.dataAssetIp !== lastSelected?.dataAssetIp ||
-      selected?.dbServerName !== lastSelected?.dbServerName
+    let shouldRefresh = isEmpty(prev) && isEmpty(last)
+    if (prev?.tableName && !selected?.tableName) {
+      shouldRefresh = shouldRefresh ||
+        selected?.dataAssetIp !== last?.dataAssetIp ||
+        selected?.dbServerName !== last?.dbServerName
+    } else {
+      shouldRefresh = shouldRefresh || true
+    }
+    // const shouldRefresh = (isEmpty(prev) && isEmpty(last)) ||
+    //   selected?.dataAssetIp !== last?.dataAssetIp ||
+    //   selected?.dbServerName !== last?.dbServerName
     if (!visible && shouldRefresh) {
       refresh()
     }
+    lastSelected.current = {
+      prev: { ...selected },
+      last: lastSelected.current.prev
+    }
     setFieldVisible(visible)
-  }, [selected, lastSelected])
+  }, [selected?.key])
 
   // useEffect(() => {
   //   debugger
@@ -243,9 +270,9 @@ function DatabaseTable (props) {
   }
 
   const title = useMemo(() => {
-    const { dataAssetIp, dbServerName, tableName } = selected ?? {}
+    const { dataAssetIp, dbServerName, tableName, tableNameNotes } = selected ?? {}
     if (tableName) {
-      return `[ ${dataAssetIp} / ${dbServerName} ] ${tableName}`
+      return `[ ${dataAssetIp} / ${dbServerName} ] ${tableNameNotes || tableName}`
     }
     if (dbServerName) {
       return `[ ${dataAssetIp} / ${dbServerName} ]`
@@ -269,7 +296,7 @@ function DatabaseTable (props) {
       <div className='page-header'>
         {title}
         {
-          fieldVisible ? <Button type='primary' onClick={handleBack}>返回上一页</Button> : null
+          fieldVisible ? <Button type='primary' onClick={handleBack}>返回列表</Button> : null
         }
       </div>
       <HeightKeepWrapper style={{ height: 'calc(100% - 56px)', display: fieldVisible ? 'none' : 'block' }} minus={160}>

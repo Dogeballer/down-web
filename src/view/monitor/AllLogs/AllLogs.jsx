@@ -6,8 +6,9 @@ import DetailModal from "../RiskWarning/modal/DetailModal"
 import Table from "@cecdataFE/bui/dist/components/Ant4Table"
 import HeightKeepWrapper from "@cecdataFE/bui/dist/components/HeightKeepWrapper"
 import moment from "moment";
-import {DICT_SET, INIT_PAGE} from "../../../constant";
+import {DICT_SET, INIT_PAGE} from "../../../constant"
 import style from './style.scss'
+import ExportModal from "./modal/ExportModal";
 
 const { Option } = Select
 const mainKey = 'logId'
@@ -43,10 +44,6 @@ export default function (props) {
   const search = () => {
     queryRef.current = { ...queryRef.current, page: 1 }
     fetchData()
-  }
-
-  const doExport = () => {
-
   }
 
   const handleTableChange = ({current, pageSize}) => {
@@ -167,7 +164,7 @@ export default function (props) {
         <Input onBlur={onChange('ip')} placeholder='操作IP' allowClear style={{ width: 138 }} />
         <Select onChange={onChange('et')} placeholder='操作类型' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
           {
-            ['查询','添加','更新','删除', '漏洞扫描', '数据防泄露'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
+            ['查询','添加','更新','删除', '漏洞扫描', '数据防泄漏'].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>
         <Select onChange={onChange('app')} placeholder='应用' allowClear style={{ width: 138 }} dropdownMatchSelectWidth={false}>
@@ -176,9 +173,7 @@ export default function (props) {
               '大数据采集平台',
               'ETL管理平台',
               '大数据检索平台',
-              '权限中心',
-              '大数据管理平台',
-              '数据服务',
+              '大数据服务平台',
             ].map((v,i) => <Option key={i} value={v}>{v}</Option>)
           }
         </Select>
@@ -188,7 +183,8 @@ export default function (props) {
           }
         </Select>
         <Button type='primary' onMouseUp={search}>查询</Button>
-        <Button type='primary' onMouseUp={doExport}>导出</Button>
+        <ExportModal><Button type='primary'>导出</Button></ExportModal>
+
       </div>
       <HeightKeepWrapper minus={152}>
         {

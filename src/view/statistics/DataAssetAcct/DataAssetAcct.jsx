@@ -18,9 +18,8 @@ import { DATE_FORMAT, INIT_FILTER } from '../../../constant'
 import { useFetch } from '../../../hooks/useFetch'
 import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
 import StatusSwitch from '../../../components/StatusSwitch'
-import style from './style.scss'
-import {updateDetailShowStatus} from '../../../api/dataAssetDetail'
 import tableDataModify from '../../../lib/tableDataModify'
+import style from './style.scss'
 
 const DataAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
@@ -32,18 +31,12 @@ const DataAssetAcct = () => {
       dataIndex: 'id',
       fixed: 'left',
       width: 100,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value, record, idx) => idx + 1
     },
     {
       title: '账号名称',
       dataIndex: 'userName',
       width: 200,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.userName
       })
@@ -51,9 +44,6 @@ const DataAssetAcct = () => {
     {
       title: '数据资产名称',
       dataIndex: 'dataAssetName',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       onCell: record => ({
         tooltip: () => record.dataAssetName
       })
@@ -61,37 +51,25 @@ const DataAssetAcct = () => {
     {
       title: '资产类型',
       dataIndex: 'dataStorageName',
-      width: 200,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
+      width: 200
     },
     {
       title: '来源方式',
       dataIndex: 'sourceMode',
       width: 150,
-      align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
+      align: 'center'
     },
     {
       title: '操作人',
       dataIndex: 'operationUser',
       width: 150,
-      align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      }
+      align: 'center'
     },
     {
       title: '操作时间',
       dataIndex: 'operationTime',
       align: 'center',
       width: 184,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value) => (
         value ? moment(value).format(DATE_FORMAT.YYYYMMDDHHMMSS) : ''
       )
@@ -101,15 +79,12 @@ const DataAssetAcct = () => {
       dataIndex: 'showStatus',
       align: 'center',
       width: 100,
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value, record) => (
         <StatusSwitch
           value={value}
-          fetcher={(value) => updateAcctShowStatus(record.id, value)}
-          onFinish={(value) => {
-            setData(tableDataModify(data, 'id', record, { showStatus: value }))
+          fetcher={(v) => updateAcctShowStatus(record.id, v)}
+          onFinish={(v) => {
+            setData(tableDataModify(data, 'id', record, { showStatus: v }))
           }}
         />
       )
@@ -120,9 +95,6 @@ const DataAssetAcct = () => {
       fixed: 'right',
       width: 136,
       align: 'center',
-      shouldCellUpdate: function (record, prevRecord) {
-        return record[this.dataIndex] !== prevRecord[this.dataIndex]
-      },
       render: (value, record) => (
         <>
           <AddEditModal onOk={handleOk} record={record}>

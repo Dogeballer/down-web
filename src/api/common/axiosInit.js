@@ -10,8 +10,8 @@ axios.defaults.baseURL = window.__smp_config.REACT_ENV_API_URL
 axios.interceptors.request.use(config => {
   // 清空params里的 '' null undefined
   if (config.params) {
-    const params = {...config.params}
-    Object.keys(params).map(key => {
+    const params = { ...config.params }
+    Object.keys(params).forEach(key => {
       if (typeof params[key] === 'undefined' || params[key] === '' || params[key] === null) {
         delete params[key]
       }
@@ -19,7 +19,7 @@ axios.interceptors.request.use(config => {
     config.params = params
   }
 
-  config.timeout = 30000 // 超时时间30s
+  // config.timeout = 30000 // 超时时间30s
   // requestCount++
   // 增加 token 头
   // config.headers.common['token'] = token

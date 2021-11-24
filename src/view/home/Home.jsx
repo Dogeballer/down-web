@@ -12,9 +12,9 @@ import ExceptionTrendChart from './charts/ExceptionTrendChart'
 import AppBugChart from './charts/AppBugChart'
 import DatabaseBugChart from './charts/DatabaseBugChart'
 import style from './style.scss'
-import {useScreenFetch} from "./lib/hooks";
-import {thousandComma} from "@cecdataFE/bui";
+import {useScreenFetch} from "./lib/hooks"
 import {Link} from "react-router-dom";
+import {formatDataVolume} from "../../lib/utils";
 
 export default function (props) {
 
@@ -31,11 +31,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>贴   源</label>
-              <span className={style.f3}>{thousandComma(data.res2?.odscnt)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res2?.odscnt)}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>非贴源</label>
-              <span className={style.f3}>{thousandComma(data.res2?.othercnt)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res2?.othercnt)}</span>
             </div>
           </div>
         </section>
@@ -49,11 +49,11 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>数据文件</label>
-              <span className={style.f3}>{thousandComma(data.res5?.datafilecount)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res5?.datafilecount)}</span>
             </div>
             <div className='flex-center-v'>
               <label className={style.f2}>影像文件</label>
-              <span className={style.f3}>{thousandComma(data.res5?.imgfilecount)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res5?.imgfilecount)}</span>
             </div>
           </div>
         </section>
@@ -67,7 +67,7 @@ export default function (props) {
             <Divider className={style.divider} />
             <div className='flex-center-v'>
               <label className={style.f2}>业务系统</label>
-              <span className={style.f3}>{thousandComma(data.res3)}</span>
+              <span className={style.f3}>{formatDataVolume(data.res3)}</span>
             </div>
           </div>
         </section>
@@ -77,15 +77,15 @@ export default function (props) {
             <Icon3 className={style.icon} />
           </div>
           <div className='flex1'>
-            <label className={style.f1}>帐号资产</label>
+            <label className={style.f1}>账号资产</label>
             <Divider className={style.divider} />
             <div className='flex-center-v'>
-              <label className={style.f2}>数据库帐号</label>
-              <span className={style.f3}>{thousandComma(data.res4?.db)}</span>
+              <label className={style.f2}>数据库账号</label>
+              <span className={style.f3}>{formatDataVolume(data.res4?.db)}</span>
             </div>
             <div className='flex-center-v'>
-              <label className={style.f2}>应用帐号</label>
-              <span className={style.f3}>{thousandComma(data.res4?.app)}</span>
+              <label className={style.f2}>应用账号</label>
+              <span className={style.f3}>{formatDataVolume(data.res4?.app)}</span>
             </div>
           </div>
         </section>
@@ -98,12 +98,12 @@ export default function (props) {
             <label className={style.f1}>分类分级</label>
             <Divider className={style.divider} />
             <div className='flex-center-v'>
-              <label className={style.f2}>元数据分类</label>
-              <span className={style.f3}>{thousandComma(data.res1?.classcnt)}</span>
+              <label className={style.f2} style={{minWidth: 110}}>分类分级数</label>
+              <span className={style.f3}>{formatDataVolume(data.res1?.classcnt)}</span>
             </div>
             <div className='flex-center-v'>
-              <label className={style.f2}>元数据分级</label>
-              <span className={style.f3}>{thousandComma(data.res1?.gradecnt)}</span>
+              <label className={style.f2} style={{minWidth: 110}}>分类分级标识量</label>
+              <span className={style.f3}>{formatDataVolume(data.res0?.classtagcnt)}</span>
             </div>
           </div>
         </section>
