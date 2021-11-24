@@ -77,14 +77,14 @@ export default function (props) {
             <Icon3 className={style.icon} />
           </div>
           <div className='flex1'>
-            <label className={style.f1}>帐号资产</label>
+            <label className={style.f1}>账号资产</label>
             <Divider className={style.divider} />
             <div className='flex-center-v'>
-              <label className={style.f2}>数据库帐号</label>
+              <label className={style.f2}>数据库账号</label>
               <span className={style.f3}>{formatDataVolume(data.res4?.db)}</span>
             </div>
             <div className='flex-center-v'>
-              <label className={style.f2}>应用帐号</label>
+              <label className={style.f2}>应用账号</label>
               <span className={style.f3}>{formatDataVolume(data.res4?.app)}</span>
             </div>
           </div>

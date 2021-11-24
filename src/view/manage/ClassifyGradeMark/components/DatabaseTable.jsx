@@ -296,7 +296,7 @@ function DatabaseTable (props) {
       <div className='page-header'>
         {title}
         {
-          fieldVisible ? <Button type='primary' onClick={handleBack}>返回上一页</Button> : null
+          fieldVisible ? <Button type='primary' onClick={handleBack}>返回列表</Button> : null
         }
       </div>
       <HeightKeepWrapper style={{ height: 'calc(100% - 56px)', display: fieldVisible ? 'none' : 'block' }} minus={160}>

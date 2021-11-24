@@ -27,7 +27,7 @@ export default function (props) {
       <div className={style.section}>
         <Tabs>
           {
-            DICT_SET.LOG_TYPES.filter(v => v.value != 1).map(v => {
+            DICT_SET.LOG_TYPES.map(v => {
               return <TabPane tab={v.text} key={v.value}>
                 <TableContent query={{tab: v.value}} />
               </TabPane>

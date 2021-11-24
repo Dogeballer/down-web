@@ -113,33 +113,15 @@ export default function (props) {
               <div className={style.title}>分类分级</div>
 
               <div className='flex-center-vh' style={{flexWrap: 'wrap', paddingLeft: 30, paddingTop: 12}}>
-                <div className='flex-center-v' style={{width: '50%', marginBottom: 32}}>
-                  <img className={style.img} src={require('../asset/分类数.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分类数</span>
-                    <span className={style.f2}>{formatDataVolume(data.res1?.classcnt)}</span>
-                  </div>
+                <div className='flex-direction-column flex-center-v' style={{width: '50%'}}>
+                  <img className={style.img} style={{marginRight: 0, marginBottom: 16, marginTop: 6}} src={require('../asset/分类数.png')}/>
+                  <span className={style.f1} style={{marginBottom: 12}}>分类分级数</span>
+                  <span className={style.f2}>{formatDataVolume(data.res1?.classcnt)}</span>
                 </div>
-                <div className='flex-center-v' style={{width: '50%', marginBottom: 32}}>
-                  <img className={style.img} src={require('../asset/分级数据.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分级数</span>
-                    <span className={style.f2}>{formatDataVolume(data.res1?.gradecnt)}</span>
-                  </div>
-                </div>
-                <div className='flex-center-v' style={{width: '50%'}}>
-                  <img className={style.img} src={require('../asset/分类标识量.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分类标识量</span>
-                    <span className={style.f2}>{formatDataVolume(data.res0?.classtagcnt)}</span>
-                  </div>
-                </div>
-                <div className='flex-center-v' style={{width: '50%'}}>
-                  <img className={style.img} src={require('../asset/分级标识量.png')}/>
-                  <div className='flex-direction-column'>
-                    <span className={style.f1}>分级标识量</span>
-                    <span className={style.f2}>{formatDataVolume(data.res0?.gradetagcnt)}</span>
-                  </div>
+                <div className='flex-direction-column flex-center-v' style={{width: '50%'}}>
+                  <img className={style.img} style={{marginRight: 0, marginBottom: 16, marginTop: 6}} src={require('../asset/分类标识量.png')}/>
+                  <span className={style.f1} style={{marginBottom: 12}}>分类分级标识量</span>
+                  <span className={style.f2}>{formatDataVolume(data.res0?.classtagcnt)}</span>
                 </div>
               </div>
             </section>
