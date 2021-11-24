@@ -2,8 +2,6 @@ import React from 'react'
 
 import { Form } from 'antd4'
 import { Button, Input, Select } from 'antd'
-import DictSelect from '../../../../../components/DictSelect'
-import { DICT_SET } from '../../../../../constant'
 
 const Option = Select.Option
 const Filter = (props) => {
@@ -19,7 +17,7 @@ const Filter = (props) => {
       }}
     >
       <Form.Item
-        name='fileAssetName'
+        name='fileName'
       >
         <Input
           allowClear
