@@ -98,12 +98,12 @@ export default function (props) {
             <label className={style.f1}>分类分级</label>
             <Divider className={style.divider} />
             <div className='flex-center-v'>
-              <label className={style.f2}>元数据分类</label>
+              <label className={style.f2} style={{minWidth: 110}}>分类分级数</label>
               <span className={style.f3}>{formatDataVolume(data.res1?.classcnt)}</span>
             </div>
             <div className='flex-center-v'>
-              <label className={style.f2}>元数据分级</label>
-              <span className={style.f3}>{formatDataVolume(data.res1?.gradecnt)}</span>
+              <label className={style.f2} style={{minWidth: 110}}>分类分级标识量</label>
+              <span className={style.f3}>{formatDataVolume(data.res0?.classtagcnt)}</span>
             </div>
           </div>
         </section>
