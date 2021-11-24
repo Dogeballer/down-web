@@ -38,7 +38,7 @@ function GradeSetModal (props) {
         {children}
       </Button>
       <Modal
-        title='设置分类'
+        title='设置分级'
         destroyOnClose
         width={400}
         visible={visible}
