@@ -14,6 +14,7 @@ import * as api from '../../api/screen'
 import geojson from './FuzhouCityMap/assets/fuzhou.json'
 import {pieColors} from "../../components/EchartsComp/theme/shine";
 import {formatDataVolume} from "../../lib/utils";
+import {Modal} from "antd";
 
 const width = 1920
 const height = 1080
@@ -34,6 +35,9 @@ export default function (props) {
           '数据资产': formatDataVolume(v.collectcount)
         }
       }))
+    }).finally(() => {
+      // 不弹错误
+      Modal.destroyAll()
     })
   }, [])
 
