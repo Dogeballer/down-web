@@ -68,7 +68,8 @@ function DatabaseTable (props) {
     ))
     return dataClassSet(tables, newData)
       .then(() => {
-        tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData)
+        tableRef.current.tableSource = tableDataModify(tableRef.current.tableSource, 'id', records, newData,
+          ['tableOperationTime', 'tableOperationUser'])
         setSelectedRowKeys([])
         selectedRows.current = []
       })
