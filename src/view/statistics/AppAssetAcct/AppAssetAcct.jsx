@@ -22,7 +22,13 @@ import tableDataModify from '../../../lib/tableDataModify'
 
 const AppAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
-  const { data, loading, pagination, request, setData } = useFetch(getAppAssetAcctPage, { ...filter.current })
+  const {
+    data,
+    loading,
+    pagination,
+    request,
+    setData
+  } = useFetch(getAppAssetAcctPage, { ...filter.current })
 
   const columns = [
     {

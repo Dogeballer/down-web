@@ -23,7 +23,14 @@ import style from './style.scss'
 
 const AppAssetDetail = () => {
   const filter = useRef({ ...INIT_FILTER })
-  const { data, loading, pagination, request, setData } = useFetch(getAppAssetDetailPage, { ...filter.current })
+  const {
+    data,
+    loading,
+    pagination,
+    request,
+    setData
+  } = useFetch(getAppAssetDetailPage, { ...filter.current })
+
   const columns = [
     {
       title: '序号',
