@@ -23,7 +23,7 @@ const Filter = (props) => {
           allowClear
           placeholder='文件名称'
           style={{ width: 200 }}
-          maxLength={50}
+          maxLength={200}
         />
       </Form.Item>
       <Form.Item
