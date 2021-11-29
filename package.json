@@ -1,18 +1,14 @@
 {
   "name": "smp-web",
   "projectName": "医疗健康数据安全监测平台",
-  "version": "1.0.3",
-  "productVersion": "1.0.3",
+  "version": "1.0.4",
+  "productVersion": "1.0.4",
   "scripts": {
     "dev": "webpack-script start:development",
     "test": "webpack-script start:test",
     "build:dev": "webpack-script build:development",
     "build:prod": "webpack-script build:production",
     "build:test": "webpack-script build:test",
-    "build:development": "webpack-script build:development",
-    "build:preproduction": "webpack-script build:preproduction",
-    "build:production": "webpack-script build:production",
-    "build:intranet": "webpack-script build:intranet",
     "standardfix": "standard --fix",
     "prepare": "husky install"
   },
