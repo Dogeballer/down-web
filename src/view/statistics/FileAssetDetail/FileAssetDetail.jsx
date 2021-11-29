@@ -12,7 +12,12 @@ import style from './style.scss'
 
 const FileAssetDetail = () => {
   const filter = useRef({ ...INIT_FILTER })
-  const { data, loading, pagination, request } = useFetch(getFileAssetDetailPage, { ...filter.current })
+  const {
+    data,
+    loading,
+    pagination,
+    request
+  } = useFetch(getFileAssetDetailPage, { ...filter.current })
 
   const columns = [
     {
