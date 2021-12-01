@@ -23,7 +23,13 @@ import style from './style.scss'
 
 const DataAssetAcct = () => {
   const filter = useRef({ ...INIT_FILTER })
-  const { data, loading, pagination, request, setData } = useFetch(getDataAssetAcctPage, { ...filter.current })
+  const {
+    data,
+    loading,
+    pagination,
+    request,
+    setData
+  } = useFetch(getDataAssetAcctPage, { ...filter.current })
 
   const columns = [
     {

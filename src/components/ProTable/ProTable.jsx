@@ -39,10 +39,10 @@ function ProTable (props, ref) {
     if (typeof fetch !== 'function') {
       return
     }
-    const params = { ...queryData.current }
     if (isFresh) {
-      params.page = 1
+      queryData.current.page = 1
     }
+    const params = { ...queryData.current }
     setLoading(true)
     fetch(params)
       .then(res => {
