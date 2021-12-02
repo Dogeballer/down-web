@@ -17,7 +17,7 @@ class ThreeJsMap {
     this.optionConfig = optionConfig
     this.width = width
     this.height = height
-    const { cityData, activeColor, interval, onChangeActiveData, option, optionNoData, optionMap } = this.optionConfig
+    const { cityData, activeColor, interval, onChangeActiveData, optionMap } = this.optionConfig
 
     let boundBox = findBoundBoxFromGeojson(geojson)
 
@@ -48,7 +48,7 @@ class ThreeJsMap {
     htmlRoot.appendChild(this.renderer.domElement)
 
     // this.renderer.domElement.addEventListener('mousemove', this.onMouseMove)
-    // this.renderer.domElement.addEventListener('click', this.onClick)
+    this.renderer.domElement.addEventListener('click', this.onClick)
 
     let filterProviceData = cityData.filter(v => this.curMap.getStandarData()[v.name])
     if (filterProviceData.length) {
@@ -56,9 +56,9 @@ class ThreeJsMap {
       let heightHalf = height / 2
       let index = 0
       const loop = () => {
-        // if (Date.now() - (this.lastClick || 0) < interval) {
-        //   return
-        // }
+        if (Date.now() - (this.lastClick || 0) < interval) {
+          return
+        }
 
         let activeData = filterProviceData[index]
 
@@ -101,6 +101,66 @@ class ThreeJsMap {
     animate()
   }
 
+  onClick = (event) => {
+    if (!this.curMap) return
+    const { cityData, onChangeActiveData, optionMap, activeColor} = this.optionConfig
+
+    let intersects = this._getIntersects(event)
+    if (intersects.length <= 0) {
+      onChangeActiveData(null, null)
+      return
+    }
+
+    this.lastClick = Date.now()
+
+    let widthHalf = this.width / 2
+    let heightHalf = this.height / 2
+
+    const name = intersects[0].object.name
+    let pos = this.curMap.getStandarData()[name].pos.clone()
+    pos.project(this.cameraController.getCamera())
+    pos.x = (pos.x * widthHalf) + widthHalf
+    pos.y = -(pos.y * heightHalf) + heightHalf
+
+    let activeData = cityData.find(v => v.name === name)
+
+    if (activeData) {
+      const curMesh = this.curMap.getMeshGroup().getObjectByName(name)
+
+      if (this.lastMesh) {
+        changeMaterailFromColor(this.lastMesh.material, optionMap.color)
+      }
+
+      this.lastMesh = curMesh
+      changeMaterailFromColor(curMesh.material, activeColor)
+    }
+
+    onChangeActiveData(pos, activeData)
+  }
+
+  _getIntersects = (event) => {
+    let camera = this.cameraController.getCamera()
+
+    let raycaster = new THREE.Raycaster() // create once
+    let mouse = new THREE.Vector2() // create once
+
+    let x = event.clientX
+    let y = event.clientY
+
+    let rect = event.target.getBoundingClientRect()
+    x -= rect.left
+    y -= rect.top
+
+    let clientRect = this.renderer.domElement.getBoundingClientRect()
+
+    mouse.x = (x / clientRect.width) * 2 - 1
+    mouse.y = -(y / clientRect.height) * 2 + 1
+
+    raycaster.setFromCamera(mouse, camera)
+
+    return raycaster.intersectObjects(this.curMap.getMeshGroup().children)
+  }
+
   dispose = () => {
     clearThree(this.sceneMap)
     clearThree(this.scene)
@@ -108,7 +168,7 @@ class ThreeJsMap {
     window.cancelAnimationFrame(this.timerKey)
     clearInterval(this.timerTipKey)
 
-    // this.renderer.domElement.removeEventListener('click', this.onClick)
+    this.renderer.domElement.removeEventListener('click', this.onClick)
   }
 }
 
