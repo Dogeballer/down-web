@@ -17,16 +17,6 @@ const Filter = (props) => {
       }}
     >
       <Form.Item
-        name='fileName'
-      >
-        <Input
-          allowClear
-          placeholder='文件名称'
-          style={{ width: 200 }}
-          maxLength={200}
-        />
-      </Form.Item>
-      <Form.Item
         name='fileServerIp'
       >
         <Input
