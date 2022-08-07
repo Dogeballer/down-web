@@ -1,0 +1,27 @@
+.uploader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 320px;
+    .uploader-drag-icon {
+      margin-bottom: 20px;
+      :global(.anticon){
+        color: #40a9ff;
+        font-size: 48px;
+      }
+    }
+    .uploader-text {
+      margin: 0 0 6px;
+      color: rgba(0,0,0,.85);
+      font-size: 16px;
+    }
+    .uploader-hint {
+      color: rgba(0,0,0,.45);
+      font-size: 14px;
+    }
+    > span {
+      width: 100%;
+      height: calc(100% - 24px);
+    }
+  }
+  

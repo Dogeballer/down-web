@@ -1,0 +1,6 @@
+.schedule-graph-modal {
+    top: 50px;
+    :global(.ant-modal-body) {
+        max-height: unset;
+    }
+}

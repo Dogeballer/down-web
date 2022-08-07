@@ -1,4 +1,4 @@
-import { getUserData } from './storage'
+import { getUserInfo } from './userLocalStorage'
 
 function tableDataModify (
   tableData,
@@ -7,7 +7,7 @@ function tableDataModify (
   newRecord,
   defaultKeys = []
 ) {
-  const username = getUserData()?.userName
+  const username = getUserInfo()?.username
   const newTableData = [...tableData]
   const oldRecords = Array.isArray(oldRecord) ? oldRecord : [oldRecord]
   const [userKey = 'operationUser'] = defaultKeys

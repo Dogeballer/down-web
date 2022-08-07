@@ -1,10 +1,10 @@
 import React, {useState, useEffect, Fragment, useRef} from 'react'
-import Table from '@cecdataFE/bui/dist/components/Ant4Table'
+import Table from '@fishballer/bui/dist/components/Ant4Table'
 import * as api from '../../../api/logs'
 import DetailModal from './modal/DetailModal'
 import moment from "moment";
 import {INIT_PAGE} from "../../../constant"
-import {HeightKeepWrapper} from "@cecdataFE/bui";
+import {HeightKeepWrapper} from "@fishballer/bui";
 
 const mainKey = 'logId'
 export default function (props) {

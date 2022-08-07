@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import debounce from "@cecdataFE/bui/dist/lib/debounce";
+import debounce from "@fishballer/bui/dist/lib/debounce";
 import cx from 'classnames'
 import FuzhouCityMap from './FuzhouCityMap'
 import style from './style.scss'

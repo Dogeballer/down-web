@@ -3,8 +3,8 @@ import cx from 'classnames'
 import {Button, Input, Select} from 'antd'
 import * as api from '../../../api/logs'
 import DetailModal from "../RiskWarning/modal/DetailModal"
-import Table from "@cecdataFE/bui/dist/components/Ant4Table"
-import HeightKeepWrapper from "@cecdataFE/bui/dist/components/HeightKeepWrapper"
+import Table from "@fishballer/bui/dist/components/Ant4Table"
+import HeightKeepWrapper from "@fishballer/bui/dist/components/HeightKeepWrapper"
 import moment from "moment";
 import {DICT_SET, INIT_PAGE} from "../../../constant"
 import style from './style.scss'

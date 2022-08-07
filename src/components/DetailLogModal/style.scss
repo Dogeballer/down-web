@@ -1,0 +1,72 @@
+.service-modal-body{
+  height: 100%;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  .service-modal-list {
+    width:196px;
+    background: #FFFFFF;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.20);
+    height: 100%;
+    overflow: auto;
+    :global(.ant-tree-switcher) {
+      display: none;
+    }
+  }
+  .service-modal-content{
+    flex: 1;
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+    .discribe{
+      .title{
+        color: rgba(0,0,0,0.85);
+        margin-bottom: 12px !important;
+      }
+      .step-info{
+        overflow: hidden;
+        .step-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 12px;;
+          span{
+            display:inline-block;
+            padding-right: 24px;
+          }
+          .step-item-one {
+            width: 200px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    .message{
+      flex: 1;
+      box-sizing: content-box;
+      display: flex;
+      justify-content: space-between;
+      .title{
+        color: rgba(0,0,0,0.85);
+        margin-bottom: 12px !important;
+        display: flex;
+        justify-content: space-between;
+        line-height: 24px;
+      }
+      .message-content-block{
+        width: calc(50% - 12px);
+        .text-content{
+          height: calc(100% - 36px);
+          padding:12px 8px;
+          border: 1px solid #D9D9D9;
+          border-radius: 4px;
+          overflow: auto;
+          resize: none;
+        }
+      }
+    }
+  }
+}

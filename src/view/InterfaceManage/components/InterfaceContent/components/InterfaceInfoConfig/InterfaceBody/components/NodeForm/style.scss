@@ -1,0 +1,10 @@
+.node-form-row {
+  display: flex;
+  justify-content: space-between;
+  :global(.ant-form-item) {
+    flex: 1;
+    &:first-child {
+      width: 50%;
+    }
+  }
+}

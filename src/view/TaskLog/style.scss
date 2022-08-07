@@ -1,0 +1,34 @@
+.etl-log-resizer {
+  > div:global(.right) {
+    background: transparent;
+  }
+}
+.etl-log-tree {
+  height: 100%;
+}
+
+.etl-log {
+  height: 100%;
+
+  .elt-log-section {
+    background: white;
+    border-radius: 2px;
+    height: calc(50% - 8px);
+
+    &:first-child {
+      margin-bottom: 16px;
+    }
+
+    .table-container {
+      height: calc(100% - 48px);
+      overflow: auto;
+      padding: 16px;
+      :global(.ant-table) {
+        background-color: white;
+      }
+      :global(.ant-table-pagination):global(.ant-pagination-simple) {
+        margin: 16px 0 0;
+      }
+    }
+  }
+}

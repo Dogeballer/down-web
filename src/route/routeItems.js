@@ -1,147 +1,110 @@
-import Home from '../view/home'
-import AppAssetAcct from '../view/statistics/AppAssetAcct'
-import AppAssetDetail from '../view/statistics/AppAssetDetail'
-import DataAssetDetail from '../view/statistics/DataAssetDetail'
-import DataAssetAcct from '../view/statistics/DataAssetAcct'
-import FileAssetDetail from '../view/statistics/FileAssetDetail'
-import DataGradeManage from '../view/manage/DataGradeManage'
-import ClassifyGradeMark from '../view/manage/ClassifyGradeMark'
-import RiskWarning from '../view/monitor/RiskWarning/RiskWarning'
-import AllLogs from '../view/monitor/AllLogs/AllLogs'
-import DataClassifyGrade from '../view/statistics/DataClassifyGrade'
+import ProjectModule from '../view/ProjectModule/ProjectModule'
+import EmptyRoute from './EmptyRoute'
+import DataSourceManage from "../view/DataSourceManage/DataSourceManage";
+import TestSuiteClass from "../view/TestSuiteClass/TestSuiteClass";
+import InterfaceManage from "../view/InterfaceManage/InterfaceManage";
+import UseCasesManage from "../view/UseCasesManage/UseCasesManage";
+import TestSuite from "../view/TestSuite/TestSuite";
+import TaskLog from "../view/TaskLog/TaskLog";
+import UdfManage from "../view/UdfManage/UdfManage";
+import InterfaceClassManage from "../view/ProjectModule/components/InterfaceClassManage/InterfaceClassManage";
 
 export default [
   {
-    exact: true,
-    path: '/home',
-    isChild: true, // 叶子路由
-    component: Home,
+    path: '/pro/ProjectManage',
     meta: {
-      name: '控制台',
-      icon: 'console'
-    }
-  },
-  {
-    path: '/risk',
-    component: null,
-    meta: {
-      name: '安全监测',
-      icon: 'monitor'
-    },
-    routes: [
-      {
-        exact: true,
-        path: '/risk/warn',
-        isChild: true,
-        component: RiskWarning,
-        meta: {
-          name: '风险预警',
-          icon: 'home'
-        }
-      },
-      {
-        exact: true,
-        path: '/risk/logs',
-        isChild: true,
-        component: AllLogs,
-        meta: {
-          name: '所有日志',
-          icon: 'home'
-        }
-      }
-    ]
-  },
-  {
-    path: '/manage',
-    component: null,
-    meta: {
-      name: '数据资产管理',
+      name: '项目配置',
       icon: 'data'
     },
+    component: ProjectModule,
+  },
+  {
+    path: '/at',
+    meta: {
+      name: '自动化测试',
+      icon: 'icon-shujujiekou'
+    },
+    component: EmptyRoute,
     routes: [
       {
-        exact: true,
-        path: '/manage/manage',
+        path: '/at/InterfaceManage',
         isChild: true,
-        component: DataGradeManage,
+        component: InterfaceManage,
         meta: {
-          name: '数据分级管理',
-          icon: 'home'
+          name: '接口管理'
         }
-      },
-      {
-        exact: true,
-        path: '/manage/mark',
+      }, {
+        path: '/at/UseCasesManage',
         isChild: true,
-        component: ClassifyGradeMark,
+        component: UseCasesManage,
         meta: {
-          name: '分级分类标注',
-          icon: 'home'
+          name: '用例管理'
+        }
+      }, {
+        path: '/at/TestSuite',
+        isChild: true,
+        meta: {
+          name: '测试套件'
+        },
+        component: TestSuite
+      }
+    ]
+  }, {
+    path: '/logs',
+    meta: {
+      name: '日志',
+      icon: 'icon-rizhi'
+    },
+    component: EmptyRoute,
+    routes: [
+      {
+        path: '/logs/TaskLog',
+        isChild: true,
+        component: TaskLog,
+        meta: {
+          name: '任务日志'
         }
       }
     ]
   },
   {
-    path: '/statistics',
-    component: null,
+    path: '/sys',
     meta: {
-      name: '数据资产统计',
-      icon: 'statistics'
+      name: '系统配置',
+      icon: 'data'
     },
+    component: EmptyRoute,
     routes: [
       {
-        exact: true,
-        path: '/statistics/data/detail',
+        path: '/sys/InterfaceClass',
         isChild: true,
-        component: DataAssetDetail,
         meta: {
-          name: '数据资产详情'
-        }
+          name: '接口分类管理'
+        },
+        component: InterfaceClassManage
       },
       {
-        exact: true,
-        path: '/statistics/data/account',
+        path: '/sys/TestSuiteClass',
         isChild: true,
-        component: DataAssetAcct,
         meta: {
-          name: '数据资产账号'
-        }
+          name: '套件分类管理'
+        },
+        component: TestSuiteClass
       },
       {
-        exact: true,
-        path: '/statistics/app/detail',
+        path: '/sys/DataSourceManage',
         isChild: true,
-        component: AppAssetDetail,
         meta: {
-          name: '应用资产详情'
-        }
-      },
-      {
-        exact: true,
-        path: '/statistics/app/account',
+          name: '元数据管理'
+        },
+        component: DataSourceManage
+      }, {
+        path: '/sys/UdfManage',
         isChild: true,
-        component: AppAssetAcct,
         meta: {
-          name: '应用资产账号'
-        }
-      },
-      {
-        exact: true,
-        path: '/statistics/file/detail',
-        isChild: true,
-        component: FileAssetDetail,
-        meta: {
-          name: '文件资产详情'
-        }
-      },
-      {
-        exact: true,
-        path: '/statistics/data/classify',
-        isChild: true,
-        component: DataClassifyGrade,
-        meta: {
-          name: '数据分类分级'
-        }
+          name: 'UDF函数管理'
+        },
+        component: UdfManage
       }
     ]
   }

@@ -1,0 +1,146 @@
+$scroll-width: 12px;
+$scroll-color: rgba(24,144,255,0.45);
+$primary-color: #1890ff;
+$hover-color: #4FC5FF;
+$border-color: #e8e8e8;
+$table-row-gray-color: #FAFAFA;
+$table-row-light-color: #E6F7FF;
+
+//@mixin table-td($height, $padding) {
+//  .ant-table-thead > tr > th,
+//  .ant-table-tbody > tr > td,
+//  .ant-table-fixed > .ant-table-tbody > tr > td,
+//  .ant-table-bordered .ant-table-tbody > tr > td{
+//    height: $height;
+//    padding: 0 $padding;
+//  }
+//  .ant-table-middle > .ant-table-content > {
+//    .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th,
+//    .ant-table-scroll > .ant-table-body > table > .ant-table-tbody > tr > td,
+//    .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th,
+//    .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th,
+//    .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td,
+//    .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td{
+//      height: $height;
+//      padding: 0 $padding;
+//    }
+//  }
+//}
+
+.bui-table.ant-table-wrapper {
+  //position: relative;
+  //.ant-table-scroll .ant-table-header {
+  //  .ant-table-tbody>tr>td {
+  //    &:first-child {
+  //      border-left: 0;
+  //    }
+  //  }
+  //  .ant-table-tbody > tr > td:first-child{
+  //    border-left: 1px solid $border-color;
+  //  }
+  //}
+  //.ant-table-tbody > tr > td {
+  //  transition: none;
+  //}
+  //.ant-table-thead > tr > th:last-child{
+  //  position: relative;
+  //}
+  //.ant-table-bordered .ant-table-fixed-right .ant-table-fixed .ant-table-tbody > tr > td{
+  //  &:first-child{
+  //    border-left: 0;
+  //  }
+  //}
+  .ant-table-cell-ellipsis.ant-table-cell-fix-left-last,
+  .ant-table-cell-ellipsis.ant-table-cell-fix-right-first {
+    overflow: hidden;
+  }
+
+  .ant-table-tbody>.added {
+    background-color: rgba(230, 247, 255, 0.5);
+  }
+  //@include table-td(46px, 8px);
+  .ant-table-row-indent:not(.indent-level-0) {
+    position: relative;
+    border-left: 1px solid $border-color;
+    &::before {
+      content: ' ';
+      display: inline-block;
+      height: 1px;
+      position: absolute;
+      top: 8px;
+      left: 4px;
+      right: 4px;
+      border-top: 1px dashed $border-color;
+    }
+  }
+  //.ant-table-thead > tr > th .ant-table-header-column .ant-table-column-sorters > *:not(.ant-table-column-sorter) {
+  //  position: inherit;
+  //}
+  // 操作按钮
+  //.bui-operation-btns{
+  //  display: flex;
+  //  justify-content: space-around;
+  //  .anticon {
+  //    font-size: 20px;
+  //    cursor: pointer;
+  //  }
+  //}
+  &.header-no-border{
+    .ant-table-tbody>tr>td {
+      &:first-child {
+        border-left: 1px solid $border-color;
+      }
+    }
+    .ant-table-bordered {
+      .ant-table-body>table,.ant-table-fixed-right table{
+        border: 0;
+      }
+      .ant-table-thead > tr > th{
+        border-right: 0;
+      }
+    }
+    .ant-table-fixed-left table,
+    .ant-table-fixed-header .ant-table-header > table{
+      border:0;
+    }
+  }
+  // 小型表格
+  //&.small{
+  //  @include table-td(32px, 8px);
+  //  .ant-input-number, .ant-input{
+  //    height: 24px;
+  //  }
+  //  .ant-select-selection--single{
+  //    height: 24px;
+  //    .ant-select-selection__rendered{
+  //      line-height: inherit;
+  //    }
+  //  }
+  //  .bui-table-collapse-btn {
+  //    top: 16px;
+  //  }
+  //}
+  // 需要行背景色
+  &.striped{
+    .ant-table-tbody>tr{
+      &:nth-child(even) {
+        background: $table-row-gray-color;
+      }
+    }
+  }
+  //.bui-table-collapse-btn{
+  //  display: inline-block;
+  //  position: absolute;
+  //  margin-top: -7px;
+  //  right: 8px;
+  //  top: 24px;
+  //  line-height: 14px;
+  //  z-index: 999;
+  //  color: $primary-color;
+  //  cursor: pointer;
+  //  transition: top .3s;
+  //  &:hover{
+  //    color: $hover-color;
+  //  }
+  //}
+}

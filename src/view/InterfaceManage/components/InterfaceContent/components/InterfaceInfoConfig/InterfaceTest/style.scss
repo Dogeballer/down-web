@@ -1,0 +1,147 @@
+.intfnet-test-wrapper {
+  height: 100%;
+  padding: 16px;
+
+  :global(.ant-spin-container) {
+    height: 100%;
+  }
+
+  .intfnet-test-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .intfnet-header-label {
+      margin-right: 8px;
+      font-size: 16px;
+
+      &::after {
+        content: ': ';
+      }
+    }
+
+    .intfnet-header-desc {
+      width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .intfnet-test-body {
+    display: flex;
+    justify-content: space-between;
+    height: calc(100% - 44px);
+    padding-top: 20px;
+
+    .intfnet-test-item {
+      width: calc(50% - 12px);
+      background: rgba(255, 255, 255, 1);
+
+      & > p {
+        font-size: 16px;
+        margin: 0;
+        padding: 8px 0;
+        font-weight: bold;
+        border: 1px solid rgb(232, 232, 232);
+        border-bottom: none;
+      }
+
+      .intfnet-item-editor {
+        height: calc(100% - 41px);
+      }
+    }
+  }
+}
+
+.intf-info-section {
+  &:nth-child(2) {
+    flex: 1;
+    margin-top: 16px;
+    // overflow: hidden;
+  }
+
+  background: #F5F5F5;
+  border: 1px solid #E9E9E9;
+  border-radius: 4px;
+  padding: 16px 16px 0;
+
+  h3 {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .intf-info-title {
+    display: flex;
+    align-items: center;
+    padding-bottom: 16px;
+
+    > label {
+      margin-left: 24px;
+
+      &::after {
+        content: ':';
+      }
+    }
+
+    > span {
+      padding: 0 8px;
+      color: #f5222d;
+    }
+  }
+
+  .basic-info-content {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    overflow: hidden;
+
+    .basic-info-item {
+      width: 25%;
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+
+      &:first-child {
+        margin-left: 0;
+
+        > label {
+          &::before {
+            content: ' ';
+          }
+        }
+      }
+
+      .basic-item-comp {
+        flex: 1;
+      }
+    }
+  }
+
+  .dataset-info-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 52px);
+
+    .dataset-info-item {
+      &:nth-child(1) {
+        display: flex;
+        height: 40px;
+      }
+
+      &:nth-child(2) {
+        flex: auto;
+        overflow: hidden;
+      }
+
+      .dataset-info-prompt {
+        color: #f5222d;
+        display: block;
+        font-size: 14px;
+        line-height: 32px;
+      }
+    }
+
+  }
+}

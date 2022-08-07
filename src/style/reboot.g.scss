@@ -21,7 +21,7 @@ a, a:active, a:hover, a:focus, a:focus-within {
 }
 
 .bui-common-menu-title-text-name {
-  height: 48px;
+  //height: 48px;
 }
 
 .bui-common-menu-title-text {
@@ -99,4 +99,9 @@ a, a:active, a:hover, a:focus, a:focus-within {
       padding: 0 1px;
     }
   }
+}
+
+.bui-tabs.ant-tabs .ant-tabs-content .ant-tabs-tabpane-active {
+    height: 100%;
+    overflow: auto;
 }

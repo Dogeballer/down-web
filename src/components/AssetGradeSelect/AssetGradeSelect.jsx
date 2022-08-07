@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { FetchSelect } from '@cecdataFE/bui'
+import { FetchSelect } from '@fishballer/bui'
 import { getAssetGradeList } from '../../api/other'
 
 const AssetGradeSelect = (props) => {

@@ -1,0 +1,112 @@
+.intf-info-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  :global(.ant-form-item) {
+    display: flex;
+    margin-bottom: 8px;
+    :global(.ant-form-item-label) {
+      line-height: 32px !important;
+    }
+    :global(.ant-form-item-control) {
+      line-height: 32px !important;
+      :global(.ant-select), :global(.ant-cascader-picker) {
+        width: 224px;
+      }
+    }
+    :global(.ant-form-item-control-wrapper) {
+      flex: 1;
+    }
+  }
+  .intf-info-spin {
+    height: calc(100% - 48px);
+    :global(.ant-spin-container) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+    }
+    .intf-info-section {
+      &:nth-child(2){
+        flex: 1;
+        margin-top: 16px;
+        // overflow: hidden;
+      }
+      background: #F5F5F5;
+      border: 1px solid #E9E9E9;
+      border-radius: 4px;
+      padding: 16px 16px 0;
+      h3 {
+        padding: 0;
+        margin: 0;
+        font-size: 16px;
+      }
+      .intf-info-title {
+        display: flex;
+        align-items: center;
+        padding-bottom: 16px;
+        >label {
+          margin-left: 24px;
+          &::after {
+            content: ':';
+          }
+        }
+        >span {
+          padding: 0 8px;
+          color: #f5222d;
+        }
+      }
+      .basic-info-content {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 16px;
+        overflow: hidden;
+        .basic-info-item {
+          width: 25%;
+          margin-left: 8px;
+          display: flex;
+          align-items: center;
+          &:first-child{
+            margin-left: 0;
+            >label {
+              &::before {
+                content: ' ';
+              }
+            }
+          }
+          .basic-item-comp {
+            flex: 1;
+          }
+        }
+      }
+      .dataset-info-content {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 52px);
+        .dataset-info-item {
+          &:nth-child(1) {
+            display: flex;
+            height: 40px;
+          }
+          &:nth-child(2) {
+            flex: auto;
+            overflow: hidden;
+          }
+          .dataset-info-prompt {
+            color: #f5222d;
+            display: block;
+            font-size: 14px;
+            line-height: 32px;
+          }
+        }
+
+      }
+    }
+  }
+  .dataset-info-buttons {
+    display: flex;
+    padding: 16px 0 0;
+    justify-content: flex-end;
+  }
+}

@@ -1,4 +1,4 @@
-import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
+import { isEmpty } from '@fishballer/bui/dist/lib/utils'
 
 export const validator = (_, value) => {
   const reg = /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/

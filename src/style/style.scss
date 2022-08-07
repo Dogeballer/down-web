@@ -1,0 +1,80 @@
+@import "./reboot.scss";
+:global(.blue-text) {
+  color: var(--background-color-light);
+}
+
+:global(.ant-table-fixed-right) {
+  z-index: 2;
+}
+/*
+ * 模态框样式
+ */
+:global(.ant-modal-close-x){
+  height: 64px;
+  width: 64px;
+  line-height: 64px;
+}
+:global(.ant-modal-header){
+  padding: 21px 24px;
+}
+:global(.ant-modal-body){
+  position: relative;
+  padding: 24px;
+  max-height: calc(70vh - 100px);
+  overflow-y: auto;
+}
+:global(.ant-modal-footer){
+  padding: 16px 24px;
+}
+
+:global(.modal-table) {
+  :global(.ant-table-middle) > :global(.ant-table-content) > :global(.ant-table-body){
+    table {
+      :global(.ant-table-thead) > tr > th, :global(.ant-table-tbody) > tr > td {
+        padding: 9px 8px;
+      }
+    }
+  }
+  :global(.ant-table-bordered) :global(.ant-table-thead) > tr > th{
+    border-right: none;
+    &:last-child{
+      border-right: 1px solid #e8e8e8;
+    }
+  }
+}
+
+:global(.form-page) {
+  background-color: #fff;
+  textarea:global(.ant-input){
+    height: 88px;
+  }
+  :global(.ant-form-item) {
+    margin-bottom: 16px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+:global(.ant-modal-content){
+  :global(.ant-form-item) {
+    margin-bottom: 16px;
+  }
+}
+
+:global(.ant-tree li) {
+  padding: 2px 0;
+  :global(.ant-tree-node-content-wrapper){
+    padding: 0;
+  }
+  :global(.ant-tree-child-tree) > li:first-child {
+    padding-top: 4px;
+  }
+}
+
+:global(.ant-select-selection-selected-value) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

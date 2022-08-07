@@ -1,0 +1,41 @@
+/**
+  这个文件专门存放css覆盖重置样式
+*/
+@import "./theme/theme";
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
+}
+
+body {
+  min-width: 1280px;
+  height: 100%;
+}
+
+:global(#app) {
+  height: 100%;
+}
+
+a, a:active, a:hover, a:focus, a:focus-within {
+  text-decoration: none;
+  outline: 0;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+}
+ 
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: rgba(24,144,255,0.45);
+}
+ 
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+}
+
+:global(.bui-common-header) {
+  max-width: 99%;
+}

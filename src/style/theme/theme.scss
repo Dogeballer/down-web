@@ -1,0 +1,31 @@
+@import '../../../node_modules/css-vars/css-vars';
+
+$css-vars-use-native: true;
+
+// default-base color
+$layout-header-background: linear-gradient(-225deg, #005FA2 0%, #0150AB 100%);
+$layout-sider-background: #003571;
+$link-hover-color: #0c55a2;
+$text-color: rgba(255,255,255,0.65);
+$breadcrumb-text: rgba(0,0,0,0.65);
+$background-color-light: #1890ff;  // selected item of nav-li
+$layout-body-background: #F0F2F5;
+$body-background: #FFF;
+
+$first-hover-text: #FFF;
+$font-size-sm: 12px; 
+$font-size-base: 14px;
+$footer-text:rgba(0,0,0,0.45);
+$box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+
+
+@include css-vars((
+  --layout-header-background: $layout-header-background,
+  --layout-sider-background: $layout-sider-background,
+  --link-hover-color: $link-hover-color,
+  --text-color: $text-color,
+  --breadcrumb-text: $breadcrumb-text,
+  --background-color-light: $background-color-light,
+  --layout-body-background: $layout-body-background,
+  --body-background: $body-background
+));

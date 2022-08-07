@@ -1,23 +1,21 @@
 import React from 'react'
 
-import { Avatar, Dropdown, Menu } from 'antd'
+import {Avatar, Dropdown, Menu} from 'antd'
 import avatar from '../../assets/images/frame/avatar.png'
-import { history, Icon } from '@cecdataFE/bui'
-import { logout, getUserData } from '../../lib/storage'
+import {history, Icon} from '@fishballer/bui'
+import {clear, getUserInfo} from '../../lib/userLocalStorage'
 import style from './style.scss'
 
 const Toolbar = () => {
-  const userData = getUserData()
+  const userData = getUserInfo()
 
   const handleLogout = () => {
-    logout()
-      .then(() => {
-        history.replace('/login')
-      })
+    clear()
+    history.replace('/login')
   }
 
   const handleMenuClick = (item) => {
-    const { key } = item
+    const {key} = item
     switch (key) {
       case 'logout':
         handleLogout()
@@ -37,10 +35,10 @@ const Toolbar = () => {
     >
       <div className={style['header-user']}>
         <span className={style['header-user-name']}>
-          {userData ? userData.userName : 'cecdata'}
+          {userData ? userData.username : 'cecdata'}
         </span>
-        <Avatar size={32} src={avatar} />
-        <Icon type='icon-shangsanjiaoxing' className={style['header-user-triangle']} />
+        <Avatar size={32} src={avatar}/>
+        <Icon type='icon-shangsanjiaoxing' className={style['header-user-triangle']}/>
       </div>
     </Dropdown>
   )

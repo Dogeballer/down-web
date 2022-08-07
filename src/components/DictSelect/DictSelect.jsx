@@ -1,37 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react'
+import AjaxSelect from '../AjaxSelect/AjaxSelect'
+import dictionaryAPI from '../../api/dictionary'
 
-import { Select } from 'antd'
-
-const Option = Select.Option
-const DictSelect = (props) => {
-  const { options = [], searchable, ...restProps } = props
-  const searchProps = searchable
-    ? {
-        showSearch: true,
-        filterOption: (input, option) => {
-          const { children, label } = option.props
-          if (Array.isArray(children) && typeof label === 'string') {
-            return label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          } else if (typeof children === 'string') {
-            return children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-          return false
-        }
-      }
-    : {}
-  return (
-    <Select
-      allowClear
-      {...searchProps}
-      {...restProps}
-    >
-      {
-        options.map(v => (
-          <Option value={v.value} key={v.value}>{v.text}</Option>
-        ))
-      }
-    </Select>
-  )
+class DictSelect extends Component {
+  render () {
+    const {
+      dictCode,
+      serverName,
+      ...props
+    } = this.props
+    return (
+      <AjaxSelect
+        fetch={() => dictionaryAPI.getDictList(dictCode, serverName)}
+        optionsGet={(response) => (
+          ((response.data && response.data.items) || []).map(({dictNum, dictName}) => {
+            return {
+              value: dictNum,
+              title: dictName
+            }
+          })
+        )}
+        {...props}
+      />
+    )
+  }
 }
 
 export default DictSelect

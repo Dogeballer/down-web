@@ -1,0 +1,23 @@
+.dispatch-source-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #FFF;
+  border-radius: 2px;
+  .dispatch-source-header {
+    padding: 16px;
+    border-bottom: 1px solid #CCCCCC;
+  }
+  .dispatch-source-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+  }
+  .dispatch-source-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-top: 1px solid #e8e8e8;
+  }
+}
+

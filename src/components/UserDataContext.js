@@ -1,0 +1,6 @@
+import React from 'react'
+
+export const UserDataContext = React.createContext({
+  userData: {},
+  setUserData: () => {}
+})

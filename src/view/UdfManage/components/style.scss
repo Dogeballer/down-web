@@ -1,0 +1,135 @@
+.step-form {
+  --form-button-height: 57px;
+  overflow: auto;
+  position: relative;
+  //padding-bottom: 56px;
+  height: 100%;
+
+  > .items {
+    height: calc(100% - var(--form-button-height));
+    overflow: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+
+    .row1 {
+      display: flex;
+      justify-content: space-between;
+
+      :global(.ant-row) {
+        flex: 1px;
+        margin-right: 15px;
+
+        &:last-child {
+          margin-right: 0px;
+        }
+
+        :global(.ant-col-6) {
+          width: 53px;
+        }
+
+        :global(.ant-col-18) {
+          width: calc(100% - 53px);
+        }
+      }
+    }
+
+    .children-wrapper {
+      margin-right: 0;
+      width: 100%;
+      flex: 1;
+    }
+
+    .remark-wrapper {
+      margin-top: 12px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .remark-title {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.85);
+        line-height: 14px;
+      }
+
+      .remark-textarea {
+        margin-top: 12px;
+
+        :global(textarea.ant-input) {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+
+    .etl-param {
+      display: flex;
+      margin-top: 24px;
+
+      .title {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.85);
+        line-height: 14px;
+        padding-top: 3px;
+      }
+
+      .params {
+        flex: 1;
+
+        span {
+          display: inline-block;
+          white-space: nowrap;
+          margin-right: 24px;
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
+
+  .bottom-buttons {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgb(206, 206, 206);
+    padding: 12px 16px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &-right {
+      :global(.ant-btn) {
+        margin-left: 24px;
+      }
+
+      .copy-button {
+        border: 1px solid #1890FF;
+        border-radius: 4px;
+        color: #1890FF;
+      }
+    }
+  }
+
+  .intfnet-test-body {
+    display: flex;
+    justify-content: space-between;
+    min-height: 400px;
+    padding-top: 20px;
+
+    .intfnet-test-item {
+      width: calc(50% - 12px);
+      background: rgba(255, 255, 255, 1);
+
+      & > p {
+        font-size: 16px;
+        margin: 0;
+        padding: 8px 0;
+        font-weight: bold;
+        border: 1px solid rgb(232, 232, 232);
+        border-bottom: none;
+      }
+
+      .intfnet-item-editor {
+        height: calc(100% - 41px);
+      }
+    }
+  }
+}

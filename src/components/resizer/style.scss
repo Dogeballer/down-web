@@ -1,0 +1,41 @@
+.resizer {
+  position: relative;
+  display: flex;
+  height: 100%;
+  background: #f2f0f5;
+  .resizer-line {
+    position: absolute;
+    height: 48px;
+    width: 16px;
+    // background-color: #1890FF;
+    align-self: center;
+    cursor: pointer;
+    // border-top-right-radius: 7px;
+    // border-bottom-right-radius: 7px;
+    background: #F3F3F3;
+    border: 1px solid #D8D8D8;
+    box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.20);
+    border-radius: 8px;
+    z-index: 10;
+
+    i:global(.anticon) {
+      line-height: 52px;
+      position: relative;
+      // color: white;
+    }
+
+    &:global(.close) i:global(.anticon) {
+      transform: rotate(180deg);
+      line-height: 46px;
+    }
+  }
+  .resizer-box {
+    background-color: #ffffff;
+    overflow: auto;
+    border-radius: 4px;
+
+    &:global(.right) {
+      flex: 1;
+    }
+  }
+}

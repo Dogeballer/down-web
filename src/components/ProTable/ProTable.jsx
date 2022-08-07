@@ -1,9 +1,9 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import './style.g.scss'
-import Table from '@cecdataFE/bui/dist/components/Ant4Table'
+import Table from '@fishballer/bui/dist/components/Ant4Table'
 import { Button } from 'antd'
 import { isMoment } from 'moment'
-import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
+import { isEmpty } from '@fishballer/bui/dist/lib/utils'
 import classnames from 'classnames'
 import { INIT_PAGE } from '../../constant'
 

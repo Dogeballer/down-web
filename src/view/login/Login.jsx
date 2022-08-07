@@ -1,19 +1,21 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import moment from 'moment'
-import { Form, Icon, Input, Button, Row, Col, message } from 'antd'
+import {Form, Icon, Input, Button, Row, Col, message} from 'antd'
 import Captcha from 'captcha-mini'
-import { history, emitter } from '@cecdataFE/bui'
+import {history, emitter} from '@fishballer/bui'
 import logo from '../../assets/images/frame/cec-data-logo.png'
-import { isLogin, setUserData } from '../../lib/storage'
-import { USER_LIST } from '../../constant'
-import { isEmpty } from '@cecdataFE/bui/dist/lib/utils'
+import {USER_LIST} from '../../constant'
+import {isEmpty} from '@fishballer/bui/dist/lib/utils'
 import style from './style.scss'
 import packageJson from '../../../package.json'
+import {login} from "../../api/login";
+import {isLogin, updateUserInfo} from "../../lib/userLocalStorage";
 
 const FormItem = Form.Item
-const { emitterGetRoute } = emitter
+const {emitterGetRoute} = emitter
+
 class Login extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       loading: false
@@ -22,7 +24,7 @@ class Login extends Component {
 
   captchaCanvas = React.createRef()
 
-  componentDidMount () {
+  componentDidMount() {
     this.resetCaptcha()
     if (isLogin()) {
       return history.push('/')
@@ -31,41 +33,40 @@ class Login extends Component {
   }
 
   resetCaptcha = () => {
-    const captcha1 = new Captcha({ fontSize: 70, length: 4 })
-    captcha1.draw(this.captchaCanvas.current, r => { this.captcha = r })
+    const captcha1 = new Captcha({fontSize: 70, length: 4})
+    captcha1.draw(this.captchaCanvas.current, r => {
+      this.captcha = r
+    })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const { form } = this.props
+    const {form} = this.props
     form.validateFields((err, values) => {
       if (err) return
-      this.setState({ loading: true })
-      const { userPwd, userName, captcha } = values
+      this.setState({loading: true})
+      const {userPwd, userName, captcha} = values
       if (this.captcha.toLowerCase() !== captcha.trim().toLowerCase()) {
         this.props.form.setFields({
-          captcha: { value: captcha, errors: [new Error('验证码错误')] }
+          captcha: {value: captcha, errors: [new Error('验证码错误')]}
         })
         this.resetCaptcha()
       } else {
-        const userInfo = USER_LIST.find(v => v.userName === userName && v.userPwd === userPwd)
-        if (!isEmpty(userInfo)) {
-          setUserData(userInfo)
+        login(values).then((response) => {
+          updateUserInfo(response.data)
           setTimeout(() => {
             emitterGetRoute()
             history.replace('/')
           }, 100)
-        } else {
-          message.error('用户名与密码不匹配')
-        }
+        })
       }
-      this.setState({ loading: false })
+      this.setState({loading: false})
     })
   }
 
-  render () {
-    const { loading } = this.state
-    const { getFieldDecorator } = this.props.form
+  render() {
+    const {loading} = this.state
+    const {getFieldDecorator} = this.props.form
 
     return (
       <div className={style['login-wrapper']}>
@@ -75,30 +76,30 @@ class Login extends Component {
           </div>
           <Form onSubmit={this.handleSubmit} className={style['login-form']}>
             <FormItem>
-              {getFieldDecorator('userName', {
-                rules: [{ required: true, message: '账户不可为空' }]
+              {getFieldDecorator('username', {
+                rules: [{required: true, message: '账户不可为空'}]
               })(
-                <Input size='large' prefix={<Icon type='user' />} placeholder='账户' />
+                <Input size='large' prefix={<Icon type='user'/>} placeholder='账户'/>
               )}
             </FormItem>
             <FormItem>
-              {getFieldDecorator('userPwd', {
-                rules: [{ required: true, message: '密码不可为空' }]
+              {getFieldDecorator('password', {
+                rules: [{required: true, message: '密码不可为空'}]
               })(
-                <Input.Password size='large' prefix={<Icon type='lock' />} placeholder='密码' />
+                <Input.Password size='large' prefix={<Icon type='lock'/>} placeholder='密码'/>
               )}
             </FormItem>
             <FormItem>
               <Row gutter={8}>
                 <Col span={16}>
                   {getFieldDecorator('captcha', {
-                    rules: [{ required: true, message: '验证码不可为空' }]
+                    rules: [{required: true, message: '验证码不可为空'}]
                   })(
-                    <Input size='large' placeholder='请输入验证码' />
+                    <Input size='large' placeholder='请输入验证码'/>
                   )}
                 </Col>
-                <Col span={8} style={{ height: 40 }}>
-                  <canvas className={style.captcha} ref={this.captchaCanvas} />
+                <Col span={8} style={{height: 40}}>
+                  <canvas className={style.captcha} ref={this.captchaCanvas}/>
                 </Col>
               </Row>
             </FormItem>
@@ -114,7 +115,7 @@ class Login extends Component {
           </Form>
         </div>
         <div className={style['login-footer']}>
-          &copy;2018-{moment(Date.now()).year()} 中电数据.  All Rights Reserved.中电数据
+          &copy;2018-{moment(Date.now()).year()} 中电数据. All Rights Reserved.中电数据
         </div>
       </div>
     )

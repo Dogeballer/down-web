@@ -1,56 +1,63 @@
 import axios from 'axios'
-import { message } from 'antd'
-import { history } from '@cecdataFE/bui'
-import { getUserData } from '../../lib/storage'
+
+import {isEmpty} from '@fishballer/bui/dist/lib/utils'
+import {message} from 'antd'
+import * as userLocalStorage from "../../lib/userLocalStorage";
+import history from '@fishballer/bui/dist/lib/history'
+import {clear} from "../../lib/userLocalStorage";
+
 
 // 获取环境变量里面的基础 API 路径，设置默认的URL
-axios.defaults.baseURL = window.__smp_config.REACT_ENV_API_URL
-
+const config = window.__rb_config
+axios.defaults.baseURL = config.REACT_ENV_API_URL
 // 请求拦截器
 axios.interceptors.request.use(config => {
-  // 清空params里的 '' null undefined
-  if (config.params) {
-    const params = { ...config.params }
-    Object.keys(params).forEach(key => {
-      if (typeof params[key] === 'undefined' || params[key] === '' || params[key] === null) {
-        delete params[key]
-      }
-    })
-    config.params = params
+  config.timeout = 3 * 60000 // 超时时间3分钟
+  const userInfo = userLocalStorage.getUserInfo()
+  if (userInfo && userInfo.access) {
+    config.headers.Authorization = "Bearer " + userInfo.access
   }
-
-  // config.timeout = 30000 // 超时时间30s
-  // requestCount++
-  // 增加 token 头
-  // config.headers.common['token'] = token
-  // 后端未做登录，暂时将用户名加在header里
-  const userData = getUserData()
-  config.headers.common.username = userData?.userName
   return config
 }, (err) => {
-  // requestCount--
+  message.error(err.message)
   return Promise.reject(err.response)
 })
 
 // 响应拦截器
+const TokenErrorCode = [401, 403]
+
+
 axios.interceptors.response.use(response => {
-  // requestCount--
-  const data = response.data
-  if (typeof data.code === 'number' && data.code !== 0) {
-    message.error(data.message || '服务端异常')
+  // console.log(response.config)
+  const method = response.config.method
+  const {data} = response
+  if (data && data.code === 0) {
+    if (method.toLocaleLowerCase() !== 'get') message.success('操作成功')
+    return data
+  } else {
+    let msg
+    if (isEmpty(data)) {
+      msg = '请求错误: 返回对象为空'
+    } else if (!data.msg) {
+      msg = '请求错误: 原因未知'
+    } else {
+      msg = data.msg
+    }
+    message.error(msg)
+    return Promise.reject(msg)
   }
-  return data
 }, (err) => {
-  // requestCount--
-  const serverData = (err.response && err.response.data) || {}
-  // 服务端code===2000,表示token过期，跳到重新登录页面
-  if (serverData.code === 2000) {
-    return history.push('/login')
+  if (TokenErrorCode.includes(err.response.status)) {
+    history.replace('/login')
+    clear()
+    message.error('登录过期')
+    return Promise.reject(new Error('登录过期'))
   }
   if (axios.isCancel(err)) {
     console.warn(err.message)
   } else {
-    message.error(serverData.message || err.message || '服务端异常')
-    return Promise.reject(err.response)
+    let msg = `请求错误: ${err.response.status}错误`
+    message.error(msg)
+    return Promise.reject(msg)
   }
 })

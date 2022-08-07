@@ -4,7 +4,7 @@ import { Button } from 'antd'
 
 import style from './style.scss'
 
-import { history } from '@cecdataFE/bui'
+import { history } from '@fishballer/bui'
 
 class NotFoundedPage extends Component {
   goBack = () => {

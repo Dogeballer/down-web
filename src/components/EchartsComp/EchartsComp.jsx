@@ -1,5 +1,5 @@
 import React from 'react'
-import debounce from '@cecdataFE/bui/dist/lib/debounce'
+import debounce from '@fishballer/bui/dist/lib/debounce'
 import * as echarts from 'echarts'
 import './theme/shine'
 
