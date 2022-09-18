@@ -3,7 +3,7 @@ import style from './style.scss'
 import {Form, Input, Button, Tooltip, Empty, Table, Select} from 'antd'
 import {StatusCreator} from '@fishballer/bui'
 import AceEditor from '../../../../components/AceEditor'
-import {isEmpty} from '../../../../lib/utils'
+import {isEmpty, isJSON} from '../../../../lib/utils'
 import QueryResult
   from '../../../UseCasesManage/components/UseCaseContent/components/UseCaseStep/components/UseCaseSqlScriptConfig/components/QueryResult/QueryResuLt'
 import EllipsisText from "../../../../components/EllipsisText";
@@ -20,6 +20,9 @@ const stepType = [
   {value: 6, text: 'SQL轮询查询'},
   {value: 8, text: 'SQL查询列表循环'},
   {value: 9, text: 'SQL执行列表循环'},
+  {value: 10, text: 'MQTT推送'},
+  {value: 11, text: 'MQTT订阅'},
+  {value: 12, text: 'MQTT推送列表循环'},
 ]
 const StepType = (data) => {
   const value = stepType.filter((value1, index) => value1.value === data)
@@ -44,10 +47,10 @@ const StepLogDetail = (props) => {
   const [receiveMessage, setreceiveMessage] = useState('')
   const [resultData, setResultData] = useState('')
   useEffect(() => {
-    if (!isEmpty(body)) {
-      setInterfaceBody(isEmpty(body) ? '' : JSON.stringify(body, null, '\t'))
+    if (isJSON(body)) {
+      setInterfaceBody(isEmpty(body) ? '' : JSON.stringify(JSON.parse(body), null, '\t'))
     } else {
-      setInterfaceBody('')
+      setInterfaceBody(body)
     }
     if ([4, 6, 8].includes(case_step['type'])) {
       if (step_body['code'] === 0) {
@@ -199,7 +202,7 @@ const StepLogDetail = (props) => {
             }
 
             <div className={style['intfnet-test-body']}>
-              {[0, 2, 3].includes(case_step['type']) ? (<div className={style['intfnet-test-item']}>
+              {[0, 2, 3, 10, 12].includes(case_step['type']) ? (<div className={style['intfnet-test-item']}>
                 <p style={{paddingLeft: 13}}>发送消息：</p>
                 <div className={style['intfnet-item-editor']}>
                   <AceEditor
@@ -217,7 +220,6 @@ const StepLogDetail = (props) => {
                     value={sql_script}
                     showPrintMargin={false}
                     style={{border: '1px solid #e8e8e8', ...style}}
-
                   />
                 </div>
               </div>)}

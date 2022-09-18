@@ -8,6 +8,7 @@ import TestSuite from "../view/TestSuite/TestSuite";
 import TaskLog from "../view/TaskLog/TaskLog";
 import UdfManage from "../view/UdfManage/UdfManage";
 import InterfaceClassManage from "../view/ProjectModule/components/InterfaceClassManage/InterfaceClassManage";
+import MqttClientManage from "../view/MqttClientManage/MqttClientManage";
 
 export default [
   {
@@ -90,6 +91,14 @@ export default [
           name: '套件分类管理'
         },
         component: TestSuiteClass
+      },
+      {
+        path: '/sys/MqttManage',
+        isChild: true,
+        meta: {
+          name: 'Mqtt管理'
+        },
+        component: MqttClientManage
       },
       {
         path: '/sys/DataSourceManage',

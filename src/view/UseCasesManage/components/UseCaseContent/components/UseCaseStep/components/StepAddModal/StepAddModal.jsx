@@ -1,20 +1,20 @@
-import React, { Component, useEffect, useState } from 'react'
-import { Form, Input, Modal, Select } from 'antd'
+import React, {Component, useEffect, useState} from 'react'
+import {Form, Input, Modal, Select} from 'antd'
 import utilities from '../../../../../../../../style/utilities.scss'
-import { modalFromLayout } from '../../../../../../../../constant'
+import {modalFromLayout} from '../../../../../../../../constant'
 import ModuleApi from '../../../../../../../../api/modules'
 import InterfaceAPI from '../../../../../../../../api/interfaces'
 import UseCasesApi from '../../../../../../../../api/usecases'
 import NumericInput from '../../../../../../../../components/NumericInput/NumericInput'
 import ProjectAPI from '../../../../../../../../api/projects'
 
-const { Option, OptGroup } = Select
+const {Option, OptGroup} = Select
 
 const CasePollParamSelect = (props) => {
   const [loading, setLoading] = useState(false)
   const [casePollParamList, setCasePollParamList] = useState([])
   useEffect(() => fetch(), [])
-  const { currentNode } = props
+  const {currentNode} = props
   const fetch = () => {
     setLoading(true)
     UseCasesApi.getCasePollParam(currentNode)
@@ -27,13 +27,13 @@ const CasePollParamSelect = (props) => {
     loading={loading}
     {...props}
   >
-    {(casePollParamList || []).map(({ id, name, param_name }) => <Option key={id}
-                                                                         value={param_name}>{param_name}({name})</Option>)}
+    {(casePollParamList || []).map(({id, name, param_name}) => <Option key={id}
+                                                                       value={param_name}>{param_name}({name})</Option>)}
   </Select>
 }
 
-function StepAddModal (props = {}) {
-  const { onOk, currentNode, ...modalProps } = props
+function StepAddModal(props = {}) {
+  const {onOk, currentNode, ...modalProps} = props
   let form = null
   const onOkHandler = () => {
     form.props.form.validateFieldsAndScroll((err, values) => {
@@ -55,7 +55,9 @@ function StepAddModal (props = {}) {
     >
       <StepAddForm
         currentNode={currentNode}
-        wrappedComponentRef={ref => { form = ref }}
+        wrappedComponentRef={ref => {
+          form = ref
+        }}
       />
     </Modal>
   )
@@ -72,15 +74,15 @@ const InterfaceSelect = (props) => {
         const module_id = response.data.modules
         ModuleApi.getModule(module_id).then((data) => {
           const project_id = data.data.project
-          const params = { project: project_id }
-          InterfaceAPI.getInterfaceSelector({ params })
+          const params = {project: project_id}
+          InterfaceAPI.getInterfaceSelector({params})
             .then((data) => {
               setInterfaceList(data.data.items)
             })
         })
       }).finally(() => setLoading(false))
   }
-  const { ...restProps } = props
+  const {...restProps} = props
   return <Select
     allowClear
     showSearch
@@ -118,7 +120,7 @@ const InterfaceSelect = (props) => {
 }
 
 class StepAdd extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       type: 0,
@@ -126,27 +128,30 @@ class StepAdd extends Component {
   }
 
   stepTypes = [
-    { value: 0, text: '执行接口' },
-    { value: 1, text: '等待时间' },
-    { value: 2, text: '轮询接口' },
-    { value: 3, text: '回调列表循环' },
-    { value: 4, text: 'SQL查询' },
-    { value: 5, text: 'SQL执行' },
-    { value: 6, text: 'SQL轮询查询' },
-    { value: 8, text: 'SQL查询列表循环' },
-    { value: 9, text: 'SQL执行列表循环' },
+    {value: 0, text: '执行接口'},
+    {value: 1, text: '等待时间'},
+    {value: 2, text: '轮询接口'},
+    {value: 3, text: '回调列表循环'},
+    {value: 4, text: 'SQL查询'},
+    {value: 5, text: 'SQL执行'},
+    {value: 6, text: 'SQL轮询查询'},
+    {value: 8, text: 'SQL查询列表循环'},
+    {value: 9, text: 'SQL执行列表循环'},
+    {value: 10, text: 'MQTT推送'},
+    {value: 11, text: 'MQTT订阅'},
+    {value: 12, text: 'MQTT推送列表循环'},
   ]
 
-  clear () {
+  clear() {
     this.props.form.resetFields()
   }
 
-  values () {
-    return { ...this.props.form.getFieldsValue() }
+  values() {
+    return {...this.props.form.getFieldsValue()}
   }
 
-  render () {
-    const { setFieldsValue, getFieldDecorator } = this.props.form
+  render() {
+    const {setFieldsValue, getFieldDecorator} = this.props.form
     return (
       <Form className={utilities['modal-form']} {...modalFromLayout.item}>
         <Form.Item
@@ -154,21 +159,22 @@ class StepAdd extends Component {
         >
           {getFieldDecorator('type', {
             initialValue: 0,
-            rules: [{ required: true, message: '请选择步骤类型' }]
+            rules: [{required: true, message: '请选择步骤类型'}]
           })(
             <Select
               allowClear
               placeholder={'请选择步骤类型'}
-              style={{ width: '100%' }}
+              style={{width: '100%'}}
               onChange={(value) => {
                 this.setState({
                   type: value
                 })
-                if (value === 2) setFieldsValue({ name: '[轮询]' })
-                if (value === 3) setFieldsValue({ name: '[循环]' })
-                if (value === 6) setFieldsValue({ name: '[S轮询]' })
-                if (value === 8) setFieldsValue({ name: '[S循环]' })
-                if (value === 9) setFieldsValue({ name: '[S循环]' })
+                if (value === 2) setFieldsValue({name: '[轮询]'})
+                if (value === 3) setFieldsValue({name: '[循环]'})
+                if (value === 6) setFieldsValue({name: '[S轮询]'})
+                if (value === 8) setFieldsValue({name: '[S循环]'})
+                if (value === 9) setFieldsValue({name: '[S循环]'})
+                if (value === 12) setFieldsValue({name: '[M循环]'})
               }}
             >
               {this.stepTypes.map((option) => (
@@ -188,7 +194,7 @@ class StepAdd extends Component {
         >
           {
             getFieldDecorator('case_interface', {
-              rules: [{ required: true, message: '请选择执行接口' }]
+              rules: [{required: true, message: '请选择执行接口'}]
             })(
               <InterfaceSelect currentNode={this.props.currentNode}/>
             )}
@@ -196,10 +202,10 @@ class StepAdd extends Component {
         {this.state.type === 1 ? <Form.Item label={'等待时间'}>
           {getFieldDecorator('time', {
             initialValue: 1,
-            rules: [{ required: true, message: '请填写休眠时间' }]
+            rules: [{required: true, message: '请填写休眠时间'}]
           })(
             <NumericInput placeholder={'请填写休眠时间'}
-                          style={{ width: '100%' }}
+                          style={{width: '100%'}}
                           onChange={(value) => {
                             setFieldsValue({
                               name: `停止${value}s`,
@@ -207,13 +213,28 @@ class StepAdd extends Component {
                           }}/>
           )}
         </Form.Item> : null
-
         }
+                {this.state.type === 11 ? <Form.Item label={'订阅次数'}>
+          {getFieldDecorator('times', {
+            initialValue: 1,
+            rules: [{required: true, message: '请填写订阅次数'}]
+          })(
+            <NumericInput placeholder={'请填写订阅次数'}
+                          style={{width: '100%'}}
+                          onChange={(value) => {
+                            setFieldsValue({
+                              name: `MQTT订阅${value}次`,
+                            })
+                          }}/>
+          )}
+        </Form.Item> : null
+        }
+
         <Form.Item
           label="步骤名称"
         >
           {getFieldDecorator('name', {
-            rules: [{ required: true, message: '请输入步骤名称' }]
+            rules: [{required: true, message: '请输入步骤名称'}]
           })(
             this.state.type !== 1 ?
               <Input placeholder={'请输入步骤名称'}/> :
@@ -226,9 +247,9 @@ class StepAdd extends Component {
           label="排序"
         >
           {getFieldDecorator('sort', {
-            rules: [{ required: true, message: '请填写步骤排序' }]
+            rules: [{required: true, message: '请填写步骤排序'}]
           })(
-            <NumericInput placeholder={'请填写步骤排序'} style={{ width: '100%' }}/>
+            <NumericInput placeholder={'请填写步骤排序'} style={{width: '100%'}}/>
           )}
         </Form.Item>
         {
@@ -236,9 +257,9 @@ class StepAdd extends Component {
             label="轮询次数"
           >
             {getFieldDecorator('wrap_count', {
-              rules: [{ required: true, message: '请填写轮询次数' }]
+              rules: [{required: true, message: '请填写轮询次数'}]
             })(
-              <NumericInput placeholder={'请填写轮询次数'} style={{ width: '100%' }}/>
+              <NumericInput placeholder={'请填写轮询次数'} style={{width: '100%'}}/>
             )}
           </Form.Item>) : null
         }
@@ -247,20 +268,20 @@ class StepAdd extends Component {
             label="轮询间隔"
           >
             {getFieldDecorator('polling_interval', {
-              rules: [{ required: true, message: '请填写轮询间隔' }]
+              rules: [{required: true, message: '请填写轮询间隔'}]
             })(
-              <NumericInput placeholder={'请填写轮询间隔'} style={{ width: '100%' }}/>
+              <NumericInput placeholder={'请填写轮询间隔'} style={{width: '100%'}}/>
             )}
           </Form.Item>) : null
         }
         {
-          [3, 8, 9].includes(this.state.type) ? (<Form.Item
+          [3, 8, 9, 12].includes(this.state.type) ? (<Form.Item
             label="循环参数"
           >
             {getFieldDecorator('loop_parameter', {
-              rules: [{ required: true, message: '请选择回调循环参数' }]
+              rules: [{required: true, message: '请选择回调循环参数'}]
             })(
-              <CasePollParamSelect placeholder={'请选择回调循环参数'} style={{ width: '100%' }}
+              <CasePollParamSelect placeholder={'请选择回调循环参数'} style={{width: '100%'}}
                                    currentNode={this.props.currentNode}/>
             )}
           </Form.Item>) : null
@@ -268,10 +289,9 @@ class StepAdd extends Component {
       </Form>
     )
   }
-
 }
 
-const StepAddForm = Form.create({ name: 'StepAddForm' }
+const StepAddForm = Form.create({name: 'StepAddForm'}
 )(StepAdd)
 
 export default StepAddModal

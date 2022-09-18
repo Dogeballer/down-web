@@ -83,11 +83,7 @@ const CaseInterface = (props) => {
                 setinterfaceHisParam([])
                 setHisSelectRows([])
               }
-              if (!isEmpty(body)) {
-                setInterfaceBody(isEmpty(body) ? '' : JSON.stringify(body, null, '\t'))
-              } else {
-                setInterfaceBody('')
-              }
+              setInterfaceBody(body)
               setinterfaceParam(interface_param)
               setReceiveValue({})
               setreceiveMessage('')
@@ -168,6 +164,7 @@ const CaseInterface = (props) => {
     setSelectRows(selectRows)
   }
   const onTest = () => {
+    if (!isJSON(interfaceBody) && !isEmpty(body)) return message.info('请输入正确的JSON格式')
     let newTestParam = testParam.filter((item) => {
       if (item.value) {
         return true
@@ -178,19 +175,12 @@ const CaseInterface = (props) => {
           return true
       }
     )
-    const newInterfaceBody = () => {
-      if (interfaceBody.length !== 0)
-        return JSON.parse(interfaceBody)
-      else {
-        return {}
-      }
-    }
 
     const data = {
       'environmentId': environmentId,
       'interfaceId': interfaceId,
       'params': newTestParam,
-      'body': newInterfaceBody()
+      'body': interfaceBody
     }
     if (newTestParam.length < selectRows.length) {
       // message.warning('请填写勾选参数值')

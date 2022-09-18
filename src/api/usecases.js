@@ -7,13 +7,13 @@ const getCasePollParam = (id) => {
   return axios.get(`usecases/casePollParamSelect/${id}`)
 }
 const getUseCasesList = (params) => {
-  return axios.get('usecases/list', { params })
+  return axios.get('usecases/list', {params})
 }
 const getUseCaseSelector = () => {
   return axios.get('usecases/selector')
 }
 const getSuiteUseCasesList = (params) => {
-  return axios.get('usecases/suiteUseCasesList', { params })
+  return axios.get('usecases/suiteUseCasesList', {params})
 }
 const getUseCaseStepList = (id) => {
   return axios.get(`usecases/caseSteps/list?use_case=${id}`)
@@ -28,7 +28,7 @@ const getStepCircularKeyList = (id) => {
   return axios.get(`usecases/stepCircularKey/list?case_step=${id}`)
 }
 const getUseCaseTree = (params) => {
-  return axios.get('usecases/tree', { params })
+  return axios.get('usecases/tree', {params})
 }
 const updateInterface = (id, data) => {
   return axios.put(`interfaces/update/${id}`, data)
@@ -98,7 +98,7 @@ const copyCaseStep = (data) => {
   return axios.post(`usecases/caseSteps/copy`, data)
 }
 const getStepCallBackParams = (params) => {
-  return axios.get('usecases/stepCallBackParams', { params })
+  return axios.get('usecases/stepCallBackParams', {params})
 }
 const updateStepCallBackParams = (id, data) => {
   return axios.put(`usecases/stepCallBackParams/${id}`, data)
@@ -110,7 +110,7 @@ const deleteStepCallBackParams = (id) => {
   return axios.delete(`usecases/stepCallBackParams/${id}`)
 }
 const getStepForwardAfterOperationList = (params) => {
-  return axios.get('usecases/stepForwardAfterOperation/list', { params })
+  return axios.get('usecases/stepForwardAfterOperation/list', {params})
 }
 const updateStepForwardAfterOperation = (id, data) => {
   return axios.put(`usecases/stepForwardAfterOperation/update/${id}`, data)
@@ -123,6 +123,12 @@ const deleteStepForwardAfterOperation = (id) => {
 }
 const sqlScriptExecute = (data) => {
   return axios.post(`usecases/sqlScriptExecute`, data)
+}
+const mqttPublish = (data) => {
+  return axios.post(`usecases/mqttPublish`, data)
+}
+const mqttSub = (data) => {
+  return axios.post(`usecases/mqttSub`, data)
 }
 export default {
   getUseCasesList,
@@ -164,5 +170,7 @@ export default {
   createStepForwardAfterOperation,
   updateStepForwardAfterOperation,
   deleteStepForwardAfterOperation,
-  sqlScriptExecute
+  sqlScriptExecute,
+  mqttPublish,
+  mqttSub
 }
